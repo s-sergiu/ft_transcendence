@@ -17,7 +17,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./debug/backend:/debug
+      - ./debug/django:/debug
     environment:
       - HOST_IP=${HOST_IP}
       - USER_GID=${USER_GID}
