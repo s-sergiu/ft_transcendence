@@ -2,7 +2,7 @@
 
 # debugging 
 cp -R * /debug/.
-cd /debug/django
+cd /debug/backend
 chown -R $USER_GID:$USER_GID .
 #
 
