@@ -7,6 +7,9 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
 function GuestNavbar(props) {
+	async function getMessage() {
+		const response = await fetch("http://127.0.0.1:8000/api");
+	}
   return (
     <div className="App">
 	<Navbar expand="lg" className="bg-body-tertiary">
@@ -20,6 +23,9 @@ function GuestNavbar(props) {
             navbarScroll
           >
           </Nav>
+          <Form className="d-flex">
+            <Button onClick = { e => getMessage() } variant="outline-success">API</Button>
+          </Form>
           <Form className="d-flex">
             <Button onClick = { e => props.loginStatus(true) } variant="outline-success">Login</Button>
           </Form>
