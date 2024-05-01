@@ -17,10 +17,19 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./debug/django:/debug
+      - ./debug/django:/debug/backend
     environment:
       - HOST_IP=${HOST_IP}
       - USER_GID=${USER_GID}
       - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD}
       - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
       - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
+  postgresql:
+    build: postgres/.
+    container_name: postgresql
+    environment:
+      - PGDATA=${PGDATA}
+      - LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
