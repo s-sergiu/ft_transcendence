@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  react:
+    build: react/.
+    container_name: react
+    environment:
+      - HOST_IP=${HOST_IP}
+      - USER_GID=${USER_GID}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./debug/react:/debug/src
+  django:
+    build: django/.
+    container_name: django
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./debug/backend:/debug
+    environment:
+      - HOST_IP=${HOST_IP}
+      - USER_GID=${USER_GID}
+      - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD}
+      - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
+      - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
