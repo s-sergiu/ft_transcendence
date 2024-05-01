@@ -17,4 +17,5 @@ then
         --email $DJANGO_SUPERUSER_EMAIL
 fi
 
+chown -R $USER_GID:$USER_GID .
 python manage.py runserver 0.0.0.0:8000
