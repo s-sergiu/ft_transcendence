@@ -38,6 +38,5 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     healthcheck:
       test: pg_isready -d django_db -U postgres -h postgresql -p 5432
-      interval: 8s
-      timeout: 5s
+      interval: 5s
       retries: 3
