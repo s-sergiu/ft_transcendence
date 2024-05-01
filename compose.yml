@@ -14,6 +14,9 @@ services:
   django:
     build: django/.
     container_name: django
+    depends_on:
+      postgresql:
+        condition: service_healthy
     ports:
       - "8000:8000"
     volumes:
@@ -33,3 +36,8 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
+    healthcheck:
+      test: pg_isready -d django_db -U postgres -h postgresql -p 5432
+      interval: 8s
+      timeout: 5s
+      retries: 3
