@@ -7,7 +7,7 @@ import slide4 from './img/background4.jpg';
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import {MDBFooter,MDBContainer,MDBCol,MDBRow,MDBBtn,MDBInput} from 'mdb-react-ui-kit';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './content.css'
+import './css/content.css'
  
 function Content() {
     return (
