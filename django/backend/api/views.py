@@ -12,7 +12,7 @@ def getToken(request):
     params = {'grant_type': 'authorization_code',
             'client_id' : 'u-s4t2ud-17c3d06c29a63f052756d513ba06d6d98b92ee95cb7b6a9dd4e66465af2477ab',
             'client_secret' : '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',
-            'code' : code,
+            'code' : code['code'],
             'redirect_uri' : 'http://127.0.0.1:3000'
             }
     api_call = requests.post(url, params)
