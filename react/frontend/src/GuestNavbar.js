@@ -44,7 +44,8 @@ function GuestNavbar(props) {
   function getCode(e) {
 		let uid='u-s4t2ud-17c3d06c29a63f052756d513ba06d6d98b92ee95cb7b6a9dd4e66465af2477ab'
 		let scope='public'
-	    let url='https://api.intra.42.fr/oauth/authorize?client_id=' + uid + '&redirect_uri=http%3A%2F%2F127.0.0.1%3A3000&response_type=code&scope=' + scope;
+	    let url='https://api.intra.42.fr/oauth/authorize?client_id=' + uid + 
+			'&redirect_uri=http%3A%2F%2F127.0.0.1%3A3000&response_type=code&scope=' + scope;
 		e.preventDefault();
 		window.open(url, "_self")
 	}
