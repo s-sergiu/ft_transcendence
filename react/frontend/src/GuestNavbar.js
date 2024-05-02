@@ -7,8 +7,9 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
 function GuestNavbar(props) {
-	async function getMessage() {
-		const response = await fetch("http://127.0.0.1:8000/api");
+	async function getMessage(e) {
+		const response = await props.client.get("http://127.0.0.1:8000/api");
+		console.log(response);
 	}
   return (
     <div className="App">
@@ -24,7 +25,7 @@ function GuestNavbar(props) {
           >
           </Nav>
           <Form className="d-flex">
-            <Button onClick = { e => getMessage() } variant="outline-success">API</Button>
+            <Button onClick = { e => getMessage(e) } variant="outline-success">API</Button>
           </Form>
           <Form className="d-flex">
             <Button onClick = { e => props.loginStatus(true) } variant="outline-success">Login</Button>
