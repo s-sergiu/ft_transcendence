@@ -1,4 +1,4 @@
-import Button from 'react-bootstrap/Button';
+
 import Carousel from 'react-bootstrap/Carousel';
 import slide from './img/background.jpg';
 import slide2 from './img/background2.jpg';
@@ -61,7 +61,7 @@ function Content() {
                     <p>
                     In the virtual realm of online ping pong, players from across the globe face off in lightning-fast matches, their digital paddles dancing across the screen with precision and finesse. Amidst the flurry of rapid exchanges, strategic maneuvers, and pixel-perfect returns, a vibrant community thrives, united by their shared love for the timeless sport.
                     <br></br>
-                    <Button variant="success">Success</Button>{' '}
+                    <Button variant="success">play</Button>{' '}
 
                     </p>
                  </div>
@@ -69,6 +69,26 @@ function Content() {
                 </Row>
             </Container>
             <br></br>
+
+
+            <Container>
+                <Row>
+                <Col xs={12} md={6}>
+                <div className='second'>
+                    <h2>Description Title</h2>
+                    <p>
+                    In the virtual realm of online ping pong, players from across the globe face off in lightning-fast matches, their digital paddles dancing across the screen with precision and finesse. Amidst the flurry of rapid exchanges, strategic maneuvers, and pixel-perfect returns, a vibrant community thrives, united by their shared love for the timeless sport.
+                    <br></br>
+                    <Button variant="success">play</Button>{' '}
+
+                    </p>
+                 </div>
+                </Col>
+                <Col xs={12} md={6}>
+                    <Image src={slide6} fluid className="custom-image"/>
+                 </Col>
+                </Row>
+            </Container>
 
             <MDBFooter bgColor='dark' className='text-center text-white text-lg-left'>
       <MDBContainer className='p-4 pb-0'>
