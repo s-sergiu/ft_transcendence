@@ -31,3 +31,19 @@ h5{
     background-color: lightblue;
 
 }
+.second{
+    margin-top: 120px;
+    margin-left: 20px;
+    margin-bottom: 100px;
+}
+.second p{
+    font-size: 20px;
+}
+.second Button{
+    margin-top: 60px;
+    width: 120px;
+    height: 60px;
+    border-radius: 12px;
+    background-color: green;
+
+}

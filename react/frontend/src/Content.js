@@ -1,14 +1,11 @@
-import logo from './logo.svg';
-import Button from 'react-bootstrap/Button';
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
-import { useState, useEffect } from 'react';
+
 import Carousel from 'react-bootstrap/Carousel';
 import slide from './background.jpg';
 import slide2 from './background2.jpg';
 import slide3 from './background3.jpg';
 import slide4 from './background4.jpg';
-import { Container, Row, Col, Image } from 'react-bootstrap';
+import slide6 from './background6.jpg'; 
+import { Container, Row, Col, Image ,Button} from 'react-bootstrap';
 import {MDBFooter,MDBContainer,MDBCol,MDBRow,MDBBtn,MDBInput} from 'mdb-react-ui-kit';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './content.css'
@@ -65,7 +62,7 @@ function Content() {
                     <p>
                     In the virtual realm of online ping pong, players from across the globe face off in lightning-fast matches, their digital paddles dancing across the screen with precision and finesse. Amidst the flurry of rapid exchanges, strategic maneuvers, and pixel-perfect returns, a vibrant community thrives, united by their shared love for the timeless sport.
                     <br></br>
-                    <Button variant="success">Success</Button>{' '}
+                    <Button variant="success">play</Button>{' '}
 
                     </p>
                  </div>
@@ -73,6 +70,26 @@ function Content() {
                 </Row>
             </Container>
             <br></br>
+
+
+            <Container>
+                <Row>
+                <Col xs={12} md={6}>
+                <div className='second'>
+                    <h2>Description Title</h2>
+                    <p>
+                    In the virtual realm of online ping pong, players from across the globe face off in lightning-fast matches, their digital paddles dancing across the screen with precision and finesse. Amidst the flurry of rapid exchanges, strategic maneuvers, and pixel-perfect returns, a vibrant community thrives, united by their shared love for the timeless sport.
+                    <br></br>
+                    <Button variant="success">play</Button>{' '}
+
+                    </p>
+                 </div>
+                </Col>
+                <Col xs={12} md={6}>
+                    <Image src={slide6} fluid className="custom-image"/>
+                 </Col>
+                </Row>
+            </Container>
 
             <MDBFooter bgColor='dark' className='text-center text-white text-lg-left'>
       <MDBContainer className='p-4 pb-0'>
