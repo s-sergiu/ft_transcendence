@@ -1,9 +1,9 @@
 import Button from 'react-bootstrap/Button';
 import Carousel from 'react-bootstrap/Carousel';
-import slide from './background.jpg';
-import slide2 from './background2.jpg';
-import slide3 from './background3.jpg';
-import slide4 from './background4.jpg';
+import slide from './img/background.jpg';
+import slide2 from './img/background2.jpg';
+import slide3 from './img/background3.jpg';
+import slide4 from './img/background4.jpg';
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import {MDBFooter,MDBContainer,MDBCol,MDBRow,MDBBtn,MDBInput} from 'mdb-react-ui-kit';
 import 'bootstrap/dist/css/bootstrap.min.css';
