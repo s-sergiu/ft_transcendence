@@ -11,11 +11,12 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+HOST_IP=os.environ.get('HOST_IP')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -25,7 +26,9 @@ SECRET_KEY = 'django-insecure-v^v38=4&1qx6=(i5bj9t@8y#@m3hh9(w*8us&e2qv9!ym26br(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    HOST_IP
+]
 
 
 # Application definition
@@ -37,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-	'rest_framework',
 	'corsheaders',
 ]
 
@@ -128,17 +130,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = [
-	'http://127.0.0.1:8000',
-	'http://127.0.0.1:3000',
-]
-
 CORS_ALLOWED_ORIGINS = [
 	'http://127.0.0.1:3000',
-	'http://127.0.0.1:8000',
 ]
-
-CORS_ALLOW_CREDENTIALS = True
-
-CORS_ORIGIN_ALLOW_ALL = True
-
