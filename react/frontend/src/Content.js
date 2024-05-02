@@ -1,8 +1,4 @@
-import logo from './logo.svg';
 import Button from 'react-bootstrap/Button';
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
-import { useState, useEffect } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import slide from './background.jpg';
 import slide2 from './background2.jpg';
