@@ -8,7 +8,7 @@ import Navbar from 'react-bootstrap/Navbar';
 
 function GuestNavbar(props) {
 	async function getMessage(e) {
-		const response = await props.client.get("http://127.0.0.1:8000/api");
+		const response = await props.client.get("http://127.0.0.1:8000/api/");
 		console.log(response);
 	}
   return (
