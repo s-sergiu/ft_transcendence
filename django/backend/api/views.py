@@ -17,4 +17,28 @@ def getToken(request):
             }
     api_call = requests.post(url, params)
     data = api_call.json()
+    print(data['access_token'], file=sys.stderr);
+    return (getInfo(data['access_token']))
     return (JsonResponse(data))
+
+def getInfo(token):
+    print("token: " + token, file=sys.stderr);
+    url = 'https://api.intra.42.fr/v2/me'
+    headers = {'authorization': f'Bearer {token}'}
+    api_call = requests.get(url, headers = headers).json()
+    return (JsonResponse(api_call))
+"""
+    if new user 
+        store the access_token and populate info
+            return user info
+    if existing user
+        check for access_token similarity 
+            return user info
+        generate a new token if not similar
+            return user info
+
+
+
+
+
+"""
