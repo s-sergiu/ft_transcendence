@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import Content from './Content';
+//import Content from './Content';
 
 function UserNavbar(props) {
   return (
@@ -48,7 +48,13 @@ function UserNavbar(props) {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-      <Content/>
+	 <h1> LOGGED IN </h1> 
+	  <ul>
+		<li>{ props.login.email }</li>
+		<li>{ props.login.login }</li>
+		<li>{ props.login.first_name }</li>
+		<li>{ props.login.last_name }</li>
+	  </ul>
     </div>
   );
 }
