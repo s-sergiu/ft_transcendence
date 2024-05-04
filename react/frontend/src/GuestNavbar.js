@@ -5,23 +5,19 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Content from './Content';
+import { useState, useEffect } from 'react';
 
 const urlParams = new URLSearchParams(window.location.search);
 
 function GuestNavbar(props) {
 
+	const [test, setTest] = useState(false);
 	const URI = process.env.REACT_APP_REDIRECT_URI
 	const HOST_IP = process.env.REACT_APP_HOST_IP
 
-	function getCodeURL(e) {
-		  const code = urlParams.get("code");
-		  return code;
-	}
-
-	async function getToken(e) {
-	  e.preventDefault();
+	async function getToken() {
 	  let csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
-	  let code = getCodeURL(e);
+	  let code = getCodeURL();
 
 		const response = await fetch('http://' + HOST_IP + ':8000/api/get-token', {
 		  mode:  'cors',
@@ -38,16 +34,16 @@ function GuestNavbar(props) {
 		return response.json();
 	}
 
-	async function displayToken(e) {
-		console.log(await getToken(e));
+	function getCodeURL() {
+		  const code = urlParams.get("code");
+		  return code;
 	}
 
-  function getCode(e) {
-		e.preventDefault();
+  function getCode() {
 		window.open(URI, "_self")
 	}
 
-	async function getMessage(e) {
+	async function getMessage() {
 		const response = await fetch('http://' + HOST_IP + ':8000/api/', {
 		  mode:  'cors',
 		  method: 'GET',
@@ -58,10 +54,20 @@ function GuestNavbar(props) {
 		return response.json();
 	}
 
-	async function getResponse(e) {
-		let response = await getMessage(e);
-		document.cookie = "csrftoken=" + response.token;
+	async function getInfo() {
+		console.log(await getToken());
 	}
+
+	async function getResponse() {
+		let response = await getMessage();
+		document.cookie = "csrftoken=" + response.token;
+		await getCode();
+		setTest(true);
+	}
+
+	useEffect(() => {
+		getInfo();
+	}, [test]);
 
   return (
     <div className="App">
@@ -77,13 +83,10 @@ function GuestNavbar(props) {
           >
           </Nav>
           <Form className="d-flex">
-            <Button onClick = { e => displayToken(e) } variant="outline-success">Token</Button>
+            <Button onClick = { e => getCode() } variant="outline-success">Code</Button>
           </Form>
           <Form className="d-flex">
-            <Button onClick = { e => getCode(e) } variant="outline-success">Code</Button>
-          </Form>
-          <Form className="d-flex">
-            <Button onClick = { e => getResponse(e) } variant="outline-success">API</Button>
+            <Button onClick = { e => getResponse() } variant="outline-success">API</Button>
           </Form>
           <Form className="d-flex">
             <Button onClick = { e => props.loginStatus(true) } variant="outline-success">Login</Button>
