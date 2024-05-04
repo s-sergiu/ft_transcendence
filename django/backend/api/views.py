@@ -26,6 +26,14 @@ def getToken(request):
         return (JsonResponse(data))
     return (getInfo(data['access_token']))
 
+def getUserInfo(request):
+    token = json.loads(request.body.decode("utf-8"))
+    print("token: ",token['code'], file=sys.stderr);
+    url = 'https://api.intra.42.fr/v2/me'
+    headers = {'authorization': f'Bearer {token["code"]}'}
+    api_call = requests.get(url, headers = headers).json()
+    return (JsonResponse(api_call))
+
 def getInfo(token):
     print("token: " + token, file=sys.stderr);
     url = 'https://api.intra.42.fr/v2/me'
