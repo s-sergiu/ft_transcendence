@@ -20,9 +20,7 @@ function GuestNavbar(props) {
 
 	async function getToken(e) {
 	  e.preventDefault();
-	  let key = "csrftoken";
-	  let csrf = document.cookie.match(("(^|;)\\s*" + key + "\\s*=\\s*([^;]+)"))[2];
-	  console.log("csrf : " + csrf);
+	  let csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
 	  let code = getCodeURL(e);
 
 		const response = await fetch('http://' + HOST_IP + ':8000/api/get-token', {
@@ -48,6 +46,7 @@ function GuestNavbar(props) {
 		e.preventDefault();
 		window.open(URI, "_self")
 	}
+
 	async function getMessage(e) {
 		const response = await fetch('http://' + HOST_IP + ':8000/api/', {
 		  mode:  'cors',
@@ -60,10 +59,10 @@ function GuestNavbar(props) {
 	}
 
 	async function getResponse(e) {
-		console.log(process.env)
 		let response = await getMessage(e);
 		document.cookie = "csrftoken=" + response.token;
 	}
+
   return (
     <div className="App">
 	<Navbar expand="lg" className="bg-body-tertiary">
