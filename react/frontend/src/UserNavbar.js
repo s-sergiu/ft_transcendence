@@ -54,6 +54,7 @@ function UserNavbar(props) {
 		<li>{ props.login.login }</li>
 		<li>{ props.login.first_name }</li>
 		<li>{ props.login.last_name }</li>
+		<li><img src={ props.login.image.versions.medium} alt="img-profile"/></li>
 	  </ul>
     </div>
   );
