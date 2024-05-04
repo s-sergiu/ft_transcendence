@@ -10,13 +10,16 @@ import { useEffect } from 'react';
 
 function UserNavbar(props) {
 
-	const HOST_IP = process.env.REACT_APP_HOST_IP;
 
 	function Logout() {
 		props.loginStatus(false);
 		props.setLoginDetails(false);
 		localStorage.clear();
 	}
+
+	useEffect(() => {
+
+	const HOST_IP = process.env.REACT_APP_HOST_IP;
 
 	async function getInfo() {
 		let csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
@@ -36,12 +39,11 @@ function UserNavbar(props) {
 		return response.json();
 	}
 
-	useEffect(() => {
 		getInfo().then( function(res) { 
 			console.log(res);
 			props.setLoginDetails(res);
 		});
-	}, []);
+	}, [props]);
 	
 
   return (

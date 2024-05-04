@@ -40,11 +40,24 @@ function GuestNavbar(props) {
 	}
 
 	useEffect(() => {
+
+		async function getMessage() {
+			const response = await fetch('http://' + HOST_IP + ':8000/api/', {
+			  mode:  'cors',
+			  method: 'GET',
+			  headers: {
+				'Content-Type': 'application/json'
+			  },
+			})
+			return response.json();
+		}
+
 		if (!document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)")))
 		{
 			let response = getMessage();
 			document.cookie = "csrftoken=" + response.token;
 		}
+
 		async function getToken() {
 		  let csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
 		  let code = getCodeURL();
