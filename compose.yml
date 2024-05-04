@@ -6,6 +6,7 @@ services:
     container_name: react
     environment:
       - REACT_APP_HOST_IP=${HOST_IP}
+      - REACT_APP_REDIRECT_URI=${REDIRECT_URI}
       - REACT_APP_CLIENT_ID=${CLIENT_ID}
       - USER_GID=${USER_GID}
       - GENERATE_SOURCEMAP=${GENERATE_SOURCEMAP}

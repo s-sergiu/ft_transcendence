@@ -10,8 +10,8 @@ const urlParams = new URLSearchParams(window.location.search);
 
 function GuestNavbar(props) {
 
-	const hostIP = process.env.REACT_APP_HOST_IP
-	const uid = process.env.REACT_APP_CLIENT_ID
+	const URI = process.env.REACT_APP_REDIRECT_URI
+	const HOST_IP = process.env.REACT_APP_HOST_IP
 
 	function getCodeURL(e) {
 		  const code = urlParams.get("code");
@@ -25,7 +25,7 @@ function GuestNavbar(props) {
 	  console.log("csrf : " + csrf);
 	  let code = getCodeURL(e);
 
-		const response = await fetch('http://' + hostIP + ':8000/api/get-token', {
+		const response = await fetch('http://' + HOST_IP + ':8000/api/get-token', {
 		  mode:  'cors',
 		  method: 'POST',
 		  credentials: 'include',
@@ -45,14 +45,11 @@ function GuestNavbar(props) {
 	}
 
   function getCode(e) {
-		let scope='public'
-	    let url='https://api.intra.42.fr/oauth/authorize?client_id=' + uid + 
-			'&redirect_uri=http%3A%2F%2F' + hostIP + '%3A3000&response_type=code&scope=' + scope;
 		e.preventDefault();
-		window.open(url, "_self")
+		window.open(URI, "_self")
 	}
 	async function getMessage(e) {
-		const response = await fetch('http://' + hostIP + ':8000/api/', {
+		const response = await fetch('http://' + HOST_IP + ':8000/api/', {
 		  mode:  'cors',
 		  method: 'GET',
 		  headers: {
