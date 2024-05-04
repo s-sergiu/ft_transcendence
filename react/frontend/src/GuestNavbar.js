@@ -57,12 +57,12 @@ function GuestNavbar(props) {
 			'Content-Type': 'application/json'
 		  },
 		})
-
 		return response.json();
 	}
 
 	async function getResponse(e) {
-		console.log(await getMessage(e));
+		let response = await getMessage(e);
+		document.cookie = "csrftoken=" + response.token;
 	}
   return (
     <div className="App">
