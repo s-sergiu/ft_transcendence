@@ -40,6 +40,11 @@ function GuestNavbar(props) {
 	}
 
 	useEffect(() => {
+		if (!document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)")))
+		{
+			let response = getMessage();
+			document.cookie = "csrftoken=" + response.token;
+		}
 		async function getToken() {
 		  let csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
 		  let code = getCodeURL();
