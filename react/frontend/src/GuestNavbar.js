@@ -89,7 +89,7 @@ function GuestNavbar(props) {
 				localStorage.setItem("token", res[0]);
 			}
 		});
-	}, [props, HOST_IP]);
+	}, [HOST_IP]);
 
   return (
     <div className="App">

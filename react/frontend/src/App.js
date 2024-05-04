@@ -13,7 +13,6 @@ function App() {
 	let token = localStorage.getItem("token");
 
 	if (userLogged || token ) {
-		console.log("logg");
 		return (
 			<UserNavbar 
 				loginStatus = { setUserLogged } 
@@ -22,7 +21,6 @@ function App() {
 			/>
 		);
 	} else {
-		console.log("not logg");
 		return (
 			<GuestNavbar 
 				loginStatus = { setUserLogged } 
