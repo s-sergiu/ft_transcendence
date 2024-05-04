@@ -18,9 +18,9 @@ def getToken(request):
             }
     api_call = requests.post(url, params)
     data = api_call.json()
-    print(data['access_token'], file=sys.stderr);
+    if (list(data.keys())[0] == 'error'):
+        return (JsonResponse(data))
     return (getInfo(data['access_token']))
-    return (JsonResponse(data))
 
 def getInfo(token):
     print("token: " + token, file=sys.stderr);
