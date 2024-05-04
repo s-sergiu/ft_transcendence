@@ -1,9 +1,10 @@
 from django.http import JsonResponse
+from django.views.decorators.csrf import get_token
 import json, sys, requests
 
 def index(request):
-    response = JsonResponse({"foo": "bar"})
-    return (response)
+    csrf = get_token(request);
+    return JsonResponse( { "token" : csrf })
 
 def getToken(request):
     code = json.loads(request.body.decode("utf-8"))
