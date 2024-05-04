@@ -1,6 +1,9 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import get_token
-import json, sys, requests
+import json, os, sys, requests
+
+ID=os.environ.get('CLIENT_ID')
+SECRET=os.environ.get('CLIENT_SECRET')
 
 def index(request):
     csrf = get_token(request);
@@ -10,12 +13,13 @@ def getToken(request):
     code = json.loads(request.body.decode("utf-8"))
     response = JsonResponse({"code": code['code']})
     url = 'https://api.intra.42.fr/oauth/token'
-    params = {'grant_type': 'authorization_code',
-            'client_id' : 'u-s4t2ud-17c3d06c29a63f052756d513ba06d6d98b92ee95cb7b6a9dd4e66465af2477ab',
-            'client_secret' : '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',
+    params = {
+            'grant_type': 'authorization_code',
+            'client_id' : ID,
+            'client_secret' : SECRET,
             'code' : code['code'],
             'redirect_uri' : 'http://127.0.0.1:3000'
-            }
+    }
     api_call = requests.post(url, params)
     data = api_call.json()
     if (list(data.keys())[0] == 'error'):
@@ -28,6 +32,7 @@ def getInfo(token):
     headers = {'authorization': f'Bearer {token}'}
     api_call = requests.get(url, headers = headers).json()
     return (JsonResponse(api_call))
+
 """
     if new user 
         store the access_token and populate info

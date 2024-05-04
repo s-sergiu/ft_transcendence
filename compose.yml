@@ -5,7 +5,8 @@ services:
     build: react/.
     container_name: react
     environment:
-      - HOST_IP=${HOST_IP}
+      - REACT_APP_HOST_IP=${HOST_IP}
+      - REACT_APP_CLIENT_ID=${CLIENT_ID}
       - USER_GID=${USER_GID}
       - GENERATE_SOURCEMAP=${GENERATE_SOURCEMAP}
     ports:
@@ -23,6 +24,8 @@ services:
     volumes:
       - ./debug/django:/debug/backend
     environment:
+      - CLIENT_ID=${CLIENT_ID}
+      - CLIENT_SECRET=${CLIENT_SECRET}
       - HOST_IP=${HOST_IP}
       - USER_GID=${USER_GID}
       - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD}
