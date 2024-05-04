@@ -1,5 +1,4 @@
 
-
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -10,6 +9,10 @@ import Content from './Content';
 const urlParams = new URLSearchParams(window.location.search);
 
 function GuestNavbar(props) {
+
+	const hostIP = process.env.REACT_APP_HOST_IP
+	const uid = process.env.REACT_APP_CLIENT_ID
+
 	function getCodeURL(e) {
 		  const code = urlParams.get("code");
 		  return code;
@@ -22,7 +25,7 @@ function GuestNavbar(props) {
 	  console.log("csrf : " + csrf);
 	  let code = getCodeURL(e);
 
-		const response = await fetch('http://127.0.0.1:8000/api/get-token', {
+		const response = await fetch('http://' + hostIP + ':8000/api/get-token', {
 		  mode:  'cors',
 		  method: 'POST',
 		  credentials: 'include',
@@ -42,15 +45,14 @@ function GuestNavbar(props) {
 	}
 
   function getCode(e) {
-		let uid='u-s4t2ud-17c3d06c29a63f052756d513ba06d6d98b92ee95cb7b6a9dd4e66465af2477ab'
 		let scope='public'
 	    let url='https://api.intra.42.fr/oauth/authorize?client_id=' + uid + 
-			'&redirect_uri=http%3A%2F%2F127.0.0.1%3A3000&response_type=code&scope=' + scope;
+			'&redirect_uri=http%3A%2F%2F' + hostIP + '%3A3000&response_type=code&scope=' + scope;
 		e.preventDefault();
 		window.open(url, "_self")
 	}
 	async function getMessage(e) {
-		const response = await fetch('http://127.0.0.1:8000/api/', {
+		const response = await fetch('http://' + hostIP + ':8000/api/', {
 		  mode:  'cors',
 		  method: 'GET',
 		  headers: {
@@ -61,6 +63,7 @@ function GuestNavbar(props) {
 	}
 
 	async function getResponse(e) {
+		console.log(process.env)
 		let response = await getMessage(e);
 		document.cookie = "csrftoken=" + response.token;
 	}
