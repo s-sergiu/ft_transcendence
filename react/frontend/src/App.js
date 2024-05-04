@@ -10,12 +10,14 @@ function App() {
 
 	const [userLogged, setUserLogged] = useState(false);
 	const [login, setLogin] = useState(false);
+	let token = localStorage.getItem("token");
 
-	if (userLogged) {
+	if (userLogged || token ) {
 		return (
 			<UserNavbar 
 				loginStatus = { setUserLogged } 
 				login = { login }
+				setLoginDetails = { setLogin } 
 			/>
 		);
 	} else {

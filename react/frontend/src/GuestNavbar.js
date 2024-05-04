@@ -66,10 +66,9 @@ function GuestNavbar(props) {
 
 		getInfo().then( function(res) { 
 			if (Object.keys(res)[0] !== 'error') { 
-				console.log(res);
-				localStorage.setItem("token", res[0]);
 				props.loginStatus(true)	
 				props.setLoginDetails(res[1]);
+				localStorage.setItem("token", res[0]);
 			}
 		});
 	}, [props, HOST_IP]);
