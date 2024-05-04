@@ -60,13 +60,16 @@ function GuestNavbar(props) {
 		}
 
 		async function getInfo() {
-			return (getToken())
+			let token = await getToken()
+			return (token)
 		}
 
 		getInfo().then( function(res) { 
 			if (Object.keys(res)[0] !== 'error') { 
+				console.log(res);
+				localStorage.setItem("token", res[0]);
 				props.loginStatus(true)	
-				props.setLoginDetails(res);
+				props.setLoginDetails(res[1]);
 			}
 		});
 	}, [props, HOST_IP]);

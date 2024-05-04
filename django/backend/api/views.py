@@ -31,7 +31,7 @@ def getInfo(token):
     url = 'https://api.intra.42.fr/v2/me'
     headers = {'authorization': f'Bearer {token}'}
     api_call = requests.get(url, headers = headers).json()
-    return (JsonResponse(api_call))
+    return (JsonResponse([token , api_call], safe=False))
 
 """
     if new user 
