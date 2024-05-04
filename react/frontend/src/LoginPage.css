@@ -1,0 +1,93 @@
+body{
+    background-color: rgb(220, 249, 255);
+}
+.container {
+    margin-top: 50px;
+  }
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+  
+  .btn-primary {
+    flex: 1;
+  }
+  
+  .btn-secondary {
+    flex: 1;
+  }
+  
+  .btn-primary:hover,
+  .btn-primary:focus {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+  
+  .btn-secondary:hover,
+  .btn-secondary:focus {
+    background-color: #545b62;
+    border-color: #545b62;
+  }
+  
+  .alert {
+    margin-top: 20px;
+    border-radius: 10px;
+  }
+  
+
+  .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-control:focus {
+    border-color: #007bff;
+    box-shadow: none;
+  }
+  
+
+  @keyframes slideInFromLeft {
+    0% {
+      transform: translateX(-50%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .form {
+    animation: slideInFromLeft 0.5s ease;
+  }
+ 
+ .ss Button{
+    width: 44%;
+    margin-left: 20px;
+    display: inline;
+  }
+  .logbutton{
+    width: 90%;
+    margin-left: 180px;
+  }
+  .logbtn1{
+    width: 90%;
+    margin-left: 180px;
+  }
+ 

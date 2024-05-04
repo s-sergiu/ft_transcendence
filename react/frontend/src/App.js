@@ -3,6 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 import UserNavbar from './UserNavbar.js';
 import GuestNavbar from './GuestNavbar.js';
+import LoginPage from './LoginPage.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -11,9 +12,7 @@ function App() {
 
 	if (userLogged) {
 		return (
-			<UserNavbar 
-				loginStatus = { setUserLogged }
-			/>
+			<LoginPage/>
 		);
 	} else {
 		return (
