@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { Container, Form, Button, Row, Col, Alert } from 'react-bootstrap';
+import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import './LoginPage.css'
-import slide4 from './img/background4.jpg';
 const LoginPage = () => {
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
   const [registerForm, setRegisterForm] = useState({ email: '', password: '' });
-  const [error, setError] = useState('');
   const [showLoginForm, setShowLoginForm] = useState(true);
 
   const handleLoginChange = (e) => {
@@ -48,8 +46,6 @@ const LoginPage = () => {
           </Button>
           {showLoginForm && (
             <>
-              <h2>Login</h2>
-              {error && <Alert variant="danger">{error}</Alert>}
               <Form onSubmit={handleLoginSubmit}>
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label>Email address</Form.Label>
