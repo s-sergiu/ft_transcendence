@@ -4,55 +4,27 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import Content from './Content';
+//import Content from './Content';
+import { useEffect } from 'react';
 
 const urlParams = new URLSearchParams(window.location.search);
 
 function GuestNavbar(props) {
+	const URI = process.env.REACT_APP_REDIRECT_URI
+	const HOST_IP = process.env.REACT_APP_HOST_IP
 
-	const hostIP = process.env.REACT_APP_HOST_IP
-	const uid = process.env.REACT_APP_CLIENT_ID
-
-	function getCodeURL(e) {
+	function getCodeURL() {
 		  const code = urlParams.get("code");
 		  return code;
 	}
 
-	async function getToken(e) {
-	  e.preventDefault();
-	  let key = "csrftoken";
-	  let csrf = document.cookie.match(("(^|;)\\s*" + key + "\\s*=\\s*([^;]+)"))[2];
-	  console.log("csrf : " + csrf);
-	  let code = getCodeURL(e);
-
-		const response = await fetch('http://' + hostIP + ':8000/api/get-token', {
-		  mode:  'cors',
-		  method: 'POST',
-		  credentials: 'include',
-		  body: JSON.stringify({
-			code: code
-		  }),
-		  headers: {
-			"X-CSRFToken": csrf,
-			'Content-Type': 'application/json'
-		  },
-		})
-		return response.json();
+  function getCode() {
+		window.open(URI, "_self")
 	}
 
-	async function displayToken(e) {
-		console.log(await getToken(e));
-	}
+	async function getMessage() {
+		const response = await fetch('http://' + HOST_IP + ':8000/api/', {
 
-  function getCode(e) {
-		let scope='public'
-	    let url='https://api.intra.42.fr/oauth/authorize?client_id=' + uid + 
-			'&redirect_uri=http%3A%2F%2F' + hostIP + '%3A3000&response_type=code&scope=' + scope;
-		e.preventDefault();
-		window.open(url, "_self")
-	}
-	async function getMessage(e) {
-		const response = await fetch('http://' + hostIP + ':8000/api/', {
 		  mode:  'cors',
 		  method: 'GET',
 		  headers: {
@@ -62,11 +34,63 @@ function GuestNavbar(props) {
 		return response.json();
 	}
 
-	async function getResponse(e) {
-		console.log(process.env)
-		let response = await getMessage(e);
+	async function getResponse() {
+		let response = await getMessage();
 		document.cookie = "csrftoken=" + response.token;
+		await getCode();
 	}
+
+	useEffect(() => {
+
+		async function getMessage() {
+			const response = await fetch('http://' + HOST_IP + ':8000/api/', {
+			  mode:  'cors',
+			  method: 'GET',
+			  headers: {
+				'Content-Type': 'application/json'
+			  },
+			})
+			return response.json();
+		}
+
+		if (!document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)")))
+		{
+			let response = getMessage();
+			document.cookie = "csrftoken=" + response.token;
+		}
+
+		async function getToken() {
+		  let csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
+		  let code = getCodeURL();
+
+			const response = await fetch('http://' + HOST_IP + ':8000/api/get-token', {
+			  mode:  'cors',
+			  method: 'POST',
+			  credentials: 'include',
+			  body: JSON.stringify({
+				code: code
+			  }),
+			  headers: {
+				"X-CSRFToken": csrf,
+				'Content-Type': 'application/json'
+			  },
+			})
+			return response.json();
+		}
+
+		async function getInfo() {
+			let token = await getToken()
+			return (token)
+		}
+
+		getInfo().then( function(res) { 
+			if (Object.keys(res)[0] !== 'error') { 
+				props.loginStatus(true)	
+				props.setLoginDetails(res[1]);
+				localStorage.setItem("token", res[0]);
+			}
+		});
+	}, [HOST_IP]);
   return (
     <div className="App">
 	<Navbar expand="lg" className="bg-body-tertiary">
@@ -81,13 +105,7 @@ function GuestNavbar(props) {
           >
           </Nav>
           <Form className="d-flex">
-            <Button onClick = { e => displayToken(e) } variant="outline-success">Token</Button>
-          </Form>
-          <Form className="d-flex">
-            <Button onClick = { e => getCode(e) } variant="outline-success">Code</Button>
-          </Form>
-          <Form className="d-flex">
-            <Button onClick = { e => getResponse(e) } variant="outline-success">API</Button>
+            <Button onClick = { e => getResponse() } variant="outline-success">Login 42</Button>
           </Form>
           <Form className="d-flex">
             <Button onClick = { e => props.loginStatus(true) } variant="outline-success">Login</Button>
@@ -95,7 +113,7 @@ function GuestNavbar(props) {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-      <Content/>
+	  <h1>NOT LOGGED</h1>
     </div>
   );
 }

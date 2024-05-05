@@ -5,9 +5,47 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import Content from './Content';
+import { useEffect } from 'react';
+//import Content from './Content';
 
 function UserNavbar(props) {
+
+
+	function Logout() {
+		props.loginStatus(false);
+		props.setLoginDetails(false);
+		localStorage.clear();
+	}
+
+	useEffect(() => {
+
+	const HOST_IP = process.env.REACT_APP_HOST_IP;
+
+	async function getInfo() {
+		let csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
+		let token = localStorage.getItem("token");
+		const response = await fetch('http://' + HOST_IP + ':8000/api/get-info', {
+		  mode:  'cors',
+		  method: 'POST',
+		  credentials: 'include',
+		  body: JSON.stringify({
+			code: token
+		  }),
+		  headers: {
+			"X-CSRFToken": csrf,
+			'Content-Type': 'application/json'
+		  },
+		})
+		return response.json();
+	}
+
+		getInfo().then( function(res) { 
+			console.log(res);
+			props.setLoginDetails(res);
+		});
+	}, []);
+	
+
   return (
     <div className="App">
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -43,12 +81,18 @@ function UserNavbar(props) {
               className="me-2"
               aria-label="Search"
             />
-            <Button onClick = { e => props.loginStatus(false) } variant="outline-success">Logout</Button>
+            <Button onClick = { e => Logout()} variant="outline-success">Logout</Button>
           </Form>
         </Navbar.Collapse>
       </Container>
     </Navbar>
-      <Content/>
+	 <h1> LOGGED IN </h1> 
+	  <ul>
+		<ol>{ props.login.email }</ol>
+		<ol>{ props.login.login }</ol>
+		<ol>{ props.login.first_name }</ol>
+		<ol>{ props.login.last_name }</ol>
+	  </ul>
     </div>
   );
 }
