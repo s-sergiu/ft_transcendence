@@ -34,6 +34,7 @@ def getUserInfo(request):
     api_call = requests.get(url, headers = headers).json()
     return (JsonResponse(api_call))
 
+
 def getInfo(token):
     print("token: " + token, file=sys.stderr);
     url = 'https://api.intra.42.fr/v2/me'

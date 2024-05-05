@@ -24,6 +24,7 @@ function GuestNavbar(props) {
 
 	async function getMessage() {
 		const response = await fetch('http://' + HOST_IP + ':8000/api/', {
+
 		  mode:  'cors',
 		  method: 'GET',
 		  headers: {
@@ -90,7 +91,6 @@ function GuestNavbar(props) {
 			}
 		});
 	}, [HOST_IP]);
-
   return (
     <div className="App">
 	<Navbar expand="lg" className="bg-body-tertiary">
