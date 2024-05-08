@@ -25,6 +25,7 @@ services:
       - ./debug/django:/debug/backend
     environment:
       - CLIENT_ID=${CLIENT_ID}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
       - CLIENT_SECRET=${CLIENT_SECRET}
       - HOST_IP=${HOST_IP}
       - USER_GID=${USER_GID}
