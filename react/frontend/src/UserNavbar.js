@@ -22,7 +22,13 @@ function UserNavbar(props) {
 	const HOST_IP = process.env.REACT_APP_HOST_IP;
 
 	async function getInfo() {
-		let csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
+		let csrf;
+		if (document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)")) == null) {
+			console.log("error")
+			return ("error")
+		}
+		else
+			csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
 		let token = localStorage.getItem("token");
 		const response = await fetch('http://' + HOST_IP + ':8000/api/get-info', {
 		  mode:  'cors',
@@ -40,7 +46,8 @@ function UserNavbar(props) {
 	}
 
 		getInfo().then( function(res) { 
-			console.log(res);
+			if (res === 'error')
+				console.log("error", res);
 			props.setLoginDetails(res);
 		});
 	}, []);
