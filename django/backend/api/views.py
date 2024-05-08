@@ -24,6 +24,10 @@ def getToken(request):
     data = api_call.json()
     if (list(data.keys())[0] == 'error'):
         return (JsonResponse(data))
+#    else if (check inside database)
+#        return user from db
+#    create user in db, add token to the user
+    return (JsonResponse(data))
     return (getInfo(data['access_token']))
 
 def getUserInfo(request):
@@ -41,19 +45,3 @@ def getInfo(token):
     headers = {'authorization': f'Bearer {token}'}
     api_call = requests.get(url, headers = headers).json()
     return (JsonResponse([token , api_call], safe=False))
-
-"""
-    if new user 
-        store the access_token and populate info
-            return user info
-    if existing user
-        check for access_token similarity 
-            return user info
-        generate a new token if not similar
-            return user info
-
-
-
-
-
-"""

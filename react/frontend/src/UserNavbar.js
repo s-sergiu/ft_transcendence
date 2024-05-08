@@ -43,7 +43,7 @@ function UserNavbar(props) {
 			console.log(res);
 			props.setLoginDetails(res);
 		});
-	}, []);
+	}, [props]);
 	
 
   return (
