@@ -5,11 +5,13 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 //import Content from './Content';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const urlParams = new URLSearchParams(window.location.search);
 
 function GuestNavbar(props) {
+
+	const [ code, setCode ] = useState();
 
     function getCode() {
 		window.open(process.env.REACT_APP_REDIRECT_URI, "_self")
@@ -57,6 +59,9 @@ function GuestNavbar(props) {
 		if (urlParams.get('code')) {
 			getToken(urlParams.get('code')).then( (res) => {
 				console.log(res)
+				setCode(res)
+				localStorage.setItem("token", res.access_token);
+				window.location.href = '.'
 			})
 		}
 
