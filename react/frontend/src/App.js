@@ -10,13 +10,14 @@ function App() {
 
 	const [userLogged, setUserLogged] = useState(false);
 	const [login, setLogin] = useState(false);
-	let token = localStorage.getItem("token");
+	const [token, setToken] = useState(localStorage.getItem("token"));
 
 	if (userLogged || token ) {
 		return (
 			<UserNavbar 
 				loginStatus = { setUserLogged } 
 				login = { login }
+				setToken = { setToken }
 				setLoginDetails = { setLogin } 
 			/>
 		);
@@ -24,6 +25,7 @@ function App() {
 		return (
 			<GuestNavbar 
 				loginStatus = { setUserLogged } 
+				setToken = { setToken }
 				setLoginDetails = { setLogin } 
 			/>
 		);
