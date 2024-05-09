@@ -12,9 +12,10 @@ function UserNavbar(props) {
 
 
 	function Logout() {
+		localStorage.clear();
 		props.loginStatus(false);
 		props.setLoginDetails(false);
-		localStorage.clear();
+		props.setToken('');
 	}
 
 	useEffect(() => {
@@ -23,10 +24,8 @@ function UserNavbar(props) {
 
 	async function getInfo() {
 		let csrf;
-		if (document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)")) == null) {
-			console.log("error")
-			return ("error")
-		}
+		if (document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)")) == null)
+			return({ "error" : "csrftoken" })
 		else
 			csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
 		let token = localStorage.getItem("token");
@@ -46,9 +45,15 @@ function UserNavbar(props) {
 	}
 
 		getInfo().then( function(res) { 
-			if (res === 'error')
-				console.log("error", res);
-			props.setLoginDetails(res);
+			if (res['error'] === 'csrftoken') {
+				console.log("Error: ", res.error);
+			} else if (res['error'] === 'Not authorized') {
+				console.log("Error : Not authorized - ", res.message)
+			} else {
+				res = res[0]['fields']
+				props.setLoginDetails(res);
+				//console.log("result", res)
+			}	
 		});
 	}, []);
 	
@@ -96,7 +101,7 @@ function UserNavbar(props) {
 	 <h1> LOGGED IN </h1> 
 	  <ul>
 		<ol>{ props.login.email }</ol>
-		<ol>{ props.login.login }</ol>
+		<ol>{ props.login.username }</ol>
 		<ol>{ props.login.first_name }</ol>
 		<ol>{ props.login.last_name }</ol>
 	  </ul>

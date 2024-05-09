@@ -7,18 +7,16 @@ import Navbar from 'react-bootstrap/Navbar';
 //import Content from './Content';
 import { useEffect, useState } from 'react';
 
-const urlParams = new URLSearchParams(window.location.search);
 
 function GuestNavbar(props) {
 
-	const [ code, setCode ] = useState();
+	const { setToken } = props;
 
     function getCode() {
 		window.open(process.env.REACT_APP_REDIRECT_URI, "_self")
 	}
 
-	async function getResponse(e) {
-		e.preventDefault()
+	async function getResponse() {
 		let response = await getMessage();
 		document.cookie = "csrftoken=" + response.token;
 		getCode()
@@ -56,12 +54,21 @@ function GuestNavbar(props) {
 		return response.json();
 	}
 
+		const urlParams = new URLSearchParams(window.location.search);
+
 		if (urlParams.get('code')) {
 			getToken(urlParams.get('code')).then( (res) => {
-				console.log(res)
-				setCode(res)
-				localStorage.setItem("token", res.access_token);
-				window.location.href = '.'
+				if (res.error) {
+					console.log("Error: ", res.error)
+					return undefined
+				}
+				else {
+					res = res[0]['fields']
+					//console.log("guest: ", res)
+					setToken(res.access_token)
+					localStorage.setItem("token", res.access_token);
+					window.history.pushState("home", "ReactApp", "/")
+				}
 			})
 		}
 
@@ -81,7 +88,7 @@ function GuestNavbar(props) {
           >
           </Nav>
           <Form className="d-flex">
-            <Button onClick = { e => getResponse(e) } variant="outline-success">Login 42</Button>
+            <Button onClick = { e => getResponse() } variant="outline-success">Login 42</Button>
           </Form>
           <Form className="d-flex">
             <Button onClick = { e => props.loginStatus(true) } variant="outline-success">Login</Button>
