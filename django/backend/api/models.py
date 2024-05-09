@@ -22,4 +22,4 @@ class Token(models.Model):
                       )
             t.save()
             return t
-        return None
+        return orgs.get()
