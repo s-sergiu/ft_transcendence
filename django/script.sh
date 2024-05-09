@@ -6,7 +6,7 @@ cd /debug/backend
 chown -R $USER_GID:$USER_GID .
 #
 
-python manage.py makemigrations
+python manage.py makemigrations api
 python manage.py migrate
 
 if [ "$DJANGO_SUPERUSER_USERNAME" ]
