@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 # Create your models here.
 class Token(models.Model):
@@ -23,3 +25,9 @@ class Token(models.Model):
             t.save()
             return t
         return orgs.get()
+
+class ExtendedUser(models.Model):
+    email = models.CharField(max_length = 64)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    token = models.ForeignKey(Token, on_delete=models.CASCADE)
+
