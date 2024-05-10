@@ -3,8 +3,9 @@
     height: 900px;
 }
 
-h5{
-    color: aliceblue;
+h3{
+    color: rgb(2, 229, 210);
+    margin-bottom: 300px;
 }
 .custom-image {
     border-radius: 10px;
@@ -28,6 +29,27 @@ h5{
 
 }
 .right Button :hover{
+    background-color: lightblue;
+
+}
+
+.left{
+    margin-top: 180px;
+    margin-left: 20px;
+    margin-bottom: 100px;
+}
+.left p{
+    font-size: 20px;
+}
+.left Button{
+    margin-top: 30px;
+    width: 120px;
+    height: 60px;
+    border-radius: 12px;
+    background-color: green;
+
+}
+.left Button :hover{
     background-color: lightblue;
 
 }
