@@ -38,11 +38,11 @@ def getToken(request):
 def get_or_create_user(api_data, token):
     orgs = User.objects.filter(email=api_data['email'])
     if not orgs:
-        orgs = User.objects.create_user(api_call['first_name'],
-                                        api_call['email']
+        orgs = User.objects.create_user(api_data['first_name'],
+                                        api_data['email']
                                             )
         t = Token.objects.get(access_token=token['code'])
-        extended = ExtendedUser.get_or_create(api_call['email'], users, t)
+        extended = ExtendedUser.get_or_create(api_data['email'], users, t)
         orgs.save()
         return orgs
     return orgs.get()
