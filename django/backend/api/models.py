@@ -30,4 +30,11 @@ class ExtendedUser(models.Model):
     email = models.CharField(max_length = 64)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     token = models.ForeignKey(Token, on_delete=models.CASCADE)
+    def get_or_create(email, user, token):
+        ext = ExtendedUser.objects.filter(token = token.id)
+        if not ext:
+            ext = ExtendedUser(email = email, user = user, token = token)
+            ext.save()
+            return ext
+        return ext.get()
 

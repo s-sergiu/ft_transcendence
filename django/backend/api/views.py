@@ -43,16 +43,6 @@ def getToken(request):
 def getUserInfo(request):
     token = json.loads(request.body.decode("utf-8"))
     print("token getInfo: ",token, file=sys.stderr);
-    t = Token.objects.get(access_token=token['code'])
-    if t:
-        print("token api_call[email]: ",t.id, file=sys.stderr);
-        ext = ExtendedUser.objects.get(token = t.id)
-        print("token api_call[ext]: ",ext.email, file=sys.stderr);
-        user = User.objects.get(email = ext.email)
-        print("token api_call[user]: ",user.email, file=sys.stderr);
-        users_serialized = serializers.serialize('json', [user, ])
-        data = json.loads(users_serialized)
-        return (JsonResponse(data, safe=False))
     if 'Cookie' in request.headers.keys():
         print("request body: ", request.headers.keys(), file=sys.stderr);
     url = 'https://api.intra.42.fr/v2/me'
@@ -73,8 +63,7 @@ def getUserInfo(request):
                                         )
         users.save()
         t = Token.objects.get(access_token=token['code'])
-        extended = ExtendedUser(email = api_call['email'], user = users, token = t)
-        extended.save()
+        extended = ExtendedUser.get_or_create(api_call['email'], users, t)
     else:
         print("EMAIL call getInfo: ", users.email, file=sys.stderr);
     users_serialized = serializers.serialize('json', [users, ])
