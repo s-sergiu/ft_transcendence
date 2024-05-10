@@ -8,7 +8,8 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useEffect } from 'react';
 import SuggestedFriends from './SuggestedFriends';
 import ProfileDashboard from './profile';
-//import Content from './Content';
+import Content from './Content';
+
 
 function UserNavbar(props) {
 
@@ -95,9 +96,10 @@ function UserNavbar(props) {
     {/* <SuggestedFriends/> */}
     {/* <PingPongGame/> */}
 
-	  <ProfileDashboard
+	  {/* <ProfileDashboard
 		loginData = {props.login}
-	  />
+	  /> */}
+	  <Content/>
 
     </div>
   );
