@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 //import Content from './Content';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 
 function GuestNavbar(props) {
@@ -21,7 +21,6 @@ function GuestNavbar(props) {
 		document.cookie = "csrftoken=" + response.token;
 		getCode()
 	}
-
 
 	async function getMessage() {
 		const response = await fetch('http://' + process.env.REACT_APP_HOST_IP + ':8000/api/', {
@@ -72,7 +71,7 @@ function GuestNavbar(props) {
 			})
 		}
 
-	}, []);
+	}, [setToken]);
 
   return (
     <div className="App">
@@ -89,9 +88,6 @@ function GuestNavbar(props) {
           </Nav>
           <Form className="d-flex">
             <Button onClick = { e => getResponse() } variant="outline-success">Login 42</Button>
-          </Form>
-          <Form className="d-flex">
-            <Button onClick = { e => props.loginStatus(true) } variant="outline-success">Login</Button>
           </Form>
         </Navbar.Collapse>
       </Container>

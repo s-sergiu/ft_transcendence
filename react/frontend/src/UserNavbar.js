@@ -4,20 +4,18 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useEffect } from 'react';
-import SuggestedFriends from './SuggestedFriends';
 import ProfileDashboard from './profile';
 //import Content from './Content';
 
 function UserNavbar(props) {
 
+	const { setLoginDetails, setToken } = props
 
 	function Logout() {
 		localStorage.clear();
-		props.loginStatus(false);
-		props.setLoginDetails(false);
-		props.setToken('');
+		setLoginDetails(false);
+		setToken('');
 	}
 
 	useEffect(() => {
@@ -26,9 +24,9 @@ function UserNavbar(props) {
 
 	async function getInfo() {
 		let csrf;
-		if (document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)")) == null)
+		if (document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)")) == null) {
 			return({ "error" : "csrftoken" })
-		else
+		} else
 			csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
 		let token = localStorage.getItem("token");
 		const response = await fetch('http://' + HOST_IP + ':8000/api/get-info', {
@@ -49,15 +47,19 @@ function UserNavbar(props) {
 		getInfo().then( function(res) { 
 			if (res['error'] === 'csrftoken') {
 				console.log("Error: ", res.error);
+				setLoginDetails(false);
+				setToken('');
+				return undefined
 			} else if (res['error'] === 'Not authorized') {
 				console.log("Error : Not authorized - ", res.message)
 			} else {
 				res = res[0]['fields']
-				props.setLoginDetails(res);
+				setLoginDetails(res);
 				//console.log("result", res)
+				window.history.pushState("home", "ReactApp", "/")
 			}	
 		});
-	}, []);
+	}, [setLoginDetails, setToken]);
 	
 
   return (
