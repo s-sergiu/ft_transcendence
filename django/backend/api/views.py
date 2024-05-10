@@ -49,7 +49,6 @@ def get_or_create_user(api_data, token):
 
 def getUserInfo(request):
     token = json.loads(request.body.decode("utf-8"))
-    print("token getInfo: ",token, file=sys.stderr);
     url = 'https://api.intra.42.fr/v2/me'
     headers = {'authorization': f'Bearer {token['code']}'}
     api_call = requests.get(url, headers = headers)
