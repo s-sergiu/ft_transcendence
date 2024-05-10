@@ -1,0 +1,34 @@
+
+.friend-card {
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .friend-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .card-info {
+    color: #666;
+  }
+  
+  .add-friend-btn {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .add-friend-btn:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+  

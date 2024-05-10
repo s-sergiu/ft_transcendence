@@ -6,6 +6,9 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useEffect } from 'react';
+import SuggestedFriends from './SuggestedFriends';
+import PingPongGame from './PingPongGame';
+import ProfileDashboard from './profile';
 //import Content from './Content';
 
 function UserNavbar(props) {
@@ -71,40 +74,27 @@ function UserNavbar(props) {
             navbarScroll
           >
             <Nav.Link href="#action1">Home</Nav.Link>
+            <Nav.Link href="#action2">Message</Nav.Link>
+            <Nav.Link href="#action1">Suggested friends</Nav.Link>
             <Nav.Link href="#action2">Profile</Nav.Link>
-            <NavDropdown title="Link" id="navbarScrollingDropdown">
-              <NavDropdown.Item href="#action3">Chat</NavDropdown.Item>
-              <NavDropdown.Item href="#action4">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action5">
-                Something else here
-              </NavDropdown.Item>
-            </NavDropdown>
-            <Nav.Link href="#" disabled>
-              Play
-            </Nav.Link>
+            
           </Nav>
-          <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button onClick = { e => Logout()} variant="outline-success">Logout</Button>
-          </Form>
+
         </Navbar.Collapse>
       </Container>
     </Navbar>
 	 <h1> LOGGED IN </h1> 
-	  <ul>
+	  {/* <ul>
 		<ol>{ props.login.email }</ol>
 		<ol>{ props.login.username }</ol>
 		<ol>{ props.login.first_name }</ol>
 		<ol>{ props.login.last_name }</ol>
-	  </ul>
+	  </ul> */}
+    {/* <SuggestedFriends/> */}
+    {/* <PingPongGame/> */}
+
+	  <ProfileDashboard/>
+
     </div>
   );
 }
