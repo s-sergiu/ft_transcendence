@@ -7,7 +7,6 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useEffect } from 'react';
 import SuggestedFriends from './SuggestedFriends';
-import PingPongGame from './PingPongGame';
 import ProfileDashboard from './profile';
 //import Content from './Content';
 
@@ -79,6 +78,9 @@ function UserNavbar(props) {
             <Nav.Link href="#action2">Profile</Nav.Link>
             
           </Nav>
+	   <Form className="d-flex">
+            <Button onClick = { e => Logout()} variant="outline-success">Logout</Button>
+          </Form>
 
         </Navbar.Collapse>
       </Container>
@@ -93,7 +95,9 @@ function UserNavbar(props) {
     {/* <SuggestedFriends/> */}
     {/* <PingPongGame/> */}
 
-	  <ProfileDashboard/>
+	  <ProfileDashboard
+		loginData = {props.login}
+	  />
 
     </div>
   );
