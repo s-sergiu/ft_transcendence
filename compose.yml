@@ -6,12 +6,13 @@ services:
     container_name: react
     environment:
       - REACT_APP_DJANGO_PORT=${DJANGO_PORT}
+      - PORT=${REACT_PORT}
       - REACT_APP_HOST_IP=${HOST_IP}
       - REACT_APP_REDIRECT_URI=${REDIRECT_URI}
       - USER_GID=${USER_GID}
       - GENERATE_SOURCEMAP=${GENERATE_SOURCEMAP}
     ports:
-      - "3000:3000"
+      - "${REACT_PORT}:${REACT_PORT}"
     volumes:
       - ./debug/react:/debug/src
     restart: on-failure
@@ -22,7 +23,7 @@ services:
       postgresql:
         condition: service_healthy
     ports:
-      - "8000:8000"
+      - "${DJANGO_PORT}:${DJANGO_PORT}"
     volumes:
       - ./debug/django:/debug/backend
     environment:
