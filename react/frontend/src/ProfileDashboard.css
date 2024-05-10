@@ -1,0 +1,29 @@
+.profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .profile-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profile-picture img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+  }
+  
+  .user-details {
+    flex-grow: 1;
+  }
+  
+  .game-history {
+    margin-top: 20px;
+  }
+  
+  /* Add more CSS styling as needed */
+  
