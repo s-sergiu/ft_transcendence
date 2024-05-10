@@ -25,6 +25,7 @@ services:
     volumes:
       - ./debug/django:/debug/backend
     environment:
+      - REACT_PORT=${REACT_PORT}
       - CLIENT_ID=${CLIENT_ID}
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
       - CLIENT_SECRET=${CLIENT_SECRET}
