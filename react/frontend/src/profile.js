@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Image, Button } from 'react-bootstrap';
 import './profile.css'; 
 
-const Profile = () => {
+const Profile = (props) => {
   const [selectedItem, setSelectedItem] = useState('username'); 
 
   const handleItemClick = (item) => {
@@ -18,7 +18,7 @@ const Profile = () => {
           <div className="profile-info">
             <Image src="profile-pic.jpg" roundedCircle className="profile-pic" />
             <div className="sidebar-item" onClick={() => handleItemClick('username')}>
-              <h4>Username</h4>
+              <h4>{props.loginData.email}</h4>
             </div>
             <div className="sidebar-item" onClick={() => handleItemClick('fullname')}>
               <h4>Full Name</h4>
