@@ -17,6 +17,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 HOST_IP = os.environ.get('HOST_IP')
+REACT_PORT = os.environ.get('REACT_PORT')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -132,10 +133,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
-	'http://' + HOST_IP + ':3000',
+	'http://' + HOST_IP + ':' + REACT_PORT,
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-	'http://' + HOST_IP + ':3000',
+	'http://' + HOST_IP + ':' + REACT_PORT,
 ]
 CORS_ALLOW_CREDENTIALS = True
