@@ -8,12 +8,13 @@ RUN npm install
 COPY frontend/. .
 COPY script.sh .
 RUN chmod +x script.sh
-#CMD ["./script.sh"]
-RUN ["npm", "run", "build"]
+CMD ["./script.sh"]
 
-FROM nginx:1.25-alpine3.19-slim 
+#RUN ["npm", "run", "build"]
 
-COPY default.conf /etc/nginx/conf.d/.
+#FROM nginx:1.25-alpine3.19-slim 
 
-COPY --from=base /app/build /usr/share/nginx/html
-CMD ["nginx", "-g", "daemon off;"]
+#COPY default.conf /etc/nginx/conf.d/.
+
+#COPY --from=base /app/build /usr/share/nginx/html
+#CMD ["nginx", "-g", "daemon off;"]
