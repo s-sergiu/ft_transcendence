@@ -12,4 +12,4 @@ cp .env .env.old
 cat .env.old | sed "s/$ip_to_replace/$ip/"  > .env
 rm .env.old
 
-docker-compose up --build
+docker compose up --build
