@@ -135,12 +135,13 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
-	'http://' + HOST_IP + ':' + REACT_PORT,
 	'http://' + HOST_NAME + ':' + REACT_PORT,
+	'http://' + HOST_IP + ':' + REACT_PORT,
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-	'http://' + HOST_IP + ':' + REACT_PORT,
 	'http://' + HOST_NAME + ':' + REACT_PORT,
+	'http://' + HOST_IP + ':' + REACT_PORT,
 ]
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
