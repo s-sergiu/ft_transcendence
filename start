@@ -5,12 +5,13 @@ gid_to_replace=$(eval grep USER_GID .env | awk '{ print $1}' | cut -d '=' -f2)
 if [[ $OSTYPE == darwin* ]]
 	then 
 		ip=$(eval ifconfig | grep en1 -A 1 | grep "inet " | awk '{ print $2 }')
+		host_name=$(eval hostname | tr '[:upper:]' '[:lower:]')
 	else 
 		ip=$(eval ip add | grep "BROADCAST,MULTICAST,UP,LOWER_UP" -A 2 | grep inet | awk '{print $2}' | cut -d '/' -f1)
+		host_name=$(eval hostnamectl hostname)
 fi
 ip_to_replace=$(eval grep HOST_IP= .env | cut -d '=' -f2)
 hostname_to_replace=$(eval grep HOST_NAME= .env | awk '{ print $1 }' | cut -d '=' -f2)
-host_name=$(eval hostname | tr '[:upper:]' '[:lower:]')
 
 cp .env .env.old
 cat .env.old | sed "s/$gid_to_replace/$user_gid/"  > .env
