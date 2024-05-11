@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 
 function UserNavbar(props) {
 
+	const URL = 'http://' + process.env.REACT_APP_HOST_NAME + ':' + process.env.REACT_APP_DJANGO_PORT
 	const { setLoginDetails, setToken } = props
 
 	function Logout() {
@@ -29,7 +30,7 @@ function UserNavbar(props) {
 		} else
 			csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
 		let token = localStorage.getItem("token");
-		const response = await fetch('http://' + HOST_IP + ':' + process.env.REACT_APP_DJANGO_PORT + '/api/get-info', {
+		const response = await fetch(URL + '/api/get-info', {
 		  mode:  'cors',
 		  method: 'POST',
 		  credentials: 'include',
