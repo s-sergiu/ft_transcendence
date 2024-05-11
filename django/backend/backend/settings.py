@@ -18,6 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 HOST_NAME = os.environ.get('HOST_NAME')
 REACT_PORT = os.environ.get('REACT_PORT')
+DJANGO_DEBUG = os.environ.get('DJANGO_DEBUG')
 
 if (REACT_PORT == '80'):
     HOST_WITH_PORT = "http://" + HOST_NAME
@@ -31,7 +32,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 SESSION_COOKIE_SECURE=True
 CSRF_COOKIE_SECURE=True
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = DJANGO_DEBUG
 
 ALLOWED_HOSTS = [
     HOST_NAME
