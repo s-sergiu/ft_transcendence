@@ -36,7 +36,11 @@ function GuestNavbar(props) {
 	useEffect(() => {
 
 	async function getToken(code) {
-		let csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
+		let csrf;
+		if (document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)")) == null) {
+			return({ "error" : "csrftoken" })
+		} else
+			csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
 
 		const response = await fetch('http://' + process.env.REACT_APP_HOST_NAME + ':' + process.env.REACT_APP_DJANGO_PORT + '/api/get-token', {
 			mode:  'cors',
