@@ -9,6 +9,7 @@ ID=os.environ.get('CLIENT_ID')
 HOST_NAME=os.environ.get('HOST_NAME')
 SECRET=os.environ.get('CLIENT_SECRET')
 REACT_PORT=os.environ.get('REACT_PORT')
+REDIRECT_URL= 'http://' + HOST_NAME + ':' + REACT_PORT
 
 def index(request):
     csrf = get_token(request);
@@ -27,7 +28,7 @@ def getToken(request):
             'client_id' : ID,
             'client_secret' : SECRET,
             'code' : code['code'],
-            'redirect_uri' : 'http://' + HOST_NAME + ':' + REACT_PORT
+            'redirect_uri' : REDIRECT_URL
     }
     api_call = requests.post(url, params)
     data = api_call.json()
