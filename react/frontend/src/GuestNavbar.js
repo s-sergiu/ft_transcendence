@@ -23,7 +23,7 @@ function GuestNavbar(props) {
 	}
 
 	async function getMessage() {
-		const response = await fetch('http://' + process.env.REACT_APP_HOST_IP + ':' + process.env.REACT_APP_DJANGO_PORT + '/api/', {
+		const response = await fetch('http://' + process.env.REACT_APP_HOST_NAME + ':' + process.env.REACT_APP_DJANGO_PORT + '/api/', {
 			mode:  'cors',
 			method: 'GET',
 			headers: {
@@ -38,7 +38,7 @@ function GuestNavbar(props) {
 	async function getToken(code) {
 		let csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
 
-		const response = await fetch('http://' + process.env.REACT_APP_HOST_IP + ':' + process.env.REACT_APP_DJANGO_PORT + '/api/get-token', {
+		const response = await fetch('http://' + process.env.REACT_APP_HOST_NAME + ':' + process.env.REACT_APP_DJANGO_PORT + '/api/get-token', {
 			mode:  'cors',
 			method: 'POST',
 			credentials: 'include',

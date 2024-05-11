@@ -20,7 +20,7 @@ function UserNavbar(props) {
 
 	useEffect(() => {
 
-	const HOST_IP = process.env.REACT_APP_HOST_IP;
+	const HOST_IP = process.env.REACT_APP_HOST_NAME;
 
 	async function getInfo() {
 		let csrf;
