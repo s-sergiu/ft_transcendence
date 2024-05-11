@@ -100,8 +100,6 @@ function UserNavbar(props) {
 	  {/* <ProfileDashboard
 		loginData = {props.login}
 	  /> */}
-	  <Content/>
-
     </div>
   );
 }
