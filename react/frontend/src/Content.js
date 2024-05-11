@@ -6,7 +6,7 @@ import slide3 from './img/background3.jpg';
 import slide4 from './img/background4.jpg';
 import slide33 from './img/background33.jpg';
 import { Container, Row, Col, Image } from 'react-bootstrap';
-import {MDBFooter,MDBContainer,MDBCol,MDBRow,MDBBtn,MDBInput} from 'mdb-react-ui-kit';
+import { MDBContainer, MDBFooter } from 'mdb-react-ui-kit';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/content.css'
  
@@ -92,7 +92,7 @@ function Content() {
       <MDBFooter bgColor='dark' className='text-center text-white text-lg-left'>
       <MDBContainer className='p-4 pb-0'>
         <h4>made by</h4>
-        <p>Sergiu Ster && Abdelilah Noury</p>
+        <p>Transcendence 42team</p>
         &copy; {new Date().getFullYear()} Copyright{' '}
       </MDBContainer>
     </MDBFooter>
