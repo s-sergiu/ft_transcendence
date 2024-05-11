@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useEffect } from 'react';
-import Content from './Content';
+//import Content from './Content';
 
 
 function UserNavbar(props) {
