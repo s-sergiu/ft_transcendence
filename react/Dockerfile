@@ -14,7 +14,7 @@ CMD ["./script.sh"]
 
 #FROM nginx:1.25-alpine3.19-slim 
 
-#COPY default.conf /etc/nginx/conf.d/.
+#COPY configs/default.conf /etc/nginx/conf.d/.
 
 #COPY --from=base /app/build /usr/share/nginx/html
 #CMD ["nginx", "-g", "daemon off;"]
