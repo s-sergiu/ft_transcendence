@@ -45,7 +45,7 @@ def get_or_create_user(api_data, token):
         orgs.save()
         t = Token.objects.get(access_token=token['code'])
         extended = ExtendedUser.get_or_create(api_data['email'], orgs, t)
-        return orgs
+        return extended.user
     return orgs.get()
 
 def getUserInfo(request):
