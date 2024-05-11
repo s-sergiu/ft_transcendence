@@ -33,7 +33,7 @@ def getToken(request):
     data = api_call.json()
     if (list(data.keys())[0] == 'error'):
         return (JsonResponse(data))
-    t = Token.create_token(data);
+    t = Token.get_or_create(data);
     return (JsonResponse(serialize_object(t), safe=False))
 
 def get_or_create_user(api_data, token):

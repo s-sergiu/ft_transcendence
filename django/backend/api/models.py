@@ -11,7 +11,7 @@ class Token(models.Model):
     scope = models.CharField(max_length = 6)
     created_at = models.IntegerField(null = True)
     secret_valid_until = models.IntegerField(null = True)
-    def create_token(data):
+    def get_or_create(data):
         orgs = Token.objects.filter(access_token=data['access_token'])
         if not orgs:
             t = Token(access_token = data['access_token'],
