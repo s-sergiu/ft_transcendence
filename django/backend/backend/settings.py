@@ -19,16 +19,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 HOST_NAME = os.environ.get('HOST_NAME')
 REACT_PORT = os.environ.get('REACT_PORT')
 DJANGO_DEBUG = os.environ.get('DJANGO_DEBUG')
-if (REACT_PORT == '443'):
-    HTTP_METHOD = 'https://'
-else:
-    HTTP_METHOD = 'http://'
-
-if (REACT_PORT == '80'):
-    HOST_WITH_PORT = HTTP_METHOD + HOST_NAME
-else:
-    HOST_WITH_PORT = HTTP_METHOD + HOST_NAME + REACT_PORT
-
+HTTP_METHOD = 'http://'
+HOST_WITH_PORT = HTTP_METHOD + HOST_NAME + ':' + REACT_PORT
+if REACT_PORT == '80':
+    HOST_WITH_PORT = HTTP_METHOD + HOST_NAME 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -37,7 +31,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 SESSION_COOKIE_SECURE=True
 CSRF_COOKIE_SECURE=True
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = DJANGO_DEBUG
+DEBUG=True
 
 ALLOWED_HOSTS = [
     HOST_NAME
@@ -145,11 +139,11 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
-        HOST_WITH_PORT
+        HOST_WITH_PORT,
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-        HOST_WITH_PORT
+        HOST_WITH_PORT,
 ]
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
