@@ -2,7 +2,13 @@ version: "3.8"
 
 services:
   react:
-    build: react/.
+    build: 
+      dockerfile: Dockerfile
+      context: react/.
+      args:
+        REACT_APP_DJANGO_PORT: ${DJANGO_PORT}
+        REACT_APP_HOST_NAME: ${HOST_NAME}
+        REACT_APP_REDIRECT_URI: ${REDIRECT_URI}
     container_name: react
     environment:
       - REACT_APP_DJANGO_PORT=${DJANGO_PORT}

@@ -8,13 +8,18 @@ RUN npm install
 COPY frontend/. .
 COPY script.sh .
 RUN chmod +x script.sh
-CMD ["./script.sh"]
+#CMD ["./script.sh"]
 
-#RUN ["npm", "run", "build"]
+ARG REACT_APP_HOST_NAME
+ARG REACT_APP_DJANGO_PORT
+ARG REACT_APP_REDIRECT_URI
 
-#FROM nginx:1.25-alpine3.19-slim 
+ENV REACT_APP_HOST_NAME=$REACT_APP_HOST_NAME
+ENV REACT_APP_DJANGO_PORT=$REACT_APP_DJANGO_PORT
+ENV REACT_APP_REDIRECT_URI=$REACT_APP_REDIRECT_URI
 
-#COPY configs/default.conf /etc/nginx/conf.d/.
+RUN ["npm", "run", "build"]
 
-#COPY --from=base /app/build /usr/share/nginx/html
-#CMD ["nginx", "-g", "daemon off;"]
+FROM nginx:1.25-alpine3.19-slim 
+COPY configs/default.conf /etc/nginx/conf.d/.
+COPY --from=base /app/build /usr/share/nginx/html
