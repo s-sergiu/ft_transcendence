@@ -15,10 +15,8 @@ hostname_to_replace=$(eval grep HOST_NAME= .env | awk '{ print $1 }' | cut -d '=
 
 cp .env .env.old
 cat .env.old | sed "s/$gid_to_replace/$user_gid/"  > .env
-rm .env.old
 cp .env .env.old
 cat .env.old | sed "s/$ip_to_replace/$ip/"  > .env
-rm .env.old
 cp .env .env.old
 cat .env.old | sed "s/$hostname_to_replace/$host_name/"  > .env
 rm .env.old
