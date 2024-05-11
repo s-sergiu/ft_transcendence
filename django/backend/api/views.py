@@ -55,6 +55,6 @@ def getUserInfo(request):
     api_call = requests.get(url, headers = headers)
     data = api_call.json()
     if (list(data.keys())[0] == 'error'):
-        return (JsonResponse(api_call))
+        return (JsonResponse(data))
     users = get_or_create_user(data,token);
     return (JsonResponse(serialize_object(users), safe=False))
