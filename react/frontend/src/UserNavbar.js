@@ -10,7 +10,6 @@ import { useEffect } from 'react';
 
 function UserNavbar(props) {
 
-	const URL = 'http://' + process.env.REACT_APP_HOST_NAME + ':' + process.env.REACT_APP_DJANGO_PORT
 	const { setLoginDetails, setToken } = props
 
 	function Logout() {
@@ -21,7 +20,7 @@ function UserNavbar(props) {
 
 	useEffect(() => {
 
-	const HOST_IP = process.env.REACT_APP_HOST_NAME;
+	const URL = 'http://' + process.env.REACT_APP_HOST_NAME + ':' + process.env.REACT_APP_DJANGO_PORT
 
 	async function getInfo() {
 		let csrf;

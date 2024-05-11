@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 
 function GuestNavbar(props) {
 
-	const URL = 'http://' + process.env.REACT_APP_HOST_NAME + ':' + process.env.REACT_APP_DJANGO_PORT
+	let URL = 'http://' + process.env.REACT_APP_HOST_NAME + ':' + process.env.REACT_APP_DJANGO_PORT
 	const { setToken } = props;
 
     function getCode() {
@@ -35,6 +35,8 @@ function GuestNavbar(props) {
 	}
 
 	useEffect(() => {
+
+	let URL = 'http://' + process.env.REACT_APP_HOST_NAME + ':' + process.env.REACT_APP_DJANGO_PORT
 
 	async function getToken(code) {
 		let csrf;
