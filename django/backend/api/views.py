@@ -6,7 +6,7 @@ from .models import Token, ExtendedUser
 import json, os, sys, requests
 
 ID=os.environ.get('CLIENT_ID')
-HOST_IP=os.environ.get('HOST_IP')
+HOST_NAME=os.environ.get('HOST_NAME')
 SECRET=os.environ.get('CLIENT_SECRET')
 REACT_PORT=os.environ.get('REACT_PORT')
 
@@ -27,7 +27,7 @@ def getToken(request):
             'client_id' : ID,
             'client_secret' : SECRET,
             'code' : code['code'],
-            'redirect_uri' : 'http://' + HOST_IP + ':' + REACT_PORT
+            'redirect_uri' : 'http://' + HOST_NAME + ':' + REACT_PORT
     }
     api_call = requests.post(url, params)
     data = api_call.json()

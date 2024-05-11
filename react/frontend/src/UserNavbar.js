@@ -88,12 +88,12 @@ function UserNavbar(props) {
       </Container>
     </Navbar>
 	 <h1> LOGGED IN </h1> 
-	  {/* <ul>
+	  <ul>
 		<ol>{ props.login.email }</ol>
 		<ol>{ props.login.username }</ol>
 		<ol>{ props.login.first_name }</ol>
 		<ol>{ props.login.last_name }</ol>
-	  </ul> */}
+	  </ul>
     {/* <SuggestedFriends/> */}
     {/* <PingPongGame/> */}
 
