@@ -7,7 +7,7 @@ if [[ $OSTYPE == darwin* ]]
 		ip=$(eval ifconfig | grep en1 -A 1 | grep "inet " | awk '{ print $2 }')
 		host_name=$(eval hostname | tr '[:upper:]' '[:lower:]')
 	else 
-		ip=$(eval ip add | grep "BROADCAST,MULTICAST,UP,LOWER_UP" -A 2 | grep inet | awk '{print $2}' | cut -d '/' -f1)
+		ip=$(eval ip add | grep "BROADCAST,MULTICAST,UP,LOWER_UP" -A 2 | grep inet -m1 | awk '{print $2}' | cut -d '/' -f1)
 		host_name=$(eval hostnamectl hostname)
 fi
 ip_to_replace=$(eval grep HOST_IP= .env | cut -d '=' -f2)
