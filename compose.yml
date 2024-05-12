@@ -35,8 +35,6 @@ services:
     depends_on:
       postgresql:
         condition: service_healthy
-    ports:
-      - "${DJANGO_PORT}:${DJANGO_PORT}"
     volumes:
       - ./debug/django:/debug/backend
     environment:
