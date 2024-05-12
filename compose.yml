@@ -10,6 +10,7 @@ services:
         REACT_APP_DJANGO_PORT: ${DJANGO_PORT}
         REACT_APP_HOST_NAME: ${HOST_NAME}
         REACT_APP_REDIRECT_URI: ${REDIRECT_URI}
+        REACT_APP_HTTP_METHOD: ${HTTP_METHOD}
     container_name: react
     depends_on:
       - django
