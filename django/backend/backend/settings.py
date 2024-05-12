@@ -19,8 +19,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 HOST_NAME = os.environ.get('HOST_NAME')
 REACT_PORT = os.environ.get('REACT_PORT')
 DJANGO_DEBUG = os.environ.get('DJANGO_DEBUG')
-HTTP_METHOD = 'http://'
-HOST_WITH_PORT = HTTP_METHOD + HOST_NAME + ':' + REACT_PORT
+HTTP_METHOD = 'https://'
+HOST_WITH_PORT = HTTP_METHOD + HOST_NAME 
 if REACT_PORT == '80':
     HOST_WITH_PORT = HTTP_METHOD + HOST_NAME 
 # Quick-start development settings - unsuitable for production
@@ -34,7 +34,7 @@ CSRF_COOKIE_SECURE=True
 DEBUG=True
 
 ALLOWED_HOSTS = [
-    HOST_NAME
+    HOST_NAME,
 ]
 
 
