@@ -9,7 +9,8 @@ ID=os.environ.get('CLIENT_ID')
 HOST_NAME=os.environ.get('HOST_NAME')
 SECRET=os.environ.get('CLIENT_SECRET')
 REACT_PORT=os.environ.get('REACT_PORT')
-REDIRECT_URL= 'https://' + HOST_NAME + ':' + REACT_PORT
+HTTP_METHOD=os.environ.get('HTTP_METHOD')
+REDIRECT_URL= HTTP_METHOD + "://" + HOST_NAME + ':' + REACT_PORT
 
 def index(request):
     csrf = get_token(request);

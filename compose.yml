@@ -15,6 +15,7 @@ services:
       - django
     environment:
       - REACT_APP_DJANGO_PORT=${DJANGO_PORT}
+      - REACT_APP_HTTP_METHOD=${HTTP_METHOD}
       - PORT=${REACT_PORT}
       - REACT_APP_HOST_NAME=${HOST_NAME}
       - REACT_APP_HOST_IP=${HOST_IP}
@@ -32,12 +33,15 @@ services:
       context: django/.
       target: ${DJANGO_STAGE}
     container_name: django
+    ports:
+      - "${DJANGO_PORT}:${DJANGO_PORT}"
     depends_on:
       postgresql:
         condition: service_healthy
     volumes:
       - ./debug/django:/debug/backend
     environment:
+      - HTTP_METHOD=${HTTP_METHOD}
       - REACT_PORT=${REACT_PORT}
       - CLIENT_ID=${CLIENT_ID}
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}

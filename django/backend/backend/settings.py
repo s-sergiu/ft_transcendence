@@ -19,10 +19,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 HOST_NAME = os.environ.get('HOST_NAME')
 REACT_PORT = os.environ.get('REACT_PORT')
 DJANGO_DEBUG = os.environ.get('DJANGO_DEBUG')
-HTTP_METHOD = 'https://'
-HOST_WITH_PORT = HTTP_METHOD + HOST_NAME 
-if REACT_PORT == '80':
-    HOST_WITH_PORT = HTTP_METHOD + HOST_NAME 
+HTTP_METHOD = os.environ.get('HTTP_METHOD')
+HOST_WITH_PORT = HTTP_METHOD + "://" + HOST_NAME 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -140,10 +138,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
         HOST_WITH_PORT,
+        HOST_WITH_PORT + ':80',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
         HOST_WITH_PORT,
+        HOST_WITH_PORT + ':80',
 ]
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
