@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 SESSION_COOKIE_SECURE=True
 CSRF_COOKIE_SECURE=True
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG=True
+DEBUG=DJANGO_DEBUG
 
 ALLOWED_HOSTS = [
     HOST_NAME,

@@ -24,7 +24,7 @@ function GuestNavbar(props) {
 	}
 
 	async function getMessage() {
-		const response = await fetch(URL + '/api/', {
+		const response = await fetch(URL + '/api/get-csrf', {
 			mode:  'cors',
 			method: 'GET',
 			headers: {
