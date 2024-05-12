@@ -4,9 +4,9 @@ WORKDIR /app/.
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY . .
+RUN chmod +x *-script.sh
 
 from base as dev
-RUN chmod +x script.sh
 CMD [ "sh", "./dev-script.sh" ]
 
 from base as prod
