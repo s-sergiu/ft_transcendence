@@ -6,6 +6,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useEffect } from 'react';
 //import Content from './Content';
+import Profile from './profile';
 
 
 function UserNavbar(props) {
@@ -100,6 +101,9 @@ function UserNavbar(props) {
 	  {/* <ProfileDashboard
 		loginData = {props.login}
 	  /> */}
+	  <Profile 
+	  loginData = {props.login}
+	  />
     </div>
   );
 }
