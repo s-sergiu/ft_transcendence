@@ -20,7 +20,9 @@ function UserNavbar(props) {
 
 	useEffect(() => {
 
-	const URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
+	let URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
+	if (process.env.REACT_APP_HTTP_METHOD === 'https')
+		URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME 
 
 	async function getInfo() {
 		let csrf;

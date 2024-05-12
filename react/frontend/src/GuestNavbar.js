@@ -11,6 +11,8 @@ import { useEffect } from 'react';
 function GuestNavbar(props) {
 
 	let URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
+	if (process.env.REACT_APP_HTTP_METHOD === 'https')
+		URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME 
 	const { setToken } = props;
 
     function getCode() {
@@ -37,6 +39,8 @@ function GuestNavbar(props) {
 	useEffect(() => {
 
 	let URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
+	if (process.env.REACT_APP_HTTP_METHOD === 'https')
+		URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME 
 
 	async function getToken(code) {
 		let csrf;
