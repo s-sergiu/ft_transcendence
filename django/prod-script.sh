@@ -1,6 +1,5 @@
 #! /bin/bash
 
-cd backend
 python manage.py makemigrations api
 python manage.py migrate
 
