@@ -41,3 +41,67 @@
 }
 
 
+.change-picture-btn {
+  position: relative;
+  display: inline-block;
+}
+
+.change-picture-btn label {
+  display: inline-block;
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.change-picture-btn label:hover {
+  background-color: #0056b3;
+}
+
+
+#upload-input {
+  display: none;
+}
+
+
+.right-sidebar {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-left: 1px solid #dee2e6; 
+}
+
+
+.personal-info {
+  background-color: #fff;
+  border: 1px solid #ced4da; 
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.personal-info input[type="text"],
+.personal-info input[type="email"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+
+.personal-info .edit-button {
+  background-color: #007bff;
+  color: #fff; 
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.personal-info .edit-button:hover {
+  background-color: #0056b3; 
+}

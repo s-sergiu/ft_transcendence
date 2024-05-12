@@ -6,9 +6,10 @@ import './profile.css';
 const Profile = () => {
   const [selectedSection, setSelectedSection] = useState(null); // Default selected section
   const [userInfo, setUserInfo] = useState({
-    username: 'sergiu',
+    username: 'serg',
     fullName: 'zamel',
-    email: 'sergiu@example.com',
+    email: 'zamel@example.com',
+    profilePic: 'profile-pic.jpg', 
   });
   const [editMode, setEditMode] = useState(false);
 
@@ -32,13 +33,32 @@ const Profile = () => {
     setEditMode(false);
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setUserInfo({ ...userInfo, profilePic: reader.result });
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <Container fluid className="profile-container">
       <Row>
         {/* Left sidebar */}
         <Col sm={3} className="left-sidebar">
           <div className="profile-info">
-            <Image src="profile-pic.jpg" roundedCircle className="profile-pic" />
+            <Image src={userInfo.profilePic} roundedCircle className="profile-pic" />
+            <div className="change-picture-btn">
+              <label htmlFor="upload-input" className="btn btn-primary">
+                Change Picture
+              </label>
+              <input id="upload-input" type="file" accept="image/*" onChange={handleImageChange} />
+            </div>
             <div className="sidebar-item" onClick={() => handleSectionClick('personal')}>
               <h4>Personal Information</h4>
             </div>
