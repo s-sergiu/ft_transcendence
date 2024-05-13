@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from django.views.decorators.csrf import get_token, requires_csrf_token
+from django.views.decorators.csrf import get_token
 from django.contrib.auth.models import User
 from django.core import serializers
 from .models import Token, ExtendedUser
