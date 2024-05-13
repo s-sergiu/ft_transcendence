@@ -31,7 +31,7 @@ class ExtendedUser(models.Model):
     login = models.CharField(max_length = 64)
     first_name = models.CharField(max_length = 64)
     last_name = models.CharField(max_length = 64)
-    image_medium = models.CharField(max_length = 128)
+    image_medium = models.ImageField(upload_to = '.')
     image_small = models.CharField(max_length = 128)
     pool_month = models.CharField(max_length = 64)
     pool_year = models.CharField(max_length = 64)
