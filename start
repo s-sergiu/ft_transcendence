@@ -8,14 +8,14 @@ gid_to_replace=$(grep USER_GID= .env | cut -d '=' -f2)
 if [[ $react_stage == dev ]]
 	then
 		cp .env .env.old
-		cat .env.old | sed "s/$(grep GENERATE_SOURCEMAP= .env)/GENERATE_SOURCEMAP=False/" > .env
+		cat .env.old | sed "s/$(grep GENERATE_SOURCEMAP= .env)/GENERATE_SOURCEMAP=false/" > .env
 		cp .env .env.old
 		cat .env.old | sed "s/$(grep HTTP_METHOD= .env)/HTTP_METHOD=http/" > .env
 		cp .env .env.old
 		cat .env.old | sed "s/$(grep REACT_PORT= .env)/REACT_PORT=80/" > .env
 	else
 		cp .env .env.old
-		cat .env.old | sed "s/$(grep GENERATE_SOURCEMAP= .env)/GENERATE_SOURCEMAP=True/" > .env
+		cat .env.old | sed "s/$(grep GENERATE_SOURCEMAP= .env)/GENERATE_SOURCEMAP=true/" > .env
 		cp .env .env.old
 		cat .env.old | sed "s/$(grep HTTP_METHOD= .env)/HTTP_METHOD=https/" > .env
 		cp .env .env.old
