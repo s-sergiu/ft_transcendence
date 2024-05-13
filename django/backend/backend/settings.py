@@ -27,10 +27,10 @@ HOST_WITH_PORT = HTTP_METHOD + "://" + HOST_NAME
 # SECURITY WARNING: keep the secret key used in production secret!
 
 DEBUG=True
-if DJANGO_DEBUG == False:
+if DJANGO_DEBUG == 'False':
     SESSION_COOKIE_SECURE=True
     CSRF_COOKIE_SECURE=True
-    DEBUG=DJANGO_DEBUG
+    DEBUG=False
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
