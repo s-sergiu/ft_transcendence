@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import Profile from './profile.js';
 import { useEffect } from 'react';
 //import Content from './Content';
 
@@ -88,19 +89,15 @@ function UserNavbar(props) {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-	 <h1> LOGGED IN </h1> 
-	  <ul>
-		<ol>{ props.login.email }</ol>
-		<ol>{ props.login.username }</ol>
-		<ol>{ props.login.first_name }</ol>
-		<ol>{ props.login.last_name }</ol>
-	  </ul>
     {/* <SuggestedFriends/> */}
     {/* <PingPongGame/> */}
 
 	  {/* <ProfileDashboard
 		loginData = {props.login}
 	  /> */}
+	<Profile 
+		loginData = { props.login }  
+	/>
     </div>
   );
 }
