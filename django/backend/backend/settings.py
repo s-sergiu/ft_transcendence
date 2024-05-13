@@ -26,10 +26,13 @@ HOST_WITH_PORT = HTTP_METHOD + "://" + HOST_NAME
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
-SESSION_COOKIE_SECURE=True
-CSRF_COOKIE_SECURE=True
+
+if DJANGO_DEBUG == True:
+    SESSION_COOKIE_SECURE=True
+    CSRF_COOKIE_SECURE=True
+    DEBUG=DJANGO_DEBUG
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG=DJANGO_DEBUG
 
 ALLOWED_HOSTS = [
     HOST_NAME,
@@ -138,12 +141,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
         HOST_WITH_PORT,
-        HOST_WITH_PORT + ':80',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
         HOST_WITH_PORT,
-        HOST_WITH_PORT + ':80',
 ]
+
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
