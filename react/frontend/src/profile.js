@@ -16,15 +16,15 @@ const Profile = (props) => {
         {/* Left sidebar */}
         <Col sm={3} className="left-sidebar">
           <div className="profile-info">
-            <Image src="profile-pic.jpg" roundedCircle className="profile-pic" />
+            <Image src={props.loginData.image_small} roundedCircle className="profile-pic" />
             <div className="sidebar-item" onClick={() => handleItemClick('username')}>
-              <h4>{props.loginData.email}</h4>
+              <h4>{props.loginData.login}</h4>
             </div>
             <div className="sidebar-item" onClick={() => handleItemClick('fullname')}>
-              <h4>Full Name</h4>
+              <h4>{props.loginData.first_name} {props.loginData.last_name}</h4>
             </div>
             <div className="sidebar-item" onClick={() => handleItemClick('email')}>
-              <h4>Email</h4>
+              <h4>{props.loginData.email}</h4>
             </div>
             <div className="sidebar-item" onClick={() => handleItemClick('playedmatches')}>
               <h4>Played Matches</h4>
