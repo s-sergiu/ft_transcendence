@@ -7,6 +7,9 @@ import Navbar from 'react-bootstrap/Navbar';
 import { useEffect } from 'react';
 //import Content from './Content';
 
+var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
+if (process.env.REACT_APP_HTTP_METHOD === 'https')
+	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME 
 
 function UserNavbar(props) {
 
@@ -19,10 +22,6 @@ function UserNavbar(props) {
 	}
 
 	useEffect(() => {
-
-	let URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
-	if (process.env.REACT_APP_HTTP_METHOD === 'https')
-		URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME 
 
 	async function getInfo() {
 		let csrf;
