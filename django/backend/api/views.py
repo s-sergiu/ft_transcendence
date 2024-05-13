@@ -39,16 +39,21 @@ def getToken(request):
     return (JsonResponse(serialize_object(t), safe=False))
 
 def get_or_create_user(api_data, token):
-    orgs = User.objects.filter(email=api_data['email'])
+    try:
+        orgs = User.objects.filter(email=api_data['email'])
+    except:
+        orgs = None;
+
+    t = Token.objects.get(access_token=token['code'])
     if not orgs:
         orgs = User.objects.create_user(api_data['first_name'],
                                         api_data['email']
                                             )
         orgs.save()
-        t = Token.objects.get(access_token=token['code'])
-        extended = ExtendedUser.get_or_create(api_data['email'], orgs, t)
-        return extended.user
-    return orgs.get()
+        extended = ExtendedUser.get_or_create(api_data, orgs, t)
+        return extended
+    extended = ExtendedUser.get_or_create(api_data, orgs.get(), t)
+    return extended
 
 def getUserInfo(request):
     token = json.loads(request.body.decode("utf-8"))
