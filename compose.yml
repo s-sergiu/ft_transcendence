@@ -42,6 +42,7 @@ services:
     volumes:
       - ./debug/django:/debug/backend
     environment:
+      - DJANGO_DEBUG=${DJANGO_DEBUG}
       - HTTP_METHOD=${HTTP_METHOD}
       - REACT_PORT=${REACT_PORT}
       - CLIENT_ID=${CLIENT_ID}
