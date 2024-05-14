@@ -63,7 +63,7 @@ main() {
 	cat .env.old | sed "s/$hostname_to_replace/$host_name/"  > .env
 	rm .env.old
 
-	docker compose up --build
+	exec docker compose up --build
 }
 
 cleanup_debug() {

@@ -14,7 +14,7 @@ services:
     environment:
       - USER_GID=${USER_GID}
     volumes:
-      - ./debug/gameserv:/debug/src
+      - ./debug/gameserv:/debug
     restart: on-failure
   react:
     build: 
