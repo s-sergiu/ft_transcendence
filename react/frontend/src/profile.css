@@ -1,5 +1,6 @@
 .profile-container {
   height: 100vh;
+  border-radius: 30px;
 }
 
 .left-sidebar {
@@ -104,4 +105,33 @@
 
 .personal-info .edit-button:hover {
   background-color: #0056b3; 
+}
+
+.matches-info {
+  background-color: #fff;
+  border: 1px solid #ced4da; 
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+
+.matches-info table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.matches-info th,
+.matches-info td {
+  padding: 8px;
+  border-bottom: 1px solid #dee2e6; 
+}
+
+.matches-info th {
+  background-color: #f8f9fa;
+  text-align: left;
+}
+
+.matches-info tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
 }
