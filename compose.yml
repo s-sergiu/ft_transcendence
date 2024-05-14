@@ -1,6 +1,21 @@
 version: "3.8"
 
 services:
+  gameserv:
+    build: 
+      dockerfile: Dockerfile
+      context: gameserv/.
+      target: dev
+    container_name: gameserv
+    depends_on:
+      - react
+    ports:
+      - "4000:4000"
+    environment:
+      - USER_GID=${USER_GID}
+    volumes:
+      - ./debug/gameserv:/debug/src
+    restart: on-failure
   react:
     build: 
       dockerfile: Dockerfile

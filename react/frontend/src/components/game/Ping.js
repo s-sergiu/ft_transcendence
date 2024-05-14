@@ -31,7 +31,7 @@ const GameBlock = () => {
   const [buttonClicked, setButtonClicked] = useState(false);
 
   useEffect(() => {
-    const newSocket = io('http://localhost:3000');
+    const newSocket = io('http://172.22.0.5:4000');
     setSocket(newSocket);
     // startGame();
     // newSocket.emit("infos", gameInfo, gameInfo.gameId);

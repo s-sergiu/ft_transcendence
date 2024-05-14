@@ -96,9 +96,7 @@ function UserNavbar(props) {
 	  {/* <ProfileDashboard
 		loginData = {props.login}
 	  /> */}
-	<Profile 
-		loginData = {props.login}
-	/>
+	  <Game />
     </div>
   );
 }
