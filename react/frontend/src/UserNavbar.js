@@ -7,6 +7,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Profile from './profile.js';
 import { useEffect } from 'react';
 //import Content from './Content';
+import Profile from './profile';
 
 var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
 if (process.env.REACT_APP_HTTP_METHOD === 'https')
