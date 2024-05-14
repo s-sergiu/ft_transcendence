@@ -1,5 +1,8 @@
 #!/bin/bash
 
+PRESS_ENTER="\e[1;38m"
+BLINK="\e[5m"
+BG_RED="\e[41m"
 RED="\e[31m"
 BLUE="\e[34m"
 GREEN="\e[32m"
@@ -15,10 +18,8 @@ main() {
 	cp .env .env.old
 	cat .env.old | sed "s/$(grep STAGE= .env)/STAGE=$1/" > .env
 
-	echo $1
 	if [[ $1 == 'dev' ]]
 		then
-			echo is dev
 			cp .env .env.old
 			cat .env.old | sed "s/$(grep GENERATE_SOURCEMAP= .env)/GENERATE_SOURCEMAP=false/" > .env
 			cp .env .env.old
@@ -26,7 +27,6 @@ main() {
 			cp .env .env.old
 			cat .env.old | sed "s/$(grep REACT_PORT= .env)/REACT_PORT=80/" > .env
 		else
-			echo is not dev
 			cp .env .env.old
 			cat .env.old | sed "s/$(grep GENERATE_SOURCEMAP= .env)/GENERATE_SOURCEMAP=true/" > .env
 			cp .env .env.old
@@ -77,7 +77,7 @@ cleanup() {
 
 press_enter() {
   echo ""
-  echo -n "	Press Enter to continue "
+  echo -en $PRESS_ENTER$BLINK"	Press Enter to continue "$ENDCOLOR
   read
   clear
 }
@@ -87,7 +87,7 @@ exit_case() {
 }
 
 incorrect_selection() {
-  echo "Incorrect selection! Try again."
+  echo -e $BG_RED"Wrong choice! Try again."$ENDCOLOR
 }
 
 until [ "$selection" = "q" ]; do
