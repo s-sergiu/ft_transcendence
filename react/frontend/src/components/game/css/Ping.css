@@ -44,7 +44,7 @@
   
   canvas {
       position: absolute;
-      top: 0;
+      top: 5%;
       left: 0;
       width: 100%;
       height: 100%;
@@ -52,7 +52,7 @@
   
   .canvas-background {
       position: absolute;
-      top: 0;
+      top: 5%;
       left: 0;
       width: 100%;
       height: 100%;

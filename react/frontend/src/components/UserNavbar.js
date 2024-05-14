@@ -6,7 +6,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Game from './game/Ping.js';
 import Profile from './profile';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 //import Content from './Content';
 
 var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
@@ -16,6 +16,7 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 function UserNavbar(props) {
 
 	const { setLoginDetails, setToken } = props
+	const [ gameToggle, setGameToggle ] = useState(false);
 
 	function Logout() {
 		localStorage.clear();
@@ -78,9 +79,9 @@ function UserNavbar(props) {
             navbarScroll
           >
             <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link href="#action2">Message</Nav.Link>
+            <Nav.Link onClick = { e => setGameToggle(true) } >Game</Nav.Link>
+            <Nav.Link onClick = { e => setGameToggle(false) } >Profile</Nav.Link>
             <Nav.Link href="#action1">Suggested friends</Nav.Link>
-            <Nav.Link href="#action2">Profile</Nav.Link>
             
           </Nav>
 	   <Form className="d-flex">
@@ -96,7 +97,14 @@ function UserNavbar(props) {
 	  {/* <ProfileDashboard
 		loginData = {props.login}
 	  /> */}
-	  <Game />
+	{ gameToggle ? (
+			<Game />
+		) : (
+			<Profile 
+				 loginData = { props.login }
+			/>
+		)
+	}
     </div>
   );
 }
