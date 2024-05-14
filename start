@@ -1,7 +1,6 @@
 #!/bin/bash
 
 PRESS_ENTER="\e[1;38m"
-BLINK="\e[5m"
 BG_RED="\e[41m"
 RED="\e[31m"
 BLUE="\e[34m"
@@ -77,7 +76,7 @@ cleanup() {
 
 press_enter() {
   echo ""
-  echo -en $PRESS_ENTER$BLINK"	Press Enter to continue "$ENDCOLOR
+  echo -en $PRESS_ENTER"	Press Enter to continue "$ENDCOLOR
   read
   clear
 }
