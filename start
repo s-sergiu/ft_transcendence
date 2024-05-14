@@ -66,6 +66,10 @@ main() {
 	exec docker compose up --build
 }
 
+cleanup_database() {
+	docker rm postgresql
+}
+
 cleanup_debug() {
 	rm -rf debug/
 }
@@ -100,6 +104,7 @@ until [ "$selection" = "q" ]; do
   echo -e $CYAN"    	2  -  Start server in development mode"$ENDCOLOR
   echo -e $BLUE"    	3  -  Clean up docker files and debug folder"$ENDCOLOR
   echo -e $BLUE"    	4  -  Clean up debug folder"$ENDCOLOR
+  echo -e $BLUE"    	5  -  Clean up database"$ENDCOLOR
   echo -e $RED"    	0  -  Exit" $ENDCOLOR
   echo ""
   echo -en $MAGENTA"  Enter selection: "$ENDCOLOR
@@ -110,6 +115,7 @@ until [ "$selection" = "q" ]; do
     2 ) clear ; main "dev" ; press_enter ;;
     3 ) clear ; cleanup ; press_enter ;;
     4 ) clear ; cleanup_debug ; press_enter ;;
+    5 ) clear ; cleanup_database ; press_enter ;;
     0 ) clear ; exit ;;
     * ) clear ; incorrect_selection ; press_enter ;;
   esac
