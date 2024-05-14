@@ -1,17 +1,47 @@
 #!/bin/bash
 
-user_gid=$(eval id -g)
-gid_to_replace=$(eval grep USER_GID= .env | cut -d '=' -f2)
+react_stage=$(grep REACT_STAGE= .env | cut -d '=' -f2)
+django_stage=$(grep DJANGO_STAGE= .env | cut -d '=' -f2)
+user_gid=$(id -g)
+gid_to_replace=$(grep USER_GID= .env | cut -d '=' -f2)
+
+if [[ $react_stage == dev ]]
+	then
+		cp .env .env.old
+		cat .env.old | sed "s/$(grep GENERATE_SOURCEMAP= .env)/GENERATE_SOURCEMAP=false/" > .env
+		cp .env .env.old
+		cat .env.old | sed "s/$(grep HTTP_METHOD= .env)/HTTP_METHOD=http/" > .env
+		cp .env .env.old
+		cat .env.old | sed "s/$(grep REACT_PORT= .env)/REACT_PORT=80/" > .env
+	else
+		cp .env .env.old
+		cat .env.old | sed "s/$(grep GENERATE_SOURCEMAP= .env)/GENERATE_SOURCEMAP=true/" > .env
+		cp .env .env.old
+		cat .env.old | sed "s/$(grep HTTP_METHOD= .env)/HTTP_METHOD=https/" > .env
+		cp .env .env.old
+		cat .env.old | sed "s/$(grep REACT_PORT= .env)/REACT_PORT=443/" > .env
+fi
+
+
+if [[ $django_stage == dev ]]
+	then
+		cp .env .env.old
+		cat .env.old | sed "s/$(grep DJANGO_DEBUG= .env)/DJANGO_DEBUG=True/" > .env
+	else
+		cp .env .env.old
+		cat .env.old | sed "s/$(grep DJANGO_DEBUG= .env)/DJANGO_DEBUG=False/" > .env
+fi
+
 if [[ $OSTYPE == darwin* ]]
 	then 
-		ip=$(eval ifconfig | grep en1 -A 1 | grep "inet " | awk '{ print $2 }')
-		host_name=$(eval hostname | tr '[:upper:]' '[:lower:]')
+		ip=$(ifconfig | grep en1 -A 1 | grep "inet " | awk '{ print $2 }')
+		host_name=$(hostname | tr '[:upper:]' '[:lower:]')
 	else 
-		ip=$(eval ip add | grep "BROADCAST,MULTICAST,UP,LOWER_UP" -A 2 | grep inet -m1 | awk '{print $2}' | cut -d '/' -f1)
-		host_name=$(eval hostnamectl hostname | tr '[:upper:]' '[:lower:]')
+		ip=$(ip add | grep "BROADCAST,MULTICAST,UP,LOWER_UP" -A 2 | grep inet -m1 | awk '{print $2}' | cut -d '/' -f1)
+		host_name=$(hostnamectl hostname | tr '[:upper:]' '[:lower:]')
 fi
-ip_to_replace=$(eval grep HOST_IP= .env | cut -d '=' -f2)
-hostname_to_replace=$(eval grep HOST_NAME= .env | awk '{ print $1 }' | cut -d '=' -f2)
+ip_to_replace=$(grep HOST_IP= .env | cut -d '=' -f2)
+hostname_to_replace=$(grep HOST_NAME= .env | awk '{ print $1 }' | cut -d '=' -f2)
 
 cp .env .env.old
 cat .env.old | sed "s/$gid_to_replace/$user_gid/"  > .env

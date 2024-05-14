@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-import os
+import os,sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,22 +19,25 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 HOST_NAME = os.environ.get('HOST_NAME')
 REACT_PORT = os.environ.get('REACT_PORT')
 DJANGO_DEBUG = os.environ.get('DJANGO_DEBUG')
-HTTP_METHOD = 'http://'
-HOST_WITH_PORT = HTTP_METHOD + HOST_NAME + ':' + REACT_PORT
-if REACT_PORT == '80':
-    HOST_WITH_PORT = HTTP_METHOD + HOST_NAME 
+HTTP_METHOD = os.environ.get('HTTP_METHOD')
+HOST_WITH_PORT = HTTP_METHOD + "://" + HOST_NAME 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
-SESSION_COOKIE_SECURE=True
-CSRF_COOKIE_SECURE=True
-# SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG=True
+if DJANGO_DEBUG == 'False':
+    SESSION_COOKIE_SECURE=True
+    CSRF_COOKIE_SECURE=True
+    DEBUG=False
+
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+
+# SECURITY WARNING: don't run with debug turned on in production!
 
 ALLOWED_HOSTS = [
-    HOST_NAME
+    HOST_NAME,
 ]
 
 
@@ -145,5 +148,6 @@ CORS_ALLOWED_ORIGINS = [
 CSRF_TRUSTED_ORIGINS = [
         HOST_WITH_PORT,
 ]
+
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True

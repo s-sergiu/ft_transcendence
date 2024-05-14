@@ -8,9 +8,11 @@ import Navbar from 'react-bootstrap/Navbar';
 import { useEffect } from 'react';
 
 
-function GuestNavbar(props) {
+var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
+if (process.env.REACT_APP_HTTP_METHOD === 'https')
+	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME 
 
-	let URL = 'http://' + process.env.REACT_APP_HOST_NAME + ':' + process.env.REACT_APP_DJANGO_PORT
+function GuestNavbar(props) {
 	const { setToken } = props;
 
     function getCode() {
@@ -24,7 +26,7 @@ function GuestNavbar(props) {
 	}
 
 	async function getMessage() {
-		const response = await fetch(URL + '/api/', {
+		const response = await fetch(URL + '/api/get-csrf', {
 			mode:  'cors',
 			method: 'GET',
 			headers: {
@@ -35,32 +37,29 @@ function GuestNavbar(props) {
 	}
 
 	useEffect(() => {
-
-	let URL = 'http://' + process.env.REACT_APP_HOST_NAME + ':' + process.env.REACT_APP_DJANGO_PORT
-
-	async function getToken(code) {
-		let csrf;
-		if (document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)")) == null) {
-			return({ "error" : "csrftoken" })
-		} else
-			csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
-
-		const response = await fetch(URL + '/api/get-token', {
-			mode:  'cors',
-			method: 'POST',
-			credentials: 'include',
-			body: JSON.stringify({
-				code: code
-			}),
-			headers: {
-				"X-CSRFToken": csrf,
-				'Content-Type': 'application/json'
-			},
-		})
-		return response.json();
-	}
-
 		const urlParams = new URLSearchParams(window.location.search);
+
+		async function getToken(code) {
+			let csrf;
+			if (document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)")) == null) {
+				return({ "error" : "csrftoken" })
+			} else
+				csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
+
+			const response = await fetch(URL + '/api/get-token', {
+				mode:  'cors',
+				method: 'POST',
+				credentials: 'include',
+				body: JSON.stringify({
+					code: code
+				}),
+				headers: {
+					"X-CSRFToken": csrf,
+					'Content-Type': 'application/json'
+				},
+			})
+			return response.json();
+		}
 
 		if (urlParams.get('code')) {
 			getToken(urlParams.get('code')).then( (res) => {
@@ -77,7 +76,6 @@ function GuestNavbar(props) {
 				}
 			})
 		}
-
 	}, [setToken]);
 
   return (

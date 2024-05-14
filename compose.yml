@@ -5,13 +5,18 @@ services:
     build: 
       dockerfile: Dockerfile
       context: react/.
+      target: ${REACT_STAGE}
       args:
         REACT_APP_DJANGO_PORT: ${DJANGO_PORT}
         REACT_APP_HOST_NAME: ${HOST_NAME}
         REACT_APP_REDIRECT_URI: ${REDIRECT_URI}
+        REACT_APP_HTTP_METHOD: ${HTTP_METHOD}
     container_name: react
+    depends_on:
+      - django
     environment:
       - REACT_APP_DJANGO_PORT=${DJANGO_PORT}
+      - REACT_APP_HTTP_METHOD=${HTTP_METHOD}
       - PORT=${REACT_PORT}
       - REACT_APP_HOST_NAME=${HOST_NAME}
       - REACT_APP_HOST_IP=${HOST_IP}
@@ -24,16 +29,21 @@ services:
       - ./debug/react:/debug/src
     restart: on-failure
   django:
-    build: django/.
+    build: 
+      dockerfile: Dockerfile
+      context: django/.
+      target: ${DJANGO_STAGE}
     container_name: django
+    ports:
+      - "${DJANGO_PORT}:${DJANGO_PORT}"
     depends_on:
       postgresql:
         condition: service_healthy
-    ports:
-      - "${DJANGO_PORT}:${DJANGO_PORT}"
     volumes:
       - ./debug/django:/debug/backend
     environment:
+      - DJANGO_DEBUG=${DJANGO_DEBUG}
+      - HTTP_METHOD=${HTTP_METHOD}
       - REACT_PORT=${REACT_PORT}
       - CLIENT_ID=${CLIENT_ID}
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}

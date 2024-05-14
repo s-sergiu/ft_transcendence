@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from django.views.decorators.csrf import get_token, requires_csrf_token
+from django.views.decorators.csrf import get_token
 from django.contrib.auth.models import User
 from django.core import serializers
 from .models import Token, ExtendedUser
@@ -9,7 +9,8 @@ ID=os.environ.get('CLIENT_ID')
 HOST_NAME=os.environ.get('HOST_NAME')
 SECRET=os.environ.get('CLIENT_SECRET')
 REACT_PORT=os.environ.get('REACT_PORT')
-REDIRECT_URL= 'http://' + HOST_NAME + ':' + REACT_PORT
+HTTP_METHOD=os.environ.get('HTTP_METHOD')
+REDIRECT_URL= HTTP_METHOD + "://" + HOST_NAME + ':' + REACT_PORT
 
 def index(request):
     csrf = get_token(request);
@@ -38,16 +39,21 @@ def getToken(request):
     return (JsonResponse(serialize_object(t), safe=False))
 
 def get_or_create_user(api_data, token):
-    orgs = User.objects.filter(email=api_data['email'])
+    try:
+        orgs = User.objects.filter(email=api_data['email'])
+    except:
+        orgs = None;
+
+    t = Token.objects.get(access_token=token['code'])
     if not orgs:
         orgs = User.objects.create_user(api_data['first_name'],
                                         api_data['email']
                                             )
         orgs.save()
-        t = Token.objects.get(access_token=token['code'])
-        extended = ExtendedUser.get_or_create(api_data['email'], orgs, t)
-        return extended.user
-    return orgs.get()
+        extended = ExtendedUser.get_or_create(api_data, orgs, t)
+        return extended
+    extended = ExtendedUser.get_or_create(api_data, orgs.get(), t)
+    return extended
 
 def getUserInfo(request):
     token = json.loads(request.body.decode("utf-8"))
