@@ -66,6 +66,10 @@ main() {
 	docker compose up --build
 }
 
+cleanup_debug() {
+	rm -rf debug/
+}
+
 cleanup() {
 	docker kill $(docker ps)
 	docker rm $(docker ps -a)
@@ -92,19 +96,21 @@ incorrect_selection() {
 until [ "$selection" = "q" ]; do
   clear
   echo ""
-  echo -e $GREEN"    	p  -  Start server in production mode"$ENDCOLOR
-  echo -e $CYAN"    	d  -  Start server in development mode"$ENDCOLOR
-  echo -e $BLUE"    	c  -  Clean up docker files"$ENDCOLOR
-  echo -e $RED"    	q  -  Exit" $ENDCOLOR
+  echo -e $GREEN"    	1  -  Start server in production mode"$ENDCOLOR
+  echo -e $CYAN"    	2  -  Start server in development mode"$ENDCOLOR
+  echo -e $BLUE"    	3  -  Clean up docker files and debug folder"$ENDCOLOR
+  echo -e $BLUE"    	4  -  Clean up debug folder"$ENDCOLOR
+  echo -e $RED"    	0  -  Exit" $ENDCOLOR
   echo ""
   echo -en $MAGENTA"  Enter selection: "$ENDCOLOR
   read selection
   echo ""
   case $selection in
-    p ) clear ; main "prod" ; press_enter ;;
-    d ) clear ; main "dev" ; press_enter ;;
-    c ) clear ; cleanup ; press_enter ;;
-    q ) clear ; exit ;;
+    1 ) clear ; main "prod" ; press_enter ;;
+    2 ) clear ; main "dev" ; press_enter ;;
+    3 ) clear ; cleanup ; press_enter ;;
+    4 ) clear ; cleanup_debug ; press_enter ;;
+    0 ) clear ; exit ;;
     * ) clear ; incorrect_selection ; press_enter ;;
   esac
 done
