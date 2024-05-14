@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Image, Button, Form } from 'react-bootstrap';
 import './profile.css'; 
 
-const Profile = () => {
+const Profile = (props) => {
+  const { loginData } = props;
   const [selectedSection, setSelectedSection] = useState(null); // Default selected section
   const [userInfo, setUserInfo] = useState({
     username: 'sergiu',
@@ -81,7 +82,7 @@ const Profile = () => {
         {/* Left sidebar */}
         <Col sm={3} className="left-sidebar">
           <div className="profile-info">
-            <Image src={userInfo.profilePic} roundedCircle className="profile-pic" />
+            <Image src={loginData.image_small} roundedCircle className="profile-pic" />
             <div className="change-picture-btn">
               <label htmlFor="upload-input" className="btn btn-primary">
                 Change Picture
@@ -103,9 +104,9 @@ const Profile = () => {
             <div className="personal-info">
               <h2>Personal Information</h2>
               <div className="user-info">
-                <p><strong>Username:</strong> {userInfo.username}</p>
-                <p><strong>Full Name:</strong> {userInfo.fullName}</p>
-                <p><strong>Email:</strong> {userInfo.email}</p>
+                <p><strong>Username:</strong> {loginData.username}</p>
+                <p><strong>Full Name:</strong> {loginData.first_name} {loginData.last_name}</p>
+                <p><strong>Email:</strong> {loginData.email}</p>
                 <p><strong>Wins:</strong> {userInfo.wins}</p>
                 <p><strong>Losses:</strong> {userInfo.losses}</p>
               </div>

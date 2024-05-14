@@ -96,6 +96,7 @@ function UserNavbar(props) {
 		loginData = {props.login}
 	  /> */}
 	<Profile 
+		loginData = {props.login}
 	/>
 
     </div>
