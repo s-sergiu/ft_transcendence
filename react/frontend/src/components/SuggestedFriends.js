@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import './SuggestedFriends.css'; 
+import './css/SuggestedFriends.css'; 
 
 const friendsData = [
   {

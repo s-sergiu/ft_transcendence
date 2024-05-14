@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import Game from './game/Ping.js';
 import Profile from './profile';
 import { useEffect } from 'react';
 //import Content from './Content';
@@ -98,7 +99,6 @@ function UserNavbar(props) {
 	<Profile 
 		loginData = {props.login}
 	/>
-
     </div>
   );
 }

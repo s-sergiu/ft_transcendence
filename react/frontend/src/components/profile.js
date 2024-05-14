@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Image, Button, Form } from 'react-bootstrap';
-import './profile.css'; 
+import './css/profile.css'; 
 
 const Profile = (props) => {
   const { loginData } = props;
