@@ -5,7 +5,7 @@ services:
     build: 
       dockerfile: Dockerfile
       context: react/.
-      target: ${REACT_STAGE}
+      target: ${STAGE}
       args:
         REACT_APP_DJANGO_PORT: ${DJANGO_PORT}
         REACT_APP_HOST_NAME: ${HOST_NAME}
@@ -32,7 +32,7 @@ services:
     build: 
       dockerfile: Dockerfile
       context: django/.
-      target: ${DJANGO_STAGE}
+      target: ${STAGE}
     container_name: django
     ports:
       - "${DJANGO_PORT}:${DJANGO_PORT}"

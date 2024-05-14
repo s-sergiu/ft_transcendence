@@ -1,6 +1,0 @@
-#!/bin/bash
-docker kill $(docker ps)
-docker rm $(docker ps -a)
-docker rmi $(docker images)
-docker system prune -af --volumes
-rm -rf debug/
