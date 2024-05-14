@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Image, Button, Form } from 'react-bootstrap';
 import './profile.css'; 
 
-const Profile = (props) => {
+const Profile = () => {
   const [selectedSection, setSelectedSection] = useState(null); // Default selected section
   const [userInfo, setUserInfo] = useState({
     username: 'sergiu',
