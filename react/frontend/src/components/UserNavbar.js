@@ -7,6 +7,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Game from './game/Ping.js';
 import Profile from './profile';
 import { useEffect, useState } from 'react';
+import Tournament from './tournaments';
 //import Content from './Content';
 
 var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
@@ -102,7 +103,8 @@ function UserNavbar(props) {
 		) : (
 			<Profile 
 				 loginData = { props.login }
-			/>
+			/>,
+			<Tournament/>
 		)
 	}
     </div>
