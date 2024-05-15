@@ -5,6 +5,9 @@ import kanimg from './assets/kan2.png';
 import ballimg from './assets/ball.png';
 import barimg from './assets/bar.png';
 
+import { debounce } from 'lodash';
+
+
 const GameBlock = () => {
   const [countdown, setCountdown] = useState(0);
   const [move, setMove] = useState(null);
@@ -14,14 +17,12 @@ const GameBlock = () => {
   const [position, setPosition] = useState({ lx: 0, ly: 180, x: 0, y: 180 });
   const [oposition, setOposition] = useState({ lx: 630, ly: 180, x: 630, y: 180 });
   const [ballposition, setBallposition] = useState({ lx: 320, ly: 240, x: 320, y: 240 });
-
   const [gameInfo, setGameInfo] = useState({
     gameId: 10,
     player1: 'player1',
     player2: 'player2',
     playerId: 1,
   });
-
   const [gameState, setGameState] = useState(true);
   const [scores, setScores] = useState({ player1: 0, player2: 0 });
   const [lastpl, setLastpl] = useState(1);
@@ -39,7 +40,7 @@ const GameBlock = () => {
       newSocket.disconnect();
     };
   }, []);
-
+  
   useEffect(() => {
     if (context) {
       context.clearRect(position.lx, position.ly, 10, 120);
@@ -51,10 +52,14 @@ const GameBlock = () => {
     }
   }, [context, position, oposition, ballposition]);
 
+  const debouncedEmitBallMove = debounce((clientId, gameId) => {
+    socket.emit("ballmove", clientId, gameId);
+  }, 20);
 
   useEffect(() => {
     if(socket && gameState){
-      socket.emit("ballmove", clientId, gameInfo.gameId);
+      debouncedEmitBallMove(clientId, gameInfo.gameId);
+      // socket.emit("ballmove", clientId, gameInfo.gameId);
     }}, [ballposition]);
     
     
@@ -66,7 +71,7 @@ const GameBlock = () => {
       }}, [move]);
 
       useEffect(() => {
-        if(socket && bootid === 111 && gameState){
+        if(socket && bootid == 111 && gameState){
           socket.emit("boot", bootid, gameInfo.gameId);
         }}, [ballposition]);
 
@@ -84,7 +89,10 @@ const GameBlock = () => {
 
         const startGame = () => {
           if(socket){
-            start(1);
+            // start(1);
+            setGameState(true);
+              // loop();
+            setButtonClicked(true);
             socket.emit("startGame", gameInfo.gameId);
             // loop();
             // setGameState(true);
@@ -135,14 +143,14 @@ const GameBlock = () => {
               // console.log("data", data);
               // console.log("data2", data2);
               // console.log("data3", data3);
-              if (gameInfo.gameId === gid) {
+              if (gameInfo.gameId == gid) {
                 setBallposition(data);
                 setPosition(data2);
                 setOposition(data3);
               }
             });
             socket.on('updateScores', (data, gid) => {
-              if (gameInfo.gameId === gid) {
+              if (gameInfo.gameId == gid) {
                 setScores(data);
               }
             });
@@ -161,7 +169,7 @@ const GameBlock = () => {
               }
             });
             socket.on("gameOver", (data, gid) => {
-              if (gameInfo.gameId === gid) {
+              if (gameInfo.gameId == gid) {
                 stop();
                 setBallposition(data);
                 // const canvas = context;
@@ -169,7 +177,7 @@ const GameBlock = () => {
               }
             });
             socket.on("dataup", (data1, data2, gid) => {
-              if (gameInfo.gameId === gid) {
+              if (gameInfo.gameId == gid) {
                 if (clientId === 0) {
                   setPosition(data1);
                   setOposition(data2);
@@ -190,11 +198,11 @@ const GameBlock = () => {
     }, [socket]);
 
     return (
-      <div className="canvas-contain">
+      <div className="responsive-wrapper">
         <div className="canvas-background"></div>
-        <img id="ball" src={ballimg} style={{ display: 'none' }} alt="img-ball"/>
-        <img id="kan" src={kanimg} style={{ display: 'none' }} alt="img-kan"/>
-        <img id="line" src={barimg} style={{ display: 'none' }} alt="img-line"/>
+        <img id="ball" src={ballimg} style={{ display: 'none' }} />
+        <img id="kan" src={kanimg} style={{ display: 'none' }} />
+        <img id="line" src={barimg} style={{ display: 'none' }} />
         <canvas ref={(ref) => setContext(ref && ref.getContext('2d'))} width="640" height="480" style={{ border: '1px solid black' }}></canvas>
         <div>
           {[...Array(12)].map((_, index) => (

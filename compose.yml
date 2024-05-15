@@ -15,6 +15,7 @@ services:
       game-network:
         ipv4_address: ${GAME_IP}
     environment:
+      - GAME_IP=${GAME_IP}
       - HOST_NAME=${HOST_NAME}
       - USER_GID=${USER_GID}
     volumes:

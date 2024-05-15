@@ -2,13 +2,13 @@
 // const Http = require("http").Server(Express);
 // const Socketio = require("socket.io")(Http);
 const port = 4000;
-const host = "192.168.32.2";
+const host = process.env.GAME_IP;
 var id = 0;
 createIndex = 0;
 // const id = window.prompt("Game ID :");
-const ballVelocity = 2;
+const ballVelocity = 10;
 const barVelocity = 30;
-var bootVelocity = 25;
+var bootVelocity = 22.5;
 // var velocityPercent = 0;
 // var directionX = Math.random() < 0.5 ? 1 : -1;
 // var directionY = Math.random() < 0.5 ? 1 : -1;
@@ -28,7 +28,7 @@ const io = socketIo(server, {
     }
 });
 
-app.use(cors({ origin: '*' }));
+app.use(cors({ origin: "http://" + process.env.HOST_NAME }));
 
 
 GameData = {
@@ -407,8 +407,6 @@ io.on("connection", (socket) => {
     });
     socket.on("boot", (data, gid) => {
         id = gid;
-            if (data == 111)
-                    bootVelocity = 25;
                 if (GamesList[id].ballpositions.y < GamesList[id].positions2.y && GamesList[id].positions2.y > 0)
                     {
                     GamesList[id].positions2.ly = GamesList[id].positions2.y;
@@ -419,6 +417,16 @@ io.on("connection", (socket) => {
                     GamesList[id].positions2.ly = GamesList[id].positions2.y;
                     GamesList[id].positions2.y += barVelocity - bootVelocity;
                 }
+                // if (GamesList[id].ballpositions.y < GamesList[id].positions.y && GamesList[id].positions.y > 0)
+                //     {
+                //     GamesList[id].positions.ly = GamesList[id].positions.y;
+                //     GamesList[id].positions.y -= barVelocity - bootVelocity;
+                // }
+                //     else if (GamesList[id].ballpositions.y > GamesList[id].positions.y + 100 && GamesList[id].positions.y < 360)
+                // {
+                //     GamesList[id].positions.ly = GamesList[id].positions.y;
+                //     GamesList[id].positions.y += barVelocity - bootVelocity;
+                // }
                     io.emit("dataup", GamesList[id].positions, GamesList[id].positions2, id);
     });
     socket.on("ballmove", (data, gid) => {
