@@ -61,7 +61,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url('./assets/pong.png');
+      background-image: url('./pong.png');
       background-size: cover;
   }
 
