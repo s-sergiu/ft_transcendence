@@ -116,7 +116,7 @@ incorrect_selection() {
 until [ "$selection" = "q" ]; do
   clear
   echo ""
-  echo -e $Z_GREEN"    	1  -  Start server in production mode"$ENDCOLOR
+  echo -e $GREEN"    	1  -  Start server in production mode"$ENDCOLOR
   echo -e $CYAN"    	2  -  Start server in development mode"$ENDCOLOR
   echo -e $BLUE"    	3  -  Clean up docker files and debug folder"$ENDCOLOR
   echo -e $BLUE"    	4  -  Clean up debug folder"$ENDCOLOR
