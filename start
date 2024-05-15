@@ -70,6 +70,10 @@ cleanup_database() {
 	docker rm postgresql
 }
 
+cleanup_network() {
+	docker network prune
+}
+
 cleanup_debug() {
 	rm -rf debug/
 }
@@ -105,6 +109,7 @@ until [ "$selection" = "q" ]; do
   echo -e $BLUE"    	3  -  Clean up docker files and debug folder"$ENDCOLOR
   echo -e $BLUE"    	4  -  Clean up debug folder"$ENDCOLOR
   echo -e $BLUE"    	5  -  Clean up database"$ENDCOLOR
+  echo -e $BLUE"    	6  -  Clean up docker networks"$ENDCOLOR
   echo -e $RED"    	0  -  Exit" $ENDCOLOR
   echo ""
   echo -en $MAGENTA"  Enter selection: "$ENDCOLOR
@@ -116,6 +121,7 @@ until [ "$selection" = "q" ]; do
     3 ) clear ; cleanup ; press_enter ;;
     4 ) clear ; cleanup_debug ; press_enter ;;
     5 ) clear ; cleanup_database ; press_enter ;;
+    6 ) clear ; cleanup_network ; press_enter ;;
     0 ) clear ; exit ;;
     * ) clear ; incorrect_selection ; press_enter ;;
   esac
