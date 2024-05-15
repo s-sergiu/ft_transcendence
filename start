@@ -9,6 +9,18 @@ ENDCOLOR="\e[0m"
 CYAN="\e[36m"
 MAGENTA="\e[95m"
 
+if [[ $OSTYPE == darwin* ]]
+	then
+		PRESS_ENTER=
+		BG_RED=
+		RED=
+		BLUE=
+		GREEN=
+		ENDCOLOR=
+		CYAN=
+		MAGENTA=
+fi
+
 main() {
 
 	user_gid=$(id -g)
@@ -104,7 +116,7 @@ incorrect_selection() {
 until [ "$selection" = "q" ]; do
   clear
   echo ""
-  echo -e $GREEN"    	1  -  Start server in production mode"$ENDCOLOR
+  echo -e $Z_GREEN"    	1  -  Start server in production mode"$ENDCOLOR
   echo -e $CYAN"    	2  -  Start server in development mode"$ENDCOLOR
   echo -e $BLUE"    	3  -  Clean up docker files and debug folder"$ENDCOLOR
   echo -e $BLUE"    	4  -  Clean up debug folder"$ENDCOLOR
