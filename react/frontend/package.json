@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "mdb-react-ui-kit": "8.0.0",
     "bootstrap": "^5.3.3",
+	"three": "^0.164.1",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.3.1",
