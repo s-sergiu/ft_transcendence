@@ -11,6 +11,9 @@ services:
       - react
     ports:
       - "4000:4000"
+    networks:
+      game-network:
+        ipv4_address: ${GAME_IP}
     environment:
       - USER_GID=${USER_GID}
     volumes:
@@ -30,6 +33,7 @@ services:
     depends_on:
       - django
     environment:
+      - REACT_APP_GAME_IP=${GAME_IP}
       - REACT_APP_DJANGO_PORT=${DJANGO_PORT}
       - REACT_APP_HTTP_METHOD=${HTTP_METHOD}
       - PORT=${REACT_PORT}
@@ -84,3 +88,10 @@ services:
       test: pg_isready -d django_db -U postgres -h postgresql -p 5432
       interval: 5s
       retries: 3
+
+networks:
+  game-network:
+    ipam:
+      driver: default
+      config:
+        - subnet: ${SUBNET}

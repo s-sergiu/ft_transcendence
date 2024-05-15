@@ -31,7 +31,7 @@ const GameBlock = () => {
   const [buttonClicked, setButtonClicked] = useState(false);
 
   useEffect(() => {
-    const newSocket = io('http://gameserv:4000');
+    const newSocket = io('http://' + process.env.REACT_APP_GAME_IP + ':4000');
     setSocket(newSocket);
     // startGame();
     // newSocket.emit("infos", gameInfo, gameInfo.gameId);

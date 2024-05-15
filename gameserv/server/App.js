@@ -2,7 +2,7 @@
 // const Http = require("http").Server(Express);
 // const Socketio = require("socket.io")(Http);
 const port = 4000;
-const host = '127.0.0.1';
+const host = "192.168.32.2";
 var id = 0;
 createIndex = 0;
 // const id = window.prompt("Game ID :");
