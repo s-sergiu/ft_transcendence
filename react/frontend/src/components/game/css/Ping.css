@@ -3,7 +3,7 @@
     font-family: "slashed-zero", monospace;
       font-size: 1em;
       /* letter-spacing: 1em; */
-      color: limegreen;
+      color: skyblue;
       padding: 0.2em;
   }
   .digital-number {
@@ -11,7 +11,7 @@
               /* font-family: "slashed-zero", monospace; */
               font-size: 3em;
               letter-spacing: 1em;
-              color: limegreen;
+              color: skyblue;
               padding: 0.2em;
           }
   
@@ -20,7 +20,7 @@
       font-family: "slashed-zero", monospace;
       font-size: 2em;
       /* letter-spacing: 1em; */
-      color: limegreen;
+      color: skyblue;
       padding: 0.2em;
   }
   .Win {
@@ -28,7 +28,7 @@
       font-family: "slashed-zero", monospace;
       font-size: 3em;
       letter-spacing: 1em;
-      color: limegreen;
+      color: skyblue;
       padding: 0.2em;
   }
     .canvas-container {
@@ -44,19 +44,24 @@
   
   canvas {
       position: absolute;
-      top: 5%;
+      top: 0;
       left: 0;
       width: 100%;
       height: 100%;
   }
+  .responsive-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 75%; /* 4:3 aspect ratio (4 / 3 = 0.75) */
+  }
   
   .canvas-background {
       position: absolute;
-      top: 5%;
+      top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url('./pong.png');
+      background-image: url('./assets/pong.png');
       background-size: cover;
   }
 
