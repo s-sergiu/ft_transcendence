@@ -9,9 +9,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
 
 	const [login, setLogin] = useState(false);
+	const [user, setUser] = useState(false);
 	const [token, setToken] = useState(localStorage.getItem("token"));
 
-	if (login || token ) {
+	if (user || login || token ) {
 		return (
 			<UserNavbar 
 				login = { login }

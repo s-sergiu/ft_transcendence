@@ -4,8 +4,9 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-//import Content from './Content';
-import { useEffect } from 'react';
+import LoginPage from './LoginPage';
+import Content from './Content';
+import { useEffect, useState } from 'react';
 
 
 var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
@@ -14,6 +15,7 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 
 function GuestNavbar(props) {
 	const { setToken } = props;
+	const [login, showLogin] = useState(false);
 
     function getCode() {
 		window.open(process.env.REACT_APP_REDIRECT_URI, "_self")
@@ -92,12 +94,17 @@ function GuestNavbar(props) {
           >
           </Nav>
           <Form className="d-flex">
+            <Button onClick = { e => showLogin(true) } variant="outline-success">Login</Button>
+          </Form>
+          <Form className="d-flex">
             <Button onClick = { e => getResponse() } variant="outline-success">Login 42</Button>
           </Form>
         </Navbar.Collapse>
       </Container>
     </Navbar>
-	  <h1>NOT LOGGED</h1>
+	  {
+	  (login) ? ( < LoginPage /> ) : ( <Content /> )
+	  }
     </div>
   );
 }
