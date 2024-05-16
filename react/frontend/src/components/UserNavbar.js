@@ -17,8 +17,28 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 function UserNavbar(props) {
 
 	const { setLoginDetails, setToken } = props
-	const [ gameToggle, setGameToggle ] = useState(false);
+	const [ gameToggle, setGameToggle ] = useState('');
+	const [ tournToggle, setTournToggle ] = useState('');
+	const [ profileToggle, setProfileToggle ] = useState('profile');
 
+	function toggleNav(string) {
+
+		if (string === 'game') {
+			setGameToggle(true);
+			setTournToggle(false);
+			setProfileToggle(false);
+		}
+		else if (string === 'tourn') {
+			setGameToggle(false);
+			setTournToggle(true);
+			setProfileToggle(false);
+		}
+		else if (string === 'profile') {
+			setGameToggle(false);
+			setTournToggle(false);
+			setProfileToggle(true);
+		}
+	}
 	function Logout() {
 		localStorage.clear();
 		setLoginDetails(false);
@@ -80,9 +100,9 @@ function UserNavbar(props) {
             navbarScroll
           >
             <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link onClick = { e => setGameToggle(true) } >Game</Nav.Link>
-            <Nav.Link onClick = { e => setGameToggle(false) } >Profile</Nav.Link>
-            <Nav.Link href="#action1">Tournaments</Nav.Link>
+            <Nav.Link onClick = { e => toggleNav('game') } >Game</Nav.Link>
+            <Nav.Link onClick = { e => toggleNav('profile') } >Profile</Nav.Link>
+            <Nav.Link onClick = { e => toggleNav('tourn') } >Tournaments</Nav.Link>
 
             
           </Nav>
@@ -99,14 +119,8 @@ function UserNavbar(props) {
 	  {/* <ProfileDashboard
 		loginData = {props.login}
 	  /> */}
-	{ gameToggle ? (
-			<Game />
-		) : (
-			<Profile 
-				 loginData = { props.login }
-			/>,
-			<Tournament/>
-		)
+	{ 
+		gameToggle ? ( <Game /> ) : ((tournToggle) ? (<Tournament /> ) : ( <Profile loginData = { props.login } /> ))
 	}
     </div>
   );
