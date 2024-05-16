@@ -53,7 +53,6 @@ function Game3D() {
 	function initScene() {
 		renderer = new THREE.WebGLRenderer({canvas: document.getElementById('canvas'), antialias: true});
 		renderer.setSize(window.innerWidth, window.innerHeight);
-		document.body.appendChild(renderer.domElement);
 		renderer.setClearColor(0x0000FF);
 		renderer.shadowMap.enabled = true;
 		scene = new THREE.Scene();
