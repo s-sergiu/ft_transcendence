@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cp -R debug/react/* react/frontend/src/.
-cp debug/gameserv/App.js gameserv/App.js
+cp debug/gameserv/App.js gameserv/server/App.js
