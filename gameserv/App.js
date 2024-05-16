@@ -408,6 +408,8 @@ io.on("connection", (socket) => {
     });
     socket.on("boot", (data, gid) => {
         id = gid;
+        bootVelocity = Math.floor(Math.random() * 4) + 19;
+        console.log("bootVelocity : " + bootVelocity);
                 if (GamesList[id].ballpositions.y < GamesList[id].positions2.y && GamesList[id].positions2.y > 0)
                     {
                     GamesList[id].positions2.ly = GamesList[id].positions2.y;
@@ -507,7 +509,7 @@ io.on("connection", (socket) => {
             // socket.emit("dataup", GamesList[id].positions, GamesList[id].positions2, GamesList[id].gameId);
             }});
             socket.on('join', ({ userId }) => {
-                console.log("socket id :" + socket.id);
+                console.log("socket id :" +socket.id);
                 users[socket.id] = userId;
                 console.log(`User ${userId} connected with ID: ${socket.id}`);
               });

@@ -199,7 +199,7 @@ const GameBlock = () => {
 
     return (
       <div className="responsive-wrapper">
-        <div className="canvas-background"></div>
+        {/* <div className="canvas-background"></div> */}
         <img id="ball" src={ballimg} style={{ display: 'none' }} />
         <img id="kan" src={kanimg} style={{ display: 'none' }} />
         <img id="line" src={barimg} style={{ display: 'none' }} />
@@ -215,10 +215,16 @@ const GameBlock = () => {
         <button style={{ position: 'absolute', left: '46%', top: '91%' }} onClick={() => startGame()} disabled={scores.player1 !== 0 || scores.player2 !== 0 || buttonClicked}>
           Start
         </button>
-        <div className="digital-number" style={{ position: 'absolute', left: '39%', top: '4%' }}>
+        <div className="player-name" style={{ position: 'absolute', left: '30%', top: '0%' }}>
+          {gameInfo.player1}
+        </div>
+        <div className="player-name" style={{ position: 'absolute', left: '55%', top: '0%' }}>
+          {gameInfo.player2}
+        </div>
+        <div className="digital-number" style={{ position: 'absolute', left: '35%', top: '6%' }}>
           {scores.player1}
         </div>
-        <div className="digital-number" style={{ position: 'absolute', left: '53%', top: '4%' }}>
+        <div className="digital-number" style={{ position: 'absolute', left: '60%', top: '6%' }}>
           {scores.player2}
         </div>
         {scores.player2 > 10 && <div className="Winner" style={{ position: 'absolute', left: '37%', top: '37%' }}>{gameInfo.player2}</div>}
