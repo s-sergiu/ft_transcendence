@@ -1,0 +1,93 @@
+.tournament {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tournament-title {
+  text-align: center;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  font-weight: bold;
+  color: #555;
+}
+
+.form-control {
+  border-radius: 4px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.btn-secondary:hover, .btn-secondary:focus {
+  background-color: #545b62;
+  border-color: #545b62;
+}
+
+.btn-success:hover, .btn-success:focus {
+  background-color: #218838;
+  border-color: #218838;
+}
+
+.match-layer {
+  margin-top: 20px;
+}
+
+.match-layer:hover {
+  background-color: #e9e9e9;
+}
+
+.match-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.match-container {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.match-container:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.match-info {
+  margin-bottom: 10px;
+}
+
+.match-info p {
+  margin: 0;
+  color: #555;
+}
+

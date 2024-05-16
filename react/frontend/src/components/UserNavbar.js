@@ -8,6 +8,7 @@ import Game3D from './3d-game/3DGame';
 import Game from './game/Ping';
 import Profile from './profile';
 import { useEffect, useState } from 'react';
+import Tournament from './tournaments';
 //import Content from './Content';
 
 var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
@@ -17,8 +18,28 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 function UserNavbar(props) {
 
 	const { setLoginDetails, setToken } = props
-	const [ gameToggle, setGameToggle ] = useState(false);
+	const [ gameToggle, setGameToggle ] = useState('');
+	const [ tournToggle, setTournToggle ] = useState('');
+	const [ profileToggle, setProfileToggle ] = useState('profile');
 
+	function toggleNav(string) {
+
+		if (string === 'game') {
+			setGameToggle(true);
+			setTournToggle(false);
+			setProfileToggle(false);
+		}
+		else if (string === 'tourn') {
+			setGameToggle(false);
+			setTournToggle(true);
+			setProfileToggle(false);
+		}
+		else if (string === 'profile') {
+			setGameToggle(false);
+			setTournToggle(false);
+			setProfileToggle(true);
+		}
+	}
 	function Logout() {
 		localStorage.clear();
 		setLoginDetails(false);
@@ -71,7 +92,7 @@ function UserNavbar(props) {
     <div className="App">
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand href="#">Inception</Navbar.Brand>
+        <Navbar.Brand href="#">transcendence</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -80,9 +101,10 @@ function UserNavbar(props) {
             navbarScroll
           >
             <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link onClick = { e => setGameToggle(true) } >Game</Nav.Link>
-            <Nav.Link onClick = { e => setGameToggle(false) } >Profile</Nav.Link>
-            <Nav.Link href="#action1">Suggested friends</Nav.Link>
+            <Nav.Link onClick = { e => toggleNav('game') } >Game</Nav.Link>
+            <Nav.Link onClick = { e => toggleNav('profile') } >Profile</Nav.Link>
+            <Nav.Link onClick = { e => toggleNav('tourn') } >Tournaments</Nav.Link>
+
             
           </Nav>
 		  <Form className="d-flex">
@@ -98,13 +120,8 @@ function UserNavbar(props) {
 	  {/* <ProfileDashboard
 		loginData = {props.login}
 	  /> */}
-	{ gameToggle ? (
-			<Game3D />
-		) : (
-			<Profile 
-				 loginData = { props.login }
-			/>
-		)
+	{ 
+		gameToggle ? ( <Game /> ) : ((tournToggle) ? (<Tournament /> ) : ( <Profile loginData = { props.login } /> ))
 	}
     </div>
   );
