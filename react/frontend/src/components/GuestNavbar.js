@@ -1,4 +1,5 @@
 
+import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -17,6 +18,7 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 function GuestNavbar(props) {
 	const { setToken } = props;
 	const [login, showLogin] = useState(false);
+	const [id, setId] = useState(1);
 
     function getCode() {
 		window.open(process.env.REACT_APP_REDIRECT_URI, "_self")
@@ -28,8 +30,29 @@ function GuestNavbar(props) {
 		getCode()
 	}
 
+	async function getDB(choice) {
+		let csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
+		const response = await fetch(URL + '/api/request-info', {
+			mode:  'cors',
+			method: 'POST',
+			credentials: 'include',
+			body: JSON.stringify({
+				choice : choice
+			}),
+			headers: {
+				"X-CSRFToken": csrf,
+				'Content-Type': 'application/json'
+			},
+		})
+		return response.json();
+	}
+
+	async function requestDB() {
+		const data = await getDB(id);
+		console.log(data[0]['fields'])	
+	}
+
 	async function generateDB() {
-		console.log(data);
 		let res = await getMessage();
 		document.cookie = "csrftoken=" + res.token;
 		let csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
@@ -123,6 +146,18 @@ function GuestNavbar(props) {
           <Form className="d-flex">
             <Button onClick = { e => generateDB() } variant="outline-success">Generate DB</Button>
           </Form>
+          <Form className="d-flex">
+            <Button onClick = { e => requestDB() } variant="outline-success">Request DB</Button>
+          </Form>
+		  <InputGroup size="sm" className="mb-3">
+			<InputGroup.Text id="inputGroup-sizing-sm">Small</InputGroup.Text>
+			<Form.Control
+			  value={ id }
+			  onChange={e => setId(e.target.value)}
+			  aria-label="ID"
+			  aria-describedby="inputGroup-sizing-sm"
+			/>
+		  </InputGroup>
           </Nav>
           <Form className="d-flex">
             <Button onClick = { e => showLogin(true) } variant="outline-success">Login</Button>

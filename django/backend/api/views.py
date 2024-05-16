@@ -68,8 +68,11 @@ def getUserInfo(request):
 
 def populateDB(request):
     data = json.loads(request.body.decode("utf-8"))
-    print(data, file=sys.stderr);
-    extended = ExtendedUser.create_users(data);
-    print(extended, file=sys.stderr);
-    return (JsonResponse(serialize_object(extended), safe=False))
+    ExtendedUser.create_users(data);
+    return None
+
+def requestFromDB(request):
+    choice = json.loads(request.body.decode("utf-8"))
+    ext = ExtendedUser.objects.get(id = choice['choice'])
+    return (JsonResponse(serialize_object(ext), safe=False))
 
