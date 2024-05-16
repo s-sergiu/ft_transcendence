@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { play } from './3d-game/3DGame';
+import Game3D from './3d-game/3DGame';
 import Game from './game/Ping';
 import Profile from './profile';
 import { useEffect, useState } from 'react';
@@ -88,9 +88,6 @@ function UserNavbar(props) {
 		  <Form className="d-flex">
             <Button onClick = { e => Logout()} variant="outline-success">Logout</Button>
           </Form>
-		  <Form className="d-flex">
-            <Button onClick = { e => play()} variant="outline-success">Play</Button>
-          </Form>
 
         </Navbar.Collapse>
       </Container>
@@ -102,7 +99,7 @@ function UserNavbar(props) {
 		loginData = {props.login}
 	  /> */}
 	{ gameToggle ? (
-			<Game />
+			<Game3D />
 		) : (
 			<Profile 
 				 loginData = { props.login }
