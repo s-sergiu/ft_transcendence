@@ -39,7 +39,7 @@ class ExtendedUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     token = models.ForeignKey(Token, on_delete=models.CASCADE, null = True)
     def create_users(api_data):
-        for x in range(1, 8):
+        for x in range(1, 9):
             usr1 = User.objects.create_user("test"+str(x))
             usr1.save()
             user = api_data['user'+str(x)];
