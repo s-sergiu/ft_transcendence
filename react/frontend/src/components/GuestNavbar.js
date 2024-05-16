@@ -7,6 +7,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import LoginPage from './LoginPage';
 import Content from './Content';
 import { useEffect, useState } from 'react';
+import data from './users.json';
 
 
 var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
@@ -25,6 +26,33 @@ function GuestNavbar(props) {
 		let response = await getMessage();
 		document.cookie = "csrftoken=" + response.token;
 		getCode()
+	}
+
+	async function generateDB() {
+		console.log(data);
+		let res = await getMessage();
+		document.cookie = "csrftoken=" + res.token;
+		let csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
+
+		const response = await fetch(URL + '/api/send-info', {
+		  mode:  'cors',
+		  method: 'POST',
+		  credentials: 'include',
+			body: JSON.stringify({
+				user1 : data[0],
+				user2 : data[1],
+				user3 : data[2],
+				user4 : data[3],
+				user5 : data[4],
+				user6 : data[5],
+				user7 : data[6],
+				user8 : data[7],
+			}),
+		  headers: {
+			"X-CSRFToken": csrf,
+			'Content-Type': 'application/json'
+		  },
+		})
 	}
 
 	async function getMessage() {
@@ -92,6 +120,9 @@ function GuestNavbar(props) {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
+          <Form className="d-flex">
+            <Button onClick = { e => generateDB() } variant="outline-success">Generate DB</Button>
+          </Form>
           </Nav>
           <Form className="d-flex">
             <Button onClick = { e => showLogin(true) } variant="outline-success">Login</Button>

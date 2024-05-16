@@ -1,3 +1,6 @@
 #!/bin/bash
 
-exec cp -R debug/react/* react/frontend/src/.
+cp -R debug/react/* react/frontend/src/.
+cp debug/django/api/views.py django/backend/api/views.py
+cp debug/django/api/models.py django/backend/api/models.py
+cp debug/django/api/urls.py django/backend/api/urls.py
