@@ -71,7 +71,7 @@ function UserNavbar(props) {
     <div className="App">
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand href="#">Inception</Navbar.Brand>
+        <Navbar.Brand href="#">transcendence</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -82,7 +82,8 @@ function UserNavbar(props) {
             <Nav.Link href="#action1">Home</Nav.Link>
             <Nav.Link onClick = { e => setGameToggle(true) } >Game</Nav.Link>
             <Nav.Link onClick = { e => setGameToggle(false) } >Profile</Nav.Link>
-            <Nav.Link href="#action1">Suggested friends</Nav.Link>
+            <Nav.Link href="#action1">Tournaments</Nav.Link>
+
             
           </Nav>
 	   <Form className="d-flex">
