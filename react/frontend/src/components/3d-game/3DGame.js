@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import * as THREE from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
+import './3DGame.css';
 
 function Game3D() {
 
@@ -270,7 +271,7 @@ function Game3D() {
 		  <Form className="d-flex">
             <Button onClick = { e => play()} variant="outline-success">Play</Button>
           </Form>
-		  <canvas id="canvas"></canvas>
+		  <canvas class="3d-game" id="canvas"></canvas>
 		  </div>
 	);
 }

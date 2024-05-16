@@ -19,6 +19,7 @@ function UserNavbar(props) {
 
 	const { setLoginDetails, setToken } = props
 	const [ gameToggle, setGameToggle ] = useState('');
+	const [ game3dToggle, set3dToggle ] = useState('');
 	const [ tournToggle, setTournToggle ] = useState('');
 	const [ profileToggle, setProfileToggle ] = useState('profile');
 
@@ -28,16 +29,25 @@ function UserNavbar(props) {
 			setGameToggle(true);
 			setTournToggle(false);
 			setProfileToggle(false);
+			set3dToggle(false);
 		}
 		else if (string === 'tourn') {
 			setGameToggle(false);
 			setTournToggle(true);
 			setProfileToggle(false);
+			set3dToggle(false);
 		}
 		else if (string === 'profile') {
 			setGameToggle(false);
 			setTournToggle(false);
 			setProfileToggle(true);
+			set3dToggle(false);
+		}
+		else if (string === '3dgame') {
+			setGameToggle(false);
+			setTournToggle(false);
+			setProfileToggle(false);
+			set3dToggle(true);
 		}
 	}
 	function Logout() {
@@ -102,6 +112,7 @@ function UserNavbar(props) {
           >
             <Nav.Link href="#action1">Home</Nav.Link>
             <Nav.Link onClick = { e => toggleNav('game') } >Game</Nav.Link>
+            <Nav.Link onClick = { e => toggleNav('3dgame') } >3D Game</Nav.Link>
             <Nav.Link onClick = { e => toggleNav('profile') } >Profile</Nav.Link>
             <Nav.Link onClick = { e => toggleNav('tourn') } >Tournaments</Nav.Link>
 
@@ -114,15 +125,24 @@ function UserNavbar(props) {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-    {/* <SuggestedFriends/> */}
-    {/* <PingPongGame/> */}
-
-	  {/* <ProfileDashboard
-		loginData = {props.login}
-	  /> */}
-	{ 
-		gameToggle ? ( <Game /> ) : ((tournToggle) ? (<Tournament /> ) : ( <Profile loginData = { props.login } /> ))
-	}
+	<div>
+	{	(() => { 
+		if (gameToggle) { 
+			return ( <Game /> )
+		} else if (tournToggle) {
+			return ( <Tournament /> )
+		} else if (profileToggle) {
+			return (
+				<Profile 
+					loginData = { props.login } 
+				/>
+			)
+		} else if (game3dToggle) {
+			return ( <Game3D /> )
+		}
+	})
+	() }
+	  </div>
     </div>
   );
 }
