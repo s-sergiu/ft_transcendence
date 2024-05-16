@@ -4,7 +4,8 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import Game from './game/Ping.js';
+import Game3D from './3d-game/3DGame';
+import Game from './game/Ping';
 import Profile from './profile';
 import { useEffect, useState } from 'react';
 import Tournament from './tournaments';
@@ -106,7 +107,7 @@ function UserNavbar(props) {
 
             
           </Nav>
-	   <Form className="d-flex">
+		  <Form className="d-flex">
             <Button onClick = { e => Logout()} variant="outline-success">Logout</Button>
           </Form>
 

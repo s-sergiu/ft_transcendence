@@ -74,9 +74,6 @@ const LoginPage = () => {
                   Submit
                 </Button>
                 <br></br><br></br>
-                <Button variant="primary" type="submit">
-                  Authentification
-                </Button>
                 </div>
               </Form>
             </>
