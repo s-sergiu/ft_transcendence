@@ -1,6 +1,7 @@
 // const Express = require("express")();
 // const Http = require("http").Server(Express);
 // const Socketio = require("socket.io")(Http);
+let users = {};
 const port = 4000;
 const host = process.env.GAME_IP;
 var id = 0;
@@ -506,6 +507,7 @@ io.on("connection", (socket) => {
             // socket.emit("dataup", GamesList[id].positions, GamesList[id].positions2, GamesList[id].gameId);
             }});
             socket.on('join', ({ userId }) => {
+                console.log("socket id :" + socket.id);
                 users[socket.id] = userId;
                 console.log(`User ${userId} connected with ID: ${socket.id}`);
               });

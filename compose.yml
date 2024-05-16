@@ -32,8 +32,8 @@ services:
         REACT_APP_REDIRECT_URI: ${REDIRECT_URI}
         REACT_APP_HTTP_METHOD: ${HTTP_METHOD}
     container_name: react
-    depends_on:
-      - django
+    # depends_on:
+    #   - django
     environment:
       - REACT_APP_GAME_IP=${GAME_IP}
       - REACT_APP_DJANGO_PORT=${DJANGO_PORT}
@@ -49,47 +49,47 @@ services:
     volumes:
       - ./debug/react:/debug/src
     restart: on-failure
-  django:
-    build: 
-      dockerfile: Dockerfile
-      context: django/.
-      target: ${STAGE}
-    container_name: django
-    ports:
-      - "${DJANGO_PORT}:${DJANGO_PORT}"
-    depends_on:
-      postgresql:
-        condition: service_healthy
-    volumes:
-      - ./debug/django:/debug/backend
-    environment:
-      - DJANGO_DEBUG=${DJANGO_DEBUG}
-      - HTTP_METHOD=${HTTP_METHOD}
-      - REACT_PORT=${REACT_PORT}
-      - CLIENT_ID=${CLIENT_ID}
-      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
-      - CLIENT_SECRET=${CLIENT_SECRET}
-      - HOST_IP=${HOST_IP}
-      - HOST_NAME=${HOST_NAME}
-      - USER_GID=${USER_GID}
-      - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD}
-      - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
-      - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
-    restart: on-failure
-  postgresql:
-    build: postgres/.
-    container_name: postgresql
-    environment:
-      - PGDATA=${PGDATA}
-      - LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
-    restart: on-failure
-    healthcheck:
-      test: pg_isready -d django_db -U postgres -h postgresql -p 5432
-      interval: 5s
-      retries: 3
+#   django:
+#     build: 
+#       dockerfile: Dockerfile
+#       context: django/.
+#       target: ${STAGE}
+#     container_name: django
+#     ports:
+#       - "${DJANGO_PORT}:${DJANGO_PORT}"
+#     depends_on:
+#       postgresql:
+#         condition: service_healthy
+#     volumes:
+#       - ./debug/django:/debug/backend
+#     environment:
+#       - DJANGO_DEBUG=${DJANGO_DEBUG}
+#       - HTTP_METHOD=${HTTP_METHOD}
+#       - REACT_PORT=${REACT_PORT}
+#       - CLIENT_ID=${CLIENT_ID}
+#       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+#       - CLIENT_SECRET=${CLIENT_SECRET}
+#       - HOST_IP=${HOST_IP}
+#       - HOST_NAME=${HOST_NAME}
+#       - USER_GID=${USER_GID}
+#       - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD}
+#       - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
+#       - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
+#     restart: on-failure
+#   postgresql:
+#     build: postgres/.
+#     container_name: postgresql
+#     environment:
+#       - PGDATA=${PGDATA}
+#       - LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
+#       - POSTGRES_USER=${POSTGRES_USER}
+#       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+#       - POSTGRES_DB=${POSTGRES_DB}
+#     restart: on-failure
+#     healthcheck:
+#       test: pg_isready -d django_db -U postgres -h postgresql -p 5432
+#       interval: 5s
+#       retries: 3
 
 networks:
   game-network:

@@ -1,0 +1,352 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  margin: 0;
+  font-size: 16px;
+  background: #f0f0f7;
+  color: #333;
+}
+
+body {
+  /* background-image: url('../img/masthead.jpg'); */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0; */
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-bottom: 1px solid #eaeaea;
+  color: #333;
+  padding: 10px 20px;
+  justify-content: space-between;
+  /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); */
+}
+
+.header-profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  margin-right: 10px;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
+  margin-top: 10px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background-color: #f9f9f9;
+  border: 2px solid #cd07db;
+  
+}
+
+.header-title {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 18px;
+}
+
+.header-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #007aff;
+  font-size: 16px;
+  background-color: transparent;
+  /* box-shadow: 0 4px 8px rgba(0,0,0,0.2); */
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+button {
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  background-color: #007aff;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+input, textarea {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  width: 100%;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #007aff;
+}
+
+.modal {
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.contact-item {
+  background-color: rgba(249, 249, 249, 0.8); 
+  border-bottom: 1px solid rgba(204, 204, 204, 0.5); 
+}
+
+.options-dropdown button {
+  color: #007AFF; 
+  background-color: rgba(255, 255, 255, 0.5); 
+}
+
+.options-dropdown button:hover {
+  background-color: rgba(238, 238, 255, 0.6); 
+}
+
+.notifications-container {
+  background: rgba(255, 255, 255, 0.95); 
+  box-shadow: 0px 0px 20px rgba(0,0,0,0.1); 
+}
+
+.chat-window {
+  background-color: rgba(255, 255, 255, 0.95); 
+}
+
+.chat-header {
+  background-color: rgba(0, 122, 255, 0.95); 
+}
+
+.chat-message.self-end {
+  background-color: rgba(76, 217, 100, 0.95); 
+}
+
+.chat-input button {
+  background-color: rgba(0, 122, 255, 0.95); 
+}
+
+.profile-page {
+  background-color: rgba(249, 249, 249, 0.95);
+}
+
+.profile-picNtitle {
+  /* padding: 5px; */
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+/* Utilizing backdrop-filter for iOS-style blur effects */
+.control-center, .notifications-container, .chat-window, .profile-page {
+  backdrop-filter: blur(10px);
+}
+
+/* Smooth transitions for modal and overlays */
+.modal-content, .chat-box {
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+
+.contact-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  background-color: #f9f9f9;
+}
+
+.contact-name {
+  font-size: 16px;
+}
+
+.options-dropdown {
+  display: none;
+  position: relative;
+  cursor: pointer;
+}
+
+.options-dropdown button {
+  display: block;
+  padding: 8px;
+  width: 100%;
+  text-align: left;
+  background-color: transparent;
+  border: none;
+  color: #007AFF;
+}
+
+.options-dropdown button:hover {
+  background-color: #eef;
+}
+
+.notifications-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  background: white;
+  border: 1px solid #ddd;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.notification {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.notification:last-child {
+  border-bottom: none;
+}
+
+/* General padding and margins adjustments */
+.mb-3 input {
+  margin-left: auto;
+  width: 60%; /* Adjusted from 600px for better responsiveness */
+  margin-right: auto;
+  display: block;
+}
+
+.input-group {
+  margin-bottom: 15px;
+  padding: 10px;
+}
+
+/* .App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+} */
+
+.chat-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  cursor:  pointer;
+}
+
+.chat-window {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: 300px;
+  height: 400px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-header {
+  padding: 10px;
+  background-color: #007AFF;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.chat-message {
+  margin: 5px;
+  padding: 10px;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+}
+
+.chat-message.self-end {
+  align-self: flex-end;
+  background-color: #4cd964;
+}
+
+.chat-input {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.chat-input input {
+  flex: 1;
+  margin-right: 10px;
+  padding: 8px;
+  font-size: 16px;
+}
+
+.chat-input button {
+  padding: 8px 16px;
+  background-color: #007AFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.profile-page {
+  /* padding: 20px; */
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  margin: 20px;
+  border-radius: 5px;
+}
+
+.profile-page h1 {
+  color: #333;
+}
+
+.profile-page p {
+  font-size: 16px;
+  color: #666;
+  margin-left: 20px;
+}
+
+.profile-page button {
+  padding: 10px 20px;
+  background-color: #007AFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* Add smooth transitions for opening/closing components */
+.chat-box {
+  transition: transform 0.3s ease-in-out;
+  width: 50%;
+  bottom: 20px;
+  right: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  position: fixed;
+  z-index: 1000;
+}
+
+/* Style for the new profile page and dialog */
+
+.modal-content {
+  transition: all 0.2s ease-in-out;
+}

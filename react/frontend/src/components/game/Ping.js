@@ -229,8 +229,8 @@ const GameBlock = () => {
         </div>
       </div>
     );
+    return socket;
   };
-  
   export default GameBlock;
 
 

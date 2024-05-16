@@ -6,6 +6,9 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 //import Content from './Content';
 import { useEffect } from 'react';
+import Chat from './Chat/Xat.js';
+import Game from './game/Ping.js';
+import { useState } from 'react';
 
 
 var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
@@ -13,6 +16,7 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME 
 
 function GuestNavbar(props) {
+	const [isGameOn, setIsGameOn] = useState(false);//added by reda
 	const { setToken } = props;
 
     function getCode() {
@@ -77,6 +81,10 @@ function GuestNavbar(props) {
 			})
 		}
 	}, [setToken]);
+	//added by reda
+  const handleGameToggle = () => {
+    setIsGameOn(!isGameOn);
+  };
 
   return (
     <div className="App">
@@ -98,6 +106,9 @@ function GuestNavbar(props) {
       </Container>
     </Navbar>
 	  <h1>NOT LOGGED</h1>
+	  <button onClick={handleGameToggle}>{isGameOn ? "End Game" : "Start Game"}</button>
+      {isGameOn ? <Game /> : null}
+      {!isGameOn ? <Chat /> : null}
     </div>
   );
 }
