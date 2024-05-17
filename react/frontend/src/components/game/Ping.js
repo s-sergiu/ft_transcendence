@@ -8,8 +8,8 @@ import barimg from './assets/bar.png';
 import { debounce } from 'lodash';
 
 
-const GameBlock = ({gameInfo, bootid, winner, onWinnerChange}) => {
-  // console.log("GINFO :" + gameInfo.player1);
+const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
+  console.log("GINFO :" + gameInfo.playerId);
   const [countdown, setCountdown] = useState(0);
   const [move, setMove] = useState(null);
   const [infos, setInfos] = useState(0);
@@ -59,8 +59,9 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange}) => {
   }, [context, position, oposition, ballposition]);
 
   const debouncedEmitBallMove = debounce((clientId, gameId) => {
-    socket.emit("ballmove", clientId, gameId);
+    socket.emit("ballmove", clientId, gameId, online);
   }, 20);
+
 
   useEffect(() => {
     if(socket && gameState){
@@ -69,7 +70,7 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange}) => {
     }}, [ballposition]);
 
     useEffect(() => {
-        if (scores.player1 > 10 || scores.player2 > 10) {
+        if (!bootid && !online && gameInfo.gameId != 0 && (scores.player1 > 10 || scores.player2 > 10)) {
           handleWinnerChange(gameInfo.player1 > 10? gameInfo.player1 : gameInfo.player2);
         }
       }, [scores]);
@@ -145,10 +146,19 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange}) => {
 
         useEffect(() => {
           if (socket) {
+            if (!buttonClicked && online && clientId == 1){
+                startGame();
+                // setButtonClicked(true);
+            }
             // /Emit/ //
             socket.emit("infos", gameInfo, gameInfo.gameId);
 
             // /Listen/ //
+            socket.on("startGame", (data, gid) => {
+              if (gameInfo.gameId == data && clientId == 1) {
+                startGame();
+              }
+            });
             socket.on("ballposition", (data, data2, data3, gid) => {
               // console.log("GIDD", gid);
               // console.log("GIDD2", gameInfo.gameId);
@@ -224,9 +234,9 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange}) => {
         {/* <button style={{ position: 'absolute', left: '46%', top: '91%' }} onClick={() => start(2)} disabled={scores.player1 <= 10 && scores.player2 <= 10}>
           Play Again
         </button> */}
-        <button style={{ position: 'absolute', left: '46%', top: '91%' }} onClick={() => startGame()} disabled={scores.player1 !== 0 || scores.player2 !== 0 || buttonClicked}>
+        {!online && <button style={{ position: 'absolute', left: '46%', top: '91%' }} onClick={() => startGame()} disabled={scores.player1 !== 0 || scores.player2 !== 0 || buttonClicked}>
           Start
-        </button>
+        </button>}
         <div className="player-name" style={{ position: 'absolute', left: '30%', top: '0%' }}>
           {gameInfo.player1}
         </div>

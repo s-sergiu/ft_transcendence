@@ -181,8 +181,8 @@ function GuestNavbar(props) {
 	  {/* <button onClick={handleGameToggle}>{isGameOn ? "End Game" : "Start Game"}</button>
       {isGameOn ? <Game /> : null}
       {!isGameOn ? <Chat /> : null} */}
-		{/* <Mode /> */}
-		<Game3D />
+		<Mode />
+		{/* <Game3D /> */}
 
     </div>
   );
