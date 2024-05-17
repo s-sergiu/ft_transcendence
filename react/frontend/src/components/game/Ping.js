@@ -8,7 +8,7 @@ import barimg from './assets/bar.png';
 import { debounce } from 'lodash';
 
 
-const GameBlock = ({gameInfo, bootid}) => {
+const GameBlock = ({gameInfo, bootid, winner, onWinnerChange}) => {
   // console.log("GINFO :" + gameInfo.player1);
   const [countdown, setCountdown] = useState(0);
   const [move, setMove] = useState(null);
@@ -31,6 +31,11 @@ const GameBlock = ({gameInfo, bootid}) => {
   //     setGameInfo(gameInfo2);
   //   }
   // }, [gameInfo2, gameInfo]);
+
+  const handleWinnerChange = (newWinner) => {
+    onWinnerChange(newWinner);
+    console.log("Winner: " + newWinner);
+  };
 
   useEffect(() => {
     const newSocket = io('http://' + process.env.REACT_APP_GAME_IP + ':4000');
@@ -153,6 +158,10 @@ const GameBlock = ({gameInfo, bootid}) => {
             socket.on('updateScores', (data, gid) => {
               if (gameInfo.gameId == gid) {
                 setScores(data);
+                if ( data.player1 == 2)
+                  handleWinnerChange(gameInfo.player1);
+                else if ( data.player2 == 2)
+                  handleWinnerChange(gameInfo.player2);
               }
             });
             socket.on("lose", (data, data2, data3, gid) => {

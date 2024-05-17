@@ -81,8 +81,8 @@ function GameInfo({ navigate, gameType }) {
   // Render form for filling 4 infos based on type
   return (
     <div>
-      <h2>Game Information</h2>
-      <p>Type: {gameType}</p>
+      {/* <h2>Game Information</h2>
+      <p>Type: {gameType}</p> */}
       {fillInfos(gameType)}
     </div>
   );
