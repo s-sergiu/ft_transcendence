@@ -1,0 +1,14 @@
+/* Styles for the Navbar */
+.navbar {
+    background: linear-gradient(90deg, rgba(36, 36, 36, 0.9), rgba(36, 36, 36, 0.7));
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background 0.5s ease;
+  }
+  
+  .navbar-brand {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    color: #fff !important;
+    transition: color 0.3s ease;
+  }
+  
