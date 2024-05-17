@@ -8,7 +8,8 @@ import barimg from './assets/bar.png';
 import { debounce } from 'lodash';
 
 
-const GameBlock = () => {
+const GameBlock = ({gameInfo, bootid, winner, onWinnerChange}) => {
+  // console.log("GINFO :" + gameInfo.player1);
   const [countdown, setCountdown] = useState(0);
   const [move, setMove] = useState(null);
   const [infos, setInfos] = useState(0);
@@ -17,19 +18,24 @@ const GameBlock = () => {
   const [position, setPosition] = useState({ lx: 0, ly: 180, x: 0, y: 180 });
   const [oposition, setOposition] = useState({ lx: 630, ly: 180, x: 630, y: 180 });
   const [ballposition, setBallposition] = useState({ lx: 320, ly: 240, x: 320, y: 240 });
-  const [gameInfo, setGameInfo] = useState({
-    gameId: 10,
-    player1: 'player1',
-    player2: 'player2',
-    playerId: 1,
-  });
   const [gameState, setGameState] = useState(true);
   const [scores, setScores] = useState({ player1: 0, player2: 0 });
   const [lastpl, setLastpl] = useState(1);
   const [intervalId, setIntervalId] = useState(null);
-  const [clientId, setClientId] = useState(1);
-  const [bootid, setBootid] = useState(111);
+  const [clientId, setClientId] = useState(gameInfo.playerId);
+  // const [bootid, setBootid] = useState(111);
   const [buttonClicked, setButtonClicked] = useState(false);
+
+  // useEffect(() => {
+  //   if (gameInfo2 && JSON.stringify(gameInfo2) !== JSON.stringify(gameInfo)) {
+  //     setGameInfo(gameInfo2);
+  //   }
+  // }, [gameInfo2, gameInfo]);
+
+  const handleWinnerChange = (newWinner) => {
+    onWinnerChange(newWinner);
+    console.log("Winner: " + newWinner);
+  };
 
   useEffect(() => {
     const newSocket = io('http://' + process.env.REACT_APP_GAME_IP + ':4000');
@@ -152,6 +158,10 @@ const GameBlock = () => {
             socket.on('updateScores', (data, gid) => {
               if (gameInfo.gameId == gid) {
                 setScores(data);
+                if ( data.player1 == 2)
+                  handleWinnerChange(gameInfo.player1);
+                else if ( data.player2 == 2)
+                  handleWinnerChange(gameInfo.player2);
               }
             });
             socket.on("lose", (data, data2, data3, gid) => {
@@ -199,7 +209,7 @@ const GameBlock = () => {
 
     return (
       <div className="responsive-wrapper">
-        <div className="canvas-background"></div>
+        {/* <div className="canvas-background"></div> */}
         <img id="ball" src={ballimg} style={{ display: 'none' }} />
         <img id="kan" src={kanimg} style={{ display: 'none' }} />
         <img id="line" src={barimg} style={{ display: 'none' }} />
@@ -215,10 +225,16 @@ const GameBlock = () => {
         <button style={{ position: 'absolute', left: '46%', top: '91%' }} onClick={() => startGame()} disabled={scores.player1 !== 0 || scores.player2 !== 0 || buttonClicked}>
           Start
         </button>
-        <div className="digital-number" style={{ position: 'absolute', left: '39%', top: '4%' }}>
+        <div className="player-name" style={{ position: 'absolute', left: '30%', top: '0%' }}>
+          {gameInfo.player1}
+        </div>
+        <div className="player-name" style={{ position: 'absolute', left: '55%', top: '0%' }}>
+          {gameInfo.player2}
+        </div>
+        <div className="digital-number" style={{ position: 'absolute', left: '35%', top: '6%' }}>
           {scores.player1}
         </div>
-        <div className="digital-number" style={{ position: 'absolute', left: '53%', top: '4%' }}>
+        <div className="digital-number" style={{ position: 'absolute', left: '60%', top: '6%' }}>
           {scores.player2}
         </div>
         {scores.player2 > 10 && <div className="Winner" style={{ position: 'absolute', left: '37%', top: '37%' }}>{gameInfo.player2}</div>}
@@ -229,8 +245,8 @@ const GameBlock = () => {
         </div>
       </div>
     );
+    return socket;
   };
-  
   export default GameBlock;
 
 

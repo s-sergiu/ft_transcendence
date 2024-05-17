@@ -5,6 +5,8 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import Chat from './Chat/Xat.js';
+import Mode from './game/mode.js';
 import LoginPage from './LoginPage';
 import Content from './Content';
 import { useEffect, useState } from 'react';
@@ -16,6 +18,7 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME 
 
 function GuestNavbar(props) {
+	const [isGameOn, setIsGameOn] = useState(false);//added by reda
 	const { setToken } = props;
 	const [login, showLogin] = useState(false);
 	const [id, setId] = useState(1);
@@ -130,6 +133,10 @@ function GuestNavbar(props) {
 			})
 		}
 	}, [setToken]);
+	//added by reda
+  const handleGameToggle = () => {
+    setIsGameOn(!isGameOn);
+  };
 
   return (
     <div className="App">
@@ -168,9 +175,13 @@ function GuestNavbar(props) {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-	  {
-	  (login) ? ( < LoginPage /> ) : ( <Content /> )
-	  }
+
+	  <h1>NOT LOGGED</h1>
+	  {/* <button onClick={handleGameToggle}>{isGameOn ? "End Game" : "Start Game"}</button>
+      {isGameOn ? <Game /> : null}
+      {!isGameOn ? <Chat /> : null} */}
+		<Mode />
+
     </div>
   );
 }

@@ -11,3 +11,4 @@ cp debug/django/api/urls.py django/backend/api/urls.py
 
 #gameserv files
 cp debug/gameserv/App.js  gameserv/server/App.js
+
