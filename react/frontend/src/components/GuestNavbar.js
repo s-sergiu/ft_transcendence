@@ -7,8 +7,9 @@ import Navbar from 'react-bootstrap/Navbar';
 //import Content from './Content';
 import { useEffect } from 'react';
 import Chat from './Chat/Xat.js';
-import Game from './game/Ping.js';
+// import Game from './game/Ping.js';
 import { useState } from 'react';
+import Mode from './game/mode.js';
 
 
 var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
@@ -106,9 +107,10 @@ function GuestNavbar(props) {
       </Container>
     </Navbar>
 	  <h1>NOT LOGGED</h1>
-	  <button onClick={handleGameToggle}>{isGameOn ? "End Game" : "Start Game"}</button>
+	  {/* <button onClick={handleGameToggle}>{isGameOn ? "End Game" : "Start Game"}</button>
       {isGameOn ? <Game /> : null}
-      {!isGameOn ? <Chat /> : null}
+      {!isGameOn ? <Chat /> : null} */}
+		<Mode />
     </div>
   );
 }

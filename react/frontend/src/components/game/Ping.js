@@ -8,7 +8,8 @@ import barimg from './assets/bar.png';
 import { debounce } from 'lodash';
 
 
-const GameBlock = () => {
+const GameBlock = ({gameInfo, bootid}) => {
+  // console.log("GINFO :" + gameInfo.player1);
   const [countdown, setCountdown] = useState(0);
   const [move, setMove] = useState(null);
   const [infos, setInfos] = useState(0);
@@ -17,19 +18,19 @@ const GameBlock = () => {
   const [position, setPosition] = useState({ lx: 0, ly: 180, x: 0, y: 180 });
   const [oposition, setOposition] = useState({ lx: 630, ly: 180, x: 630, y: 180 });
   const [ballposition, setBallposition] = useState({ lx: 320, ly: 240, x: 320, y: 240 });
-  const [gameInfo, setGameInfo] = useState({
-    gameId: 10,
-    player1: 'player1',
-    player2: 'player2',
-    playerId: 1,
-  });
   const [gameState, setGameState] = useState(true);
   const [scores, setScores] = useState({ player1: 0, player2: 0 });
   const [lastpl, setLastpl] = useState(1);
   const [intervalId, setIntervalId] = useState(null);
-  const [clientId, setClientId] = useState(1);
-  const [bootid, setBootid] = useState(111);
+  const [clientId, setClientId] = useState(gameInfo.playerId);
+  // const [bootid, setBootid] = useState(111);
   const [buttonClicked, setButtonClicked] = useState(false);
+
+  // useEffect(() => {
+  //   if (gameInfo2 && JSON.stringify(gameInfo2) !== JSON.stringify(gameInfo)) {
+  //     setGameInfo(gameInfo2);
+  //   }
+  // }, [gameInfo2, gameInfo]);
 
   useEffect(() => {
     const newSocket = io('http://' + process.env.REACT_APP_GAME_IP + ':4000');

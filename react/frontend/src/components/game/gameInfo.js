@@ -1,53 +1,90 @@
 // GameInfo.js
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-// import Chat from './Chat';
+import React, { useState } from 'react';
 import Game from '../game/Ping';
+import Tournament from './tourn.js';
 
-
-function GameInfo() {
-  const { search } = useLocation();
-  const params = new URLSearchParams(search);
-  const type = params.get('type');
-  const [gameInfo, setGameInfo] = useState(null);
+function GameInfo({ navigate, gameType }) {
+  const [gameInfo, setGameInfo] = useState({
+    gameId: null,
+    player1: null,
+    player2: null,
+    playerId: null,
+  });
   const [bootid, setBootid] = useState(0);
+  const [player1Name, setPlayer1Name] = useState('');
+  const [player2Name, setPlayer2Name] = useState('');
+  const [gameState, setGameState] = useState(0);
   
-    // Function to update game info
-    function updateGameInfo(id, player1, player2, gameId) {
+
+  function updateGameInfo(id, play1, play2, gId, bit, stats) {
+    // Set gameInfo only if it's different from the current state
+    if (gameInfo.gameId !== id || gameInfo.player1 !== play1 || gameInfo.player2 !== play2 || gameInfo.playerId !== gId) {
       setGameInfo({
-          gameId: gameId,
-          player1: player1,
-          player2: player2,
-          playerId : id
+        gameId: id,
+        player1: play1,
+        player2: play2,
+        playerId: gId
       });
+      setBootid(bit);
+      if (stats < 2)
+        setGameState(stats);
+      console.log("stats: " + stats);
+    }
   }
 
-  function fillInfos(type){
+  const handlePlayer1Change = (event) => {
+    setPlayer1Name(event.target.value);
+  };
+
+  // Function to handle input change for player 2 name
+  const handlePlayer2Change = (event) => {
+    setPlayer2Name(event.target.value);
+  };
+  
+
+  function fillInfos(type) {
     if (type === '1vs2') {
-      return (
-        <Game updateGameInfo={updateGameInfo(0, "pl1", "pl2", 0)} />
-      );
-    } else if (type === 'boot') {
-      return (
-        <Game updateGameInfo={updateGameInfo(0, "pl1", "Bot", 1)}
-            setBootid={setBootid(111)} />
-      );
+      updateGameInfo(0, "Player-1", "Player-2", 0, 0, 0);
+      return <Game 
+                gameInfo = {gameInfo}
+                bootid = {bootid}
+            />;
+    } 
+    else if (type === 'boot') {
+      updateGameInfo(0, "Player", "Boot", 1, 111, 0);
+      return <Game
+                gameInfo = {gameInfo}
+                bootid = {bootid}
+            />;
     } else if (type === 'tournament') {
       return (
-        <Game updateGameInfo={updateGameInfo(0, "pl1", "pl2", 0)} />
-      );
-    }
+        <Tournament 
+                gameInfo = {gameInfo}
+                bootid = {bootid}
+                updateGameInfo = {updateGameInfo}
+        />
+        // <div>
+        // <label>Enter Player 1 Name:</label>
+        // <input type="text" value={player1Name} onChange={handlePlayer1Change} />
+        // <label>Enter Player 2 Name:</label>
+        // <input type="text" value={player2Name} onChange={handlePlayer2Change} />
+        
+        // {player2Name && gameState != 1 && <button onClick={() => setGameState(1)}>Start Tournament</button>}
+        // {gameState == 1 && updateGameInfo(0, player1Name, player2Name, 0,0, 7)}
+        // {gameState == 1 && <Game gameInfo={gameInfo} bootid={bootid} />}
+        // {/* {console.log("gameState: " + gameState)} */}
+        // </div> 
+        )}
+
   }
   
   // Render form for filling 4 infos based on type
-  
   return (
     <div>
       <h2>Game Information</h2>
-      <p>Type: {type}</p>
-      {fillInfos(type)}
-      </div>
-      
+      <p>Type: {gameType}</p>
+      {fillInfos(gameType)}
+    </div>
   );
 }
 
