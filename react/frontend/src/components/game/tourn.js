@@ -63,6 +63,7 @@ const Tournament = ({gameInfo, bootid, updateGameInfo}) => {
       updateGameInfo(0, winner1, winner2, 0, 0, 1);
       setTemp(2);
       setWinner1('');
+      setWinner2('');
     }
   };
 
@@ -120,7 +121,8 @@ const Tournament = ({gameInfo, bootid, updateGameInfo}) => {
                 onWinnerChange={(newWinner) => setWinner1(newWinner)}
             />}
         {temp == 2 && !winner2 && winner1 && <div>
-      {alert(`Felicitation ${winner1}< You WON The Tournament`)}
+      {alert(`Felicitation >${winner1}< You WON The Tournament`)}
+      <h2>End</h2>
       </div>}
 
 

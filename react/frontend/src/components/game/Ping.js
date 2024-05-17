@@ -67,6 +67,12 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange}) => {
       debouncedEmitBallMove(clientId, gameInfo.gameId);
       // socket.emit("ballmove", clientId, gameInfo.gameId);
     }}, [ballposition]);
+
+    useEffect(() => {
+        if (scores.player1 > 10 || scores.player2 > 10) {
+          handleWinnerChange(gameInfo.player1 > 10? gameInfo.player1 : gameInfo.player2);
+        }
+      }, [scores]);
     
     
     useEffect(() => {
@@ -158,10 +164,6 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange}) => {
             socket.on('updateScores', (data, gid) => {
               if (gameInfo.gameId == gid) {
                 setScores(data);
-                if ( data.player1 == 2)
-                  handleWinnerChange(gameInfo.player1);
-                else if ( data.player2 == 2)
-                  handleWinnerChange(gameInfo.player2);
               }
             });
             socket.on("lose", (data, data2, data3, gid) => {
