@@ -65,3 +65,14 @@ def getUserInfo(request):
         return (JsonResponse(data))
     users = get_or_create_user(data,token);
     return (JsonResponse(serialize_object(users), safe=False))
+
+def populateDB(request):
+    data = json.loads(request.body.decode("utf-8"))
+    ExtendedUser.create_users(data);
+    return None
+
+def requestFromDB(request):
+    choice = json.loads(request.body.decode("utf-8"))
+    ext = ExtendedUser.objects.get(id = choice['choice'])
+    return (JsonResponse(serialize_object(ext), safe=False))
+
