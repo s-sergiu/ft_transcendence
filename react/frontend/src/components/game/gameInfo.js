@@ -28,7 +28,7 @@ function GameInfo({ navigate, gameType }) {
       setBootid(bit);
       if (stats < 2)
         setGameState(stats);
-      console.log("stats: " + stats);
+        console.log("stats: " + stats);
     }
   }
 

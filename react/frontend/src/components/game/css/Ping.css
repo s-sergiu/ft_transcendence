@@ -50,7 +50,7 @@
       overflow: hidden;
   } */
   
-  canvas {
+  canvas, .2d-game {
       position: relative;
       top: 0;
       left: 0;

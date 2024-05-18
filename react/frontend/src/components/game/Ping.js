@@ -213,7 +213,7 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange}) => {
         <img id="ball" src={ballimg} style={{ display: 'none' }} />
         <img id="kan" src={kanimg} style={{ display: 'none' }} />
         <img id="line" src={barimg} style={{ display: 'none' }} />
-        <canvas ref={(ref) => setContext(ref && ref.getContext('2d'))} width="640" height="480" style={{ border: '1px solid black' }}></canvas>
+        <canvas class="2d-game" ref={(ref) => setContext(ref && ref.getContext('2d'))} width="640" height="480" style={{ border: '1px solid black' }}></canvas>
         <div>
           {[...Array(12)].map((_, index) => (
             <p key={index}></p>
