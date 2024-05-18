@@ -38,7 +38,7 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
   };
 
   useEffect(() => {
-    const newSocket = io('http://' + process.env.REACT_APP_GAME_IP + ':4000');
+    const newSocket = io('http://' + process.env.REACT_APP_HOST_IP + ':4000');
     setSocket(newSocket);
     // startGame();
     // newSocket.emit("infos", gameInfo, gameInfo.gameId);
@@ -101,6 +101,7 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
 
 
         const startGame = () => {
+			console.log(process.env.REACT_APP_HOST_IP);
           if(socket){
             // start(1);
             setGameState(true);

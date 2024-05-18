@@ -2,7 +2,7 @@ let waitingPlayer = null;
 const privateGames = {};
 let users = {};
 const port = 4000;
-const host = process.env.GAME_IP;
+const host = process.env.REACT_APP_HOST_IP;
 var id = 0;
 createIndex = 0;
 const ballVelocity = 10;
@@ -18,11 +18,11 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
     cors: {
-		origin: "http://" + process.env.HOST_NAME,
+		origin: "http://" + process.env.HOST_IP,
     }
 });
 
-app.use(cors({ origin: "http://" + process.env.HOST_NAME }));
+app.use(cors({ origin: "http://" + process.env.HOST_IP }));
 
 
 GameData = {
