@@ -5,7 +5,7 @@ import Game from './Ping.js';
 const socket = io('http://' + process.env.REACT_APP_HOST_IP + ':4000');
 
 
-const OnlineMode = ({ navigate }) => {
+const OnlineMode = ({ navigate, user }) => {
   const [isWaitingForRandom, setIsWaitingForRandom] = useState(false);
   const [gameId, setGameId] = useState('');
   const [privateGameId, setPrivateGameId] = useState('');
