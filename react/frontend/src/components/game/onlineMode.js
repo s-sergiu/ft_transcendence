@@ -12,7 +12,9 @@ const OnlineMode = ({ navigate, user }) => {
   const [isPrivateGame, setIsPrivateGame] = useState(false);
   const [gameInfo, setGameInfo] = useState(null);
   const [privateClicked, setPrivateClicked] = useState(false);
+  const [randomClicked, setRandomClicked] = useState(false);
   const [joinClicked, setJoinClicked] = useState(false);
+  const [winner, setWinner] = useState('');
 
   useEffect(() => {
     socket.on('randomMatch', (gameData) => {
@@ -31,8 +33,9 @@ const OnlineMode = ({ navigate, user }) => {
 
 
   const startRandomGame = () => {
+    setRandomClicked(true);
     setIsWaitingForRandom(true);
-    socket.emit('startRandomGame', { playerName: 'Player1' });
+    socket.emit('startRandomGame', { playerName: user.name });
   };
 
   const createPrivateGame = () => {
@@ -40,13 +43,13 @@ const OnlineMode = ({ navigate, user }) => {
     setGameId(newGameId);
     setIsPrivateGame(true);
     setPrivateClicked(true);
-    socket.emit('createPrivateGame', { gameId: newGameId, playerName: 'Player1' });
+    socket.emit('createPrivateGame', { gameId: newGameId, playerName: user.name });
   };
 
   const joinPrivateGame = () => {
     setJoinClicked(true);
     alert("Joining game: " + privateGameId + "...");
-    socket.emit('joinPrivateGame', { gameId: privateGameId, playerName: 'Player2' });
+    socket.emit('joinPrivateGame', { gameId: privateGameId, playerName: user.name });
   };
 
   return (
@@ -54,7 +57,7 @@ const OnlineMode = ({ navigate, user }) => {
       <h2>Online Mode</h2>
       {!gameInfo ? (
         <>
-          <button onClick={startRandomGame}>Start Random Game</button>
+          { !randomClicked && <button onClick={startRandomGame}>Start Random Game</button>}
           {isWaitingForRandom && <p>Waiting for another player to join...</p>}
           <hr />
             <>
@@ -64,13 +67,15 @@ const OnlineMode = ({ navigate, user }) => {
             </>
             <hr />
             <>
-          {!privateClicked && <button onClick={joinPrivateGame}>Join Private Game</button>}
               {!gameId &&  <input
-                type="text"
-                value={privateGameId}
-                onChange={(e) => setPrivateGameId(e.target.value)}
-                placeholder="Enter Game ID"
+              style={{ width: '150px' }}
+              type="text"
+              value={privateGameId}
+              onChange={(e) => setPrivateGameId(e.target.value)}
+              placeholder="Enter Game ID"
               />}
+              <h1></h1>
+              {!privateClicked && <button onClick={joinPrivateGame}>Join Private Game</button>}
             </>
             <>
             {/* {!privateClicked && !joinClicked && <button onClick={displayListFr}>Invite</button>} */}
@@ -85,7 +90,12 @@ const OnlineMode = ({ navigate, user }) => {
             </>
         </>
       ) : (
-        <Game gameInfo={gameInfo} online = {true} />
+        <div>
+        {!winner && <Game gameInfo={gameInfo} 
+              online = {true}
+              onWinnerChange={(newWinner) => setWinner(newWinner)} />}
+            { winner && <h1>Winner is: {winner}</h1>}
+          </div>
       )}
     </div>
   );

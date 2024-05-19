@@ -9,16 +9,16 @@ function StartButton({ navigate, user}) {
 
 useEffect(() => {
   if (user.name && user.email) {
-    console.log('user email:', user.email);
+    // console.log('user email:', user.email);
     setUserExist(true);
     setIsFormValid(true);
-    console.log('userExist :', userExist);
+    // console.log('userExist :', userExist);
   }
   }, []);
 
   const handleStart = () => {
     if (isFormValid) {
-      console.log('user :', user.name);
+      // console.log('user :', user.name);
       navigate('modes');
     }
   };

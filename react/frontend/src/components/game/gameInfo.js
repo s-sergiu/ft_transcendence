@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Game from '../game/Ping';
 import Tournament from './tourn.js';
 
-function GameInfo({ navigate, gameType }) {
+function GameInfo({ navigate, gameType, user }) {
   const [gameInfo, setGameInfo] = useState({
     gameId: null,
     player1: null,
@@ -11,6 +11,7 @@ function GameInfo({ navigate, gameType }) {
     playerId: null,
   });
   const [bootid, setBootid] = useState(0);
+  const [winner, setWinner] = useState('');
   const [player1Name, setPlayer1Name] = useState('');
   const [player2Name, setPlayer2Name] = useState('');
   const [gameState, setGameState] = useState(0);
@@ -45,17 +46,28 @@ function GameInfo({ navigate, gameType }) {
   function fillInfos(type) {
     if (type === '1vs2') {
       updateGameInfo(0, "Player-1", "Player-2", 0, 0, 0);
-      return <Game 
+      return (
+        <div>
+        { !winner && <Game 
                 gameInfo = {gameInfo}
                 bootid = {bootid}
-            />;
+                onWinnerChange={(newWinner) => setWinner(newWinner)}
+            />}
+        { winner && <h1>Winner is: {winner}</h1>}
+        </div>
+          )
     } 
     else if (type === 'boot') {
-      updateGameInfo(0, "Player", "Boot", 1, 111, 0);
-      return <Game
+      updateGameInfo(0, user.name, "Bot", 1, 111, 0);
+      return (
+        <div>{!winner && <Game
                 gameInfo = {gameInfo}
                 bootid = {bootid}
-            />;
+                onWinnerChange={(newWinner) => setWinner(newWinner)}
+                />}
+        { winner && <h1>Winner is: {winner}</h1>}
+        </div>
+      )
     } else if (type === 'tournament') {
       return (
         <Tournament 

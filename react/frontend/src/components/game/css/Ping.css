@@ -7,6 +7,7 @@
       padding: 0.2em;
   }
   .digital-number {
+              /* position: relative; */
               font-variant-numeric: slashed-zero;
               /* font-family: "slashed-zero", monospace; */
               font-size: 2em;
@@ -14,7 +15,8 @@
               color: skyblue;
               padding: 0.2em;
           }
-        .player-name {
+  .player-name {
+          /* position: relative; */
           font-variant-numeric: slashed-zero;
           /* font-family: "slashed-zero", monospace; */
           font-size: 2em;

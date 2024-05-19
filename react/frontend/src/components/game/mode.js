@@ -5,6 +5,8 @@ import LocalModes from './localMode.js';
 import OnlineMode from './onlineMode.js';
 import GameInfo from './gameInfo.js';
 import StartButton from './startBtn.js';
+import Chat from '../Chat/Xat.js';
+// import Game from './Ping.js';
 import { useEffect } from'react';
 import { set } from 'lodash';
 
@@ -18,6 +20,9 @@ const [gameType, setGameType] = useState('');
 
     let currentComponent;
 
+    // if (currentPage === 'game') {
+    //   currentComponent = <Game navigate={navigate}/>;
+    // }
     if (currentPage === 'start') {
       currentComponent = <StartButton navigate={navigate} user={user}/>;
     } else if (currentPage === 'modes') {
@@ -53,6 +58,7 @@ const [gameType, setGameType] = useState('');
       {renderedComponent}
       <h4 />
       <hr />
+      <Chat user={user} />
       <div>
         {currentPage !== 'start' && (
           <button onClick={goBack}>🔙</button>

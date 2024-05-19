@@ -4,14 +4,14 @@ import Game from './Ping.js';
 
 const socket = io('http://' + process.env.REACT_APP_HOST_IP + ':4000');
 const my = { id: 1, name: 'Reda', email:'reda@gmail.com' };
-const friends = [
-  { id: 1, name: 'Alice' },
-  { id: 2, name: 'Bob' },
-  { id: 3, name: 'Charlie' },
-  { id: 4, name: 'Diana' },
-];
+// const friends = [
+//   { id: 1, name: 'Alice' },
+//   { id: 2, name: 'Bob' },
+//   { id: 3, name: 'Charlie' },
+//   { id: 4, name: 'Diana' },
+// ];
 
-const InviteGame = ({ }) => {
+const InviteGame = ({ friends, user }) => {
     const [isWaitingForRandom, setIsWaitingForRandom] = useState(false);
     const [gameId, setGameId] = useState('');
     const [gameInfo, setGameInfo] = useState(null);
@@ -45,10 +45,9 @@ const InviteGame = ({ }) => {
 
   return (
     <div>
-      <h2>Online Mode</h2>
       {!gameInfo ? (
         <>
-          <button onClick={createInviteGame}>Invite</button>
+          <button onClick={createInviteGame}>Pong Invite</button>
           {isWaitingForRandom && <p>Waiting for your Friend to join...</p>}
         </>
       ) : (

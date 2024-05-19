@@ -275,7 +275,7 @@ io.on("connection", (socket) => {
     //  }
     // socket.emit("infos", GamesList[id].gameInfo, GamesList[id].gameId);
     socket.on("infos", (data, gid) => {
-        console.log("GID : " + gid);
+        // console.log("GID : " + gid);
         // console.log("dpl1 : " + data.player1);
         id = gid;
         GamesList[gid].gameInfo.player1 = data.player1;
@@ -283,19 +283,19 @@ io.on("connection", (socket) => {
         GamesList[gid].gameInfo.playerId = data.playerId;
         GamesList[gid].gameInfo.gameId = data.gameId;
         // console.log("PID : " + data.playerId);
-        console.log("GID2 : " + GamesList[gid].gameInfo.gameId);
+        // console.log("GID2 : " + GamesList[gid].gameInfo.gameId);
         // console.log("GID2-1 : " + GamesList[gid-1].gameInfo.gameId);
-        console.log("dpl1 : " + GamesList[gid].gameInfo.player1);
-        console.log("dpl2 : " + GamesList[gid].gameInfo.player2);
-        console.log("PID : " + GamesList[gid].gameInfo.playerId);
-        console.log("===========================");
+        // console.log("dpl1 : " + GamesList[gid].gameInfo.player1);
+        // console.log("dpl2 : " + GamesList[gid].gameInfo.player2);
+        // console.log("PID : " + GamesList[gid].gameInfo.playerId);
+        // console.log("===========================");
           // this.player(this.gameInfo.playerId);
         });
         socket.emit('message', 'You are connected! ' + GamesList[id].gameInfo.player1, id);
         socket.emit("dataup", GamesList[id].positions, GamesList[id].positions2, GamesList[id].gameId);
         socket.on("stop", (data, gid) => {
         id = gid;
-        console.log("STOPPPPPP");
+        // console.log("STOPPPPPP");
         //==// io.emit("ballposition", GamesList[id].ballpositions, GamesList[id].positions, GamesList[id].positions2, GamesList[id].gameId);
         // io.emit("lose", data, GamesList[id].positions, GamesList[id].positions2, GamesList[id].gameId);
     });
@@ -329,7 +329,7 @@ io.on("connection", (socket) => {
     //     io.emit('updateScores', scores);
     // });
     socket.on("move", (data, playerId, gid) => {
-        console.log('Key pressed:', data);
+        // console.log('Key pressed:', data);
         id = gid;
         if (playerId == 0 && id == 0)
         {
@@ -410,7 +410,7 @@ io.on("connection", (socket) => {
     socket.on("boot", (data, gid) => {
         id = gid;
         bootVelocity = Math.floor(Math.random() * 4) + 19;
-        console.log("bootVelocity : " + bootVelocity);
+        // console.log("bootVelocity : " + bootVelocity);
                 if (GamesList[id].ballpositions.y < GamesList[id].positions2.y && GamesList[id].positions2.y > 0)
                     {
                     GamesList[id].positions2.ly = GamesList[id].positions2.y;
