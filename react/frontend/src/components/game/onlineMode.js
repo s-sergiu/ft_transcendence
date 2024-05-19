@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import Game from './Ping.js';
 
-const socket = io('http://localhost:4000'); // Replace with your server's address
+const socket = io('http://' + process.env.REACT_APP_HOST_IP + ':4000');
+
 
 const OnlineMode = ({ navigate }) => {
   const [isWaitingForRandom, setIsWaitingForRandom] = useState(false);
@@ -28,6 +29,7 @@ const OnlineMode = ({ navigate }) => {
     };
   }, []);
 
+
   const startRandomGame = () => {
     setIsWaitingForRandom(true);
     socket.emit('startRandomGame', { playerName: 'Player1' });
@@ -45,11 +47,6 @@ const OnlineMode = ({ navigate }) => {
     setJoinClicked(true);
     alert("Joining game: " + privateGameId + "...");
     socket.emit('joinPrivateGame', { gameId: privateGameId, playerName: 'Player2' });
-  };
-
-  const startGame = () => {
-    alert("Starting game: " + gameId + "...");
-    socket.emit('startGame', { gameId });
   };
 
   return (
@@ -75,6 +72,17 @@ const OnlineMode = ({ navigate }) => {
                 placeholder="Enter Game ID"
               />}
             </>
+            <>
+            {/* {!privateClicked && !joinClicked && <button onClick={displayListFr}>Invite</button>} */}
+                {/* <h1>Friends List</h1>
+                  <ul>
+                {friends.map((friend) => (
+                <li key={friend.id}>
+                {friend.name} {renderInviteButton(friend.id)}
+                </li>
+               ))}
+                  </ul> */}
+            </>
         </>
       ) : (
         <Game gameInfo={gameInfo} online = {true} />
@@ -83,21 +91,4 @@ const OnlineMode = ({ navigate }) => {
   );
 };
 
-// const Game = ({ gameInfo }) => {
-//   return (
-//     <div>
-//       <h2>Game Started</h2>
-//       <p>Game ID: {gameInfo.gameId}</p>
-//       <p>Player 1: {gameInfo.player1}</p>
-//       <p>Player 2: {gameInfo.player2}</p>
-//       <p>Your Player ID: {gameInfo.playerId}</p>
-//     </div>
-//   );
-// };
-
 export default OnlineMode;
-
-
-
-
-

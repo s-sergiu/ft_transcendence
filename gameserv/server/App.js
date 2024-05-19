@@ -211,6 +211,13 @@ function fetchIt()
 //     console.error('Error changing privacy:', error);
 //   });
 
+const findGameByEmail = (emailToFind) => {
+    const foundEntry = Object.entries(privateGames).find(
+      ([key, value]) => value.email === emailToFind
+    );
+    return foundEntry ? { id: foundEntry[0], ...foundEntry[1] } : null;
+  };
+
 function sendDataToBend(data) {
     const dataToSend = {
         gameId: GamesList[id].gameInfo.gameId,
@@ -548,6 +555,11 @@ io.on("connection", (socket) => {
                 privateGames[gameId] = { player1: playerName, socket };
                 socket.emit('privateGameCreated', { gameId, message: `Private game created with ID: ${gameId}` });
               });
+
+              socket.on('createFriendGame', ({ email, gameId, playerName }) => {
+                privateGames[gameId] = { player1: playerName, socket, email, gameId };
+                // socket.emit('privateGameCreated', { gameId, message: `Private game created with ID: ${gameId}` });
+              });
             
               socket.on('joinPrivateGame', ({ gameId, playerName }) => {
                 const game = privateGames[gameId];
@@ -569,6 +581,29 @@ io.on("connection", (socket) => {
                   socket.emit('error', { message: 'Invalid Game ID' });
                 }
               });
+
+              socket.on('joinFriendGame', ({ email, playerName }) => {
+                const game= findGameByEmail(email);
+                    if (game) {
+                        const gameInfo = {
+                            gameId : game.gameId,
+                            player1: game.player1,
+                            player2: playerName,
+                            playerId: 2,
+                        };
+                        // console.log(gameInfo);
+            
+                  // Notify both players
+                  socket.emit('InviteMatch', { ...gameInfo, playerId: 2 });
+                  game.socket.emit('InviteMatch', { ...gameInfo, playerId: 1 });
+            
+                  // Remove the game from the list of private games
+                  delete privateGames[gameInfo.gameId];
+                } else {
+                  socket.emit('error', { message: 'Invalid Game ID' });
+                }
+              });
+
             
               socket.on('disconnect', () => {
                 console.log('user disconnected:', socket.id);
