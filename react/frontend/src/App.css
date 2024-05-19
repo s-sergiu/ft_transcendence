@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  background-image: url('./components/game/assets/42bg.png');
+  background-size: cover;
 }
 
 .App-logo {

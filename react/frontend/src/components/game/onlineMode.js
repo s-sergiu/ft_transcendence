@@ -56,7 +56,7 @@ const OnlineMode = ({ navigate, user }) => {
     <div>
       <h2>Online Mode</h2>
       {!gameInfo ? (
-        <>
+        <div>
           { !randomClicked && <button onClick={startRandomGame}>Start Random Game</button>}
           {isWaitingForRandom && <p>Waiting for another player to join...</p>}
           <hr />
@@ -88,7 +88,7 @@ const OnlineMode = ({ navigate, user }) => {
                ))}
                   </ul> */}
             </>
-        </>
+        </div>
       ) : (
         <div>
         {!winner && <Game gameInfo={gameInfo} 

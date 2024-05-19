@@ -58,7 +58,7 @@ const [gameType, setGameType] = useState('');
       {renderedComponent}
       <h4 />
       <hr />
-      <Chat user={user} />
+      {/* <Chat user={user} /> */}
       <div>
         {currentPage !== 'start' && (
           <button onClick={goBack}>🔙</button>

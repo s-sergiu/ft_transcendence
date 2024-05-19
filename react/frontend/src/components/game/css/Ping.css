@@ -100,3 +100,31 @@
   .button-container button:hover {
     background-color: #0056b3;
   }
+
+  .bluebtn {
+    /* width: 500px; */
+    font-family: 'Arial', sans-serif;
+    background-color: skyblue;
+    border: 1px solid black;
+    padding: 10px; 
+    color: white; 
+    border-radius: 4px;
+    text-align: center;
+  }
+
+  .trnmRow {
+    background-color: rgb(7, 240, 240);
+    border: 1px solid black;
+    /* width: 300px; */
+    align-items: center;
+    position: relative;
+  } 
+
+  .mode {
+    /* display: flex; */
+    /* justify-content: space-between; */
+    /* margin-top: 10px; */
+    background-image: url('../assets/42bg.png');
+    background-size: cover;
+  }
+  
