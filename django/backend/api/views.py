@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import get_token
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 from django.core import serializers
 from .models import Token, ExtendedUser
 import json, os, sys, requests
@@ -37,6 +38,22 @@ def getToken(request):
         return (JsonResponse(data))
     t = Token.get_or_create(data);
     return (JsonResponse(serialize_object(t), safe=False))
+
+def get_normal_user(data):
+    print("in user" , file=sys.stderr)
+    print(data, file=sys.stderr)
+    user = User.objects.filter(email=data['email'] )
+    print("inside user" , file=sys.stderr)
+    print(user, file=sys.stderr)
+    return user.get()
+
+def get_or_create_normal_user(data):
+    orgs = User.objects.create_user(data['username'],
+                                    data['email'],
+                                    data['password'],
+                                    )
+    orgs.save()
+    return 
 
 def get_or_create_user(api_data, token):
     try:
@@ -75,4 +92,24 @@ def requestFromDB(request):
     choice = json.loads(request.body.decode("utf-8"))
     ext = ExtendedUser.objects.get(id = choice['choice'])
     return (JsonResponse(serialize_object(ext), safe=False))
+
+def register(request):
+    data= json.loads(request.body.decode("utf-8"))
+    get_or_create_normal_user(data)
+    return (JsonResponse({'200' : 'OK'}))
+
+def login(request):
+    data = json.loads(request.body.decode("utf-8"))
+    user = authenticate(username=data['username'], password=data['password'])
+    print("user auth", file=sys.stderr);
+    print(user, file=sys.stderr);
+    print("end user auth auth", file=sys.stderr);
+    if user is None:
+        print("user is none", file=sys.stderr);
+        return (JsonResponse({'404' : 'ERROR'}))
+    else:
+        print("user exists", file=sys.stderr);
+        print(user, file=sys.stderr);
+    print("exising function exists", file=sys.stderr);
+    return (JsonResponse(serialize_object(user), safe=False))
 
