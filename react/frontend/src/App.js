@@ -13,7 +13,7 @@ function App() {
 	const [user, setUser] = useState(false);
 	const [token, setToken] = useState(localStorage.getItem("token"));
 
-	if (user || login || token ) {
+	// if (user || login || token ) {
 		return (
 			<UserNavbar 
 				login = { login }
@@ -21,14 +21,14 @@ function App() {
 				setLoginDetails = { setLogin } 
 			/>
 		);
-	} else {
-		return (
-			<GuestNavbar 
-				setToken = { setToken }
-				setLoginDetails = { setLogin } 
-			/>
-		);
-	}
+	// } else {
+	// 	return (
+	// 		<GuestNavbar 
+	// 			setToken = { setToken }
+	// 			setLoginDetails = { setLogin } 
+	// 		/>
+	// 	);
+	// }
 }
 
 export default App;

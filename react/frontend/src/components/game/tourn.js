@@ -45,24 +45,28 @@ const Tournament = ({gameInfo, bootid, updateGameInfo}) => {
 
     // Update games state
     setGames(gamesArray);
-    updateGameInfo(0, gamesArray[0][0], gamesArray[0][1], 0, 0, 1);
+    const newGameId = (Math.floor(Math.random() * (201)) + 200).toString();
+    updateGameInfo(newGameId, gamesArray[0][0], gamesArray[0][1], 0, 0, 1);
   };
 
   // Function to start next game
   const startNextGame = () => {
     if (games.length > 1) {
+      const newGameId = (Math.floor(Math.random() * (201)) + 200).toString();
       alert(`Second game started between >${games[1][0]}< and >${games[1][1]}<`);
-      updateGameInfo(0, games[1][0], games[1][1], 0, 0, 1);
+      updateGameInfo(newGameId, games[1][0], games[1][1], 0, 0, 1);
       setTemp(1);
     }
   };
 
   const Final = () => {
     if (games.length > 1) {
+      const newGameId = (Math.floor(Math.random() * (201)) + 200).toString();
       alert(`Final game started between >${winner1}< and >${winner2}<`);
-      updateGameInfo(0, winner1, winner2, 0, 0, 1);
+      updateGameInfo(newGameId, winner1, winner2, 0, 0, 1);
       setTemp(2);
       setWinner1('');
+      setWinner2('');
     }
   };
 
@@ -74,25 +78,27 @@ const Tournament = ({gameInfo, bootid, updateGameInfo}) => {
 
   return (
     <div>
-      <h2>Tournament</h2>
+      <h2 class="bluebtn">Tournament</h2>
       { games.length <= 0 && <div>
-      <div>
+      <div class ="trnmRow">
+        <div>
         <label>Player 1:</label>
-        <input type="text" value={player1} onChange={(e) => handleInputChange(e, setPlayer1)} />
+        <input type="text" style={{ width: '150px' }} value={player1} onChange={(e) => handleInputChange(e, setPlayer1)} />
       </div>
       <div>
         <label>Player 2:</label>
-        <input type="text" value={player2} onChange={(e) => handleInputChange(e, setPlayer2)} />
+        <input type="text" style={{ width: '150px' }} value={player2} onChange={(e) => handleInputChange(e, setPlayer2)} />
       </div>
       <div>
         <label>Player 3:</label>
-        <input type="text" value={player3} onChange={(e) => handleInputChange(e, setPlayer3)} />
+        <input type="text" style={{ width: '150px' }} value={player3} onChange={(e) => handleInputChange(e, setPlayer3)} />
       </div>
       <div>
         <label>Player 4:</label>
-        <input type="text" value={player4} onChange={(e) => handleInputChange(e, setPlayer4)} />
+        <input type="text" style={{ width: '150px' }} value={player4} onChange={(e) => handleInputChange(e, setPlayer4)} />
       </div>
       <button onClick={startTournament}>Start Tournament</button>
+      </div>
       </div>}
       {games.length > 0 && !winner1 && !temp && <Game
                 gameInfo = {gameInfo}
@@ -101,6 +107,7 @@ const Tournament = ({gameInfo, bootid, updateGameInfo}) => {
                 onWinnerChange={(newWinner) => setWinner1(newWinner)}
             />}
         { !temp && winner1 && <div>
+          <p> {winner1} Won</p>
       <button onClick={startNextGame}>Start Next Game</button>
       </div>}
         {games.length > 0 && !winner2 && temp == 1 && winner1 && <Game
@@ -111,6 +118,7 @@ const Tournament = ({gameInfo, bootid, updateGameInfo}) => {
             />}
 
         {temp == 1 && winner2 && winner1 && <div>
+          <p> {winner2} Won</p>
       <button onClick={Final}>Start Final Game</button>
       </div>}
         {games.length > 0 &&  temp == 2 && !winner1 && <Game
@@ -120,7 +128,9 @@ const Tournament = ({gameInfo, bootid, updateGameInfo}) => {
                 onWinnerChange={(newWinner) => setWinner1(newWinner)}
             />}
         {temp == 2 && !winner2 && winner1 && <div>
-      {alert(`Felicitation ${winner1}< You WON The Tournament`)}
+      {alert(`Felicitation >${winner1}< You WON The Tournament`)}
+      <h2>End</h2>
+      <h1>WINNER OF THE TOURNAMENT IS : <bold>{winner1}</bold></h1>
       </div>}
 
 

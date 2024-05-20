@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Game3D from './3d-game/3DGame';
+import Mode from './game/mode.js';
 import Game from './game/Ping';
 import Profile from './profile';
 import { useEffect, useState } from 'react';
@@ -134,7 +135,7 @@ function UserNavbar(props) {
 	<div>
 	{	(() => { 
 		if (gameToggle) { 
-			return ( <Game /> )
+			return ( <Mode /> )
 		} else if (tournToggle) {
 			return ( <Tournament /> )
 		} else if (profileToggle) {

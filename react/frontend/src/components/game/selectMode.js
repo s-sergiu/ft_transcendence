@@ -1,7 +1,7 @@
 // ModeSelection.js
 import React from 'react';
 
-function ModeSelection({ navigate }) {
+function ModeSelection({ navigate, user }) {
   return (
     <div>
       <h2>Choose Mode:</h2>

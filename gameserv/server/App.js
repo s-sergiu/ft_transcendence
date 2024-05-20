@@ -1,20 +1,13 @@
-// const Express = require("express")();
-// const Http = require("http").Server(Express);
-// const Socketio = require("socket.io")(Http);
+let waitingPlayer = null;
+const privateGames = {};
 let users = {};
 const port = 4000;
-const host = process.env.GAME_IP;
+const host = process.env.REACT_APP_HOST_IP;
 var id = 0;
 createIndex = 0;
-// const id = window.prompt("Game ID :");
 const ballVelocity = 10;
 const barVelocity = 30;
 var bootVelocity = 22.5;
-// var velocityPercent = 0;
-// var directionX = Math.random() < 0.5 ? 1 : -1;
-// var directionY = Math.random() < 0.5 ? 1 : -1;
-// var directionX = 1;
-// var directionY = 1;
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
@@ -25,11 +18,11 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
     cors: {
-		origin: "http://" + process.env.HOST_NAME,
+		origin: "http://" + process.env.HOST_IP,
     }
 });
 
-app.use(cors({ origin: "http://" + process.env.HOST_NAME }));
+app.use(cors({ origin: "http://" + process.env.HOST_IP }));
 
 
 GameData = {
@@ -146,7 +139,7 @@ function definePercent()
 
 function createGame()
 {
-    for (let i = 0; i < 99; i++) {
+    for (let i = 0; i < 999; i++) {
         const GameData2 = JSON.parse(JSON.stringify(GameData));
         GameData2.gameInfo.gameId = i;
         GamesList.push(GameData2);
@@ -218,6 +211,13 @@ function fetchIt()
 //     console.error('Error changing privacy:', error);
 //   });
 
+const findGameByEmail = (emailToFind) => {
+    const foundEntry = Object.entries(privateGames).find(
+      ([key, value]) => value.email === emailToFind
+    );
+    return foundEntry ? { id: foundEntry[0], ...foundEntry[1] } : null;
+  };
+
 function sendDataToBend(data) {
     const dataToSend = {
         gameId: GamesList[id].gameInfo.gameId,
@@ -275,7 +275,7 @@ io.on("connection", (socket) => {
     //  }
     // socket.emit("infos", GamesList[id].gameInfo, GamesList[id].gameId);
     socket.on("infos", (data, gid) => {
-        console.log("GID : " + gid);
+        // console.log("GID : " + gid);
         // console.log("dpl1 : " + data.player1);
         id = gid;
         GamesList[gid].gameInfo.player1 = data.player1;
@@ -283,19 +283,19 @@ io.on("connection", (socket) => {
         GamesList[gid].gameInfo.playerId = data.playerId;
         GamesList[gid].gameInfo.gameId = data.gameId;
         // console.log("PID : " + data.playerId);
-        console.log("GID2 : " + GamesList[gid].gameInfo.gameId);
+        // console.log("GID2 : " + GamesList[gid].gameInfo.gameId);
         // console.log("GID2-1 : " + GamesList[gid-1].gameInfo.gameId);
-        console.log("dpl1 : " + GamesList[gid].gameInfo.player1);
-        console.log("dpl2 : " + GamesList[gid].gameInfo.player2);
-        console.log("PID : " + GamesList[gid].gameInfo.playerId);
-        console.log("===========================");
+        // console.log("dpl1 : " + GamesList[gid].gameInfo.player1);
+        // console.log("dpl2 : " + GamesList[gid].gameInfo.player2);
+        // console.log("PID : " + GamesList[gid].gameInfo.playerId);
+        // console.log("===========================");
           // this.player(this.gameInfo.playerId);
         });
         socket.emit('message', 'You are connected! ' + GamesList[id].gameInfo.player1, id);
         socket.emit("dataup", GamesList[id].positions, GamesList[id].positions2, GamesList[id].gameId);
         socket.on("stop", (data, gid) => {
         id = gid;
-        console.log("STOPPPPPP");
+        // console.log("STOPPPPPP");
         //==// io.emit("ballposition", GamesList[id].ballpositions, GamesList[id].positions, GamesList[id].positions2, GamesList[id].gameId);
         // io.emit("lose", data, GamesList[id].positions, GamesList[id].positions2, GamesList[id].gameId);
     });
@@ -315,6 +315,7 @@ io.on("connection", (socket) => {
     });
     socket.on("startGame", gid => {
         console.log("START GAME", gid);
+        // socket.emit('starGame', { gameId });
         id = gid;
         ballpositionTo_0();
         GamesList[id].scores.player1 = 0;
@@ -328,7 +329,7 @@ io.on("connection", (socket) => {
     //     io.emit('updateScores', scores);
     // });
     socket.on("move", (data, playerId, gid) => {
-        console.log('Key pressed:', data);
+        // console.log('Key pressed:', data);
         id = gid;
         if (playerId == 0 && id == 0)
         {
@@ -409,7 +410,7 @@ io.on("connection", (socket) => {
     socket.on("boot", (data, gid) => {
         id = gid;
         bootVelocity = Math.floor(Math.random() * 4) + 19;
-        console.log("bootVelocity : " + bootVelocity);
+        // console.log("bootVelocity : " + bootVelocity);
                 if (GamesList[id].ballpositions.y < GamesList[id].positions2.y && GamesList[id].positions2.y > 0)
                     {
                     GamesList[id].positions2.ly = GamesList[id].positions2.y;
@@ -432,8 +433,9 @@ io.on("connection", (socket) => {
                 // }
                     io.emit("dataup", GamesList[id].positions, GamesList[id].positions2, id);
     });
-    socket.on("ballmove", (data, gid) => {
+    socket.on("ballmove", (data, gid, online) => {
             id = gid;
+            if ((online && data == 1) || !online){
             // socket.emit("dataup", GamesList[id].positions, GamesList[id].positions2, GamesList[id].gameId);
             if(GamesList[id].ballpositions.x <= ballVelocity && (GamesList[id].ballpositions.y < GamesList[id]. positions.y || GamesList[id].ballpositions.y > GamesList[id].positions.y + 120))
                 {
@@ -505,7 +507,7 @@ io.on("connection", (socket) => {
             // GamesList[id].positions2.ly = GamesList[id].positions2.y;
             GamesList[id].ballpositions.x += ballVelocity * GamesList[id].directionX;
             GamesList[id].ballpositions.y += ballVelocity * GamesList[id].directionY * GamesList[id].velocityPercent;
-            io.emit("ballposition", GamesList[id].ballpositions, GamesList[id].positions, GamesList[id].positions2, id);
+            io.emit("ballposition", GamesList[id].ballpositions, GamesList[id].positions, GamesList[id].positions2, id);}
             // socket.emit("dataup", GamesList[id].positions, GamesList[id].positions2, GamesList[id].gameId);
             }});
             socket.on('join', ({ userId }) => {
@@ -522,22 +524,89 @@ io.on("connection", (socket) => {
                   io.to(recipientSocketId).emit('new-message', msg);
                 }
               });
+
+
+
+              socket.on('startRandomGame', ({ playerName }) => {
+                if (waitingPlayer) {
+                  // Match found
+                  const gameId = Math.floor(Math.random(150) * 800).toString();
+                  const gameInfo = {
+                    gameId,
+                    player1: waitingPlayer.playerName,
+                    player2: playerName,
+                    playerId: 2,
+                  };
+            
+                  // Notify both players
+                  socket.emit('randomMatch', { ...gameInfo, playerId: 2 });
+                  waitingPlayer.socket.emit('randomMatch', { ...gameInfo, playerId: 1 });
+            
+                  // Clear waiting player
+                  waitingPlayer = null;
+                } else {
+                  // No waiting player, set this player as waiting
+                  waitingPlayer = { socket, playerName };
+                  socket.emit('waiting', { message: 'Waiting for another player...' });
+                }
+              });
+            
+              socket.on('createPrivateGame', ({ gameId, playerName }) => {
+                privateGames[gameId] = { player1: playerName, socket };
+                socket.emit('privateGameCreated', { gameId, message: `Private game created with ID: ${gameId}` });
+              });
+
+              socket.on('createFriendGame', ({ email, gameId, playerName }) => {
+                privateGames[gameId] = { player1: playerName, socket, email, gameId };
+                // socket.emit('privateGameCreated', { gameId, message: `Private game created with ID: ${gameId}` });
+              });
+            
+              socket.on('joinPrivateGame', ({ gameId, playerName }) => {
+                const game = privateGames[gameId];
+                if (game) {
+                  const gameInfo = {
+                    gameId,
+                    player1: game.player1,
+                    player2: playerName,
+                    playerId: 2,
+                  };
+            
+                  // Notify both players
+                  socket.emit('privateMatch', { ...gameInfo, playerId: 2 });
+                  game.socket.emit('privateMatch', { ...gameInfo, playerId: 1 });
+            
+                  // Remove the game from the list of private games
+                  delete privateGames[gameId];
+                } else {
+                  socket.emit('error', { message: 'Invalid Game ID' });
+                }
+              });
+
+              socket.on('joinFriendGame', ({ email, playerName }) => {
+                const game= findGameByEmail(email);
+                    if (game) {
+                        const gameInfo = {
+                            gameId : game.gameId,
+                            player1: game.player1,
+                            player2: playerName,
+                            playerId: 2,
+                        };
+                        // console.log(gameInfo);
+            
+                  // Notify both players
+                  socket.emit('InviteMatch', { ...gameInfo, playerId: 2 });
+                  game.socket.emit('InviteMatch', { ...gameInfo, playerId: 1 });
+            
+                  // Remove the game from the list of private games
+                  delete privateGames[gameInfo.gameId];
+                } else {
+                  socket.emit('error', { message: 'Invalid Game ID' });
+                }
+              });
+
             
               socket.on('disconnect', () => {
                 console.log('user disconnected:', socket.id);
                 delete users[socket.id];
               });
     });
-
-// Socketio.on('connection', (socket) => {
-//     console.log('A user connected');
-
-//     // Example: Send data to the client
-//     socket.emit('position', positions);
-    
-//     // Example: Listen for data from the client
-//     socket.on('updatePosition', (data) => {
-//         console.log('Received new position:', data);
-//         // Handle the received data as needed
-//     });
-// });

@@ -11,7 +11,7 @@ import avatarUrl from './chat-avatar.png';
 // Backend URL
 const url = 'http://localhost:4000';
 
-function Xat() {
+function Xat(user) {
   const [contacts, setContacts] = useState([
     { id: '1', intra: 'sheali', name: 'Alice Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl},
     { id: '2', intra: 'sheali', name: 'Bob Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl},

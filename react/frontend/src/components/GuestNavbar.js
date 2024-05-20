@@ -11,6 +11,7 @@ import LoginPage from './LoginPage';
 import Content from './Content';
 import { useEffect, useState } from 'react';
 import data from './users.json';
+import Game3D from './3d-game/3DGame.js';
 
 
 var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_IP + ":" + process.env.REACT_APP_DJANGO_PORT
