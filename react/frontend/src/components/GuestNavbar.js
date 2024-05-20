@@ -14,9 +14,9 @@ import data from './users.json';
 import Game3D from './3d-game/3DGame.js';
 
 
-var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
+var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_IP + ":" + process.env.REACT_APP_DJANGO_PORT
 if (process.env.REACT_APP_HTTP_METHOD === 'https')
-	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME 
+	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_IP 
 
 function GuestNavbar(props) {
 	const [isGameOn, setIsGameOn] = useState(false);//added by reda
@@ -176,14 +176,10 @@ function GuestNavbar(props) {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-
 	  <h1>NOT LOGGED</h1>
-	  {/* <button onClick={handleGameToggle}>{isGameOn ? "End Game" : "Start Game"}</button>
-      {isGameOn ? <Game /> : null}
-      {!isGameOn ? <Chat /> : null} */}
-		<Mode />
-		{/* <Game3D /> */}
-
+	  { (login) ? (<LoginPage setLoginDetails = { props.setLoginDetails } />)
+		  : (<Mode />)
+	   }
     </div>
   );
 }
