@@ -139,7 +139,7 @@ function definePercent()
 
 function createGame()
 {
-    for (let i = 0; i < 99; i++) {
+    for (let i = 0; i < 999; i++) {
         const GameData2 = JSON.parse(JSON.stringify(GameData));
         GameData2.gameInfo.gameId = i;
         GamesList.push(GameData2);
@@ -530,7 +530,7 @@ io.on("connection", (socket) => {
               socket.on('startRandomGame', ({ playerName }) => {
                 if (waitingPlayer) {
                   // Match found
-                  const gameId = Math.floor(Math.random() * 99).toString();
+                  const gameId = Math.floor(Math.random(150) * 800).toString();
                   const gameInfo = {
                     gameId,
                     player1: waitingPlayer.playerName,
