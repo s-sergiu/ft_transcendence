@@ -17,10 +17,12 @@ import os,sys
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 HOST_NAME = os.environ.get('HOST_NAME')
+HOST_IP = os.environ.get('HOST_IP')
 REACT_PORT = os.environ.get('REACT_PORT')
 DJANGO_DEBUG = os.environ.get('DJANGO_DEBUG')
 HTTP_METHOD = os.environ.get('HTTP_METHOD')
-HOST_WITH_PORT = HTTP_METHOD + "://" + HOST_NAME 
+HOST_WITH_PORT = HTTP_METHOD + "://" + HOST_IP
+HOST_NAME_W_PORT = HTTP_METHOD + "://" + HOST_NAME
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -37,6 +39,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 
 ALLOWED_HOSTS = [
+    HOST_IP,
     HOST_NAME,
 ]
 
@@ -143,10 +146,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
         HOST_WITH_PORT,
+        HOST_NAME_W_PORT,
 ]
 
 CSRF_TRUSTED_ORIGINS = [
         HOST_WITH_PORT,
+        HOST_NAME_W_PORT,
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
