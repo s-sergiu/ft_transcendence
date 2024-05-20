@@ -223,10 +223,14 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
     return (
       <div className="responsive-wrapper">
         {/* <div className="canvas-background"></div> */}
+
         <img id="ball" src={ballimg} style={{ display: 'none' }} />
         <img id="kan" src={kanimg} style={{ display: 'none' }} />
         <img id="line" src={barimg} style={{ display: 'none' }} />
         <canvas ref={(ref) => setContext(ref && ref.getContext('2d'))} width="640" height="480" style={{ border: '1px solid black' }}></canvas>
+        <div class="result-display">
+          <span>{gameInfo.player1} : {scores.player1} </span> | <span>{gameInfo.player2} : {scores.player2}</span>
+        </div>
         {/* <div>
           {[...Array(12)].map((_, index) => (
             <p key={index}></p>
@@ -238,7 +242,7 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
         {!online && !buttonClicked && <button style={{ position: 'absolute', left: '46%', top: '91%' }} onClick={() => startGame()} disabled={scores.player1 !== 0 || scores.player2 !== 0 || buttonClicked}>
           Start
         </button>}
-        <div className="player-name" style={{ position: 'absolute', left: '30%', top: '0%' }}>
+        {/* <div className="player-name" style={{ position: 'absolute', left: '30%', top: '0%' }}>
           {gameInfo.player1}
         </div>
         <div className="player-name" style={{ position: 'absolute', left: '55%', top: '0%' }}>
@@ -249,7 +253,7 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
         </div>
         <div className="digital-number" style={{ position: 'absolute', left: '60%', top: '6%' }}>
           {scores.player2}
-        </div>
+        </div> */}
         {scores.player2 > 10 && <div className="Winner" style={{ position: 'absolute', left: '37%', top: '37%' }}>{gameInfo.player2}</div>}
         {scores.player1 > 10 && <div className="Winner" style={{ position: 'absolute', left: '37%', top: '37%' }}>{gameInfo.player1}</div>}
         {(scores.player1 > 10 || scores.player2 > 10) && <div className="Win" style={{ position: 'absolute', left: '33%', top: '46%' }}>WIN</div>}
