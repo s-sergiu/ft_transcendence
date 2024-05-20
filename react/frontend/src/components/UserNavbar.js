@@ -13,9 +13,9 @@ import Tournament from './tournaments';
 import './css/navbar.css'
 //import Content from './Content';
 
-var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_IP + ":" + process.env.REACT_APP_DJANGO_PORT
+var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
 if (process.env.REACT_APP_HTTP_METHOD === 'https')
-	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_IP 
+	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME 
 
 function UserNavbar(props) {
 
@@ -60,7 +60,6 @@ function UserNavbar(props) {
 
 	useEffect(() => {
 
-	console.log("use effect results: ", props.login);
 	async function getInfo() {
 		let csrf;
 		if (document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)")) == null) {
@@ -82,10 +81,6 @@ function UserNavbar(props) {
 		})
 		return response.json();
 	}
-		if (props.login) {
-			console.log("ok");
-			console.log(props.login[0]['fields'])
-		} else {
 			getInfo().then( function(res) { 
 				if (res['error'] === 'csrftoken') {
 					console.log("Error: ", res.error);
@@ -101,7 +96,6 @@ function UserNavbar(props) {
 					window.history.pushState("home", "ReactApp", "/")
 				}	
 			});
-		}
 	}, [setLoginDetails, setToken]);
 	
 
