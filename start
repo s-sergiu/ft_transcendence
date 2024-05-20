@@ -36,7 +36,7 @@ main() {
 			cp .env .env.old
 			cat .env.old | sed "s/$(grep HTTP_METHOD= .env)/HTTP_METHOD=http/" > .env
 			cp .env .env.old
-			cat .env.old | sed "s/$(grep REACT_PORT= .env)/REACT_PORT=80/" > .env
+			cat .env.old | sed "s/$(grep REACT_PORT= .env)/REACT_PORT=3000/" > .env
 		else
 			cp .env .env.old
 			cat .env.old | sed "s/$(grep GENERATE_SOURCEMAP= .env)/GENERATE_SOURCEMAP=true/" > .env

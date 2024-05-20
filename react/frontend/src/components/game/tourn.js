@@ -45,22 +45,25 @@ const Tournament = ({gameInfo, bootid, updateGameInfo}) => {
 
     // Update games state
     setGames(gamesArray);
-    updateGameInfo(0, gamesArray[0][0], gamesArray[0][1], 0, 0, 1);
+    const newGameId = (Math.floor(Math.random() * (201)) + 200).toString();
+    updateGameInfo(newGameId, gamesArray[0][0], gamesArray[0][1], 0, 0, 1);
   };
 
   // Function to start next game
   const startNextGame = () => {
     if (games.length > 1) {
+      const newGameId = (Math.floor(Math.random() * (201)) + 200).toString();
       alert(`Second game started between >${games[1][0]}< and >${games[1][1]}<`);
-      updateGameInfo(0, games[1][0], games[1][1], 0, 0, 1);
+      updateGameInfo(newGameId, games[1][0], games[1][1], 0, 0, 1);
       setTemp(1);
     }
   };
 
   const Final = () => {
     if (games.length > 1) {
+      const newGameId = (Math.floor(Math.random() * (201)) + 200).toString();
       alert(`Final game started between >${winner1}< and >${winner2}<`);
-      updateGameInfo(0, winner1, winner2, 0, 0, 1);
+      updateGameInfo(newGameId, winner1, winner2, 0, 0, 1);
       setTemp(2);
       setWinner1('');
       setWinner2('');

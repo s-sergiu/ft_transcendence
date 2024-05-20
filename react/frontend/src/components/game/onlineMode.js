@@ -40,6 +40,8 @@ const OnlineMode = ({ navigate, user }) => {
 
   const createPrivateGame = () => {
     const newGameId = Math.floor(Math.random() * 999).toString();
+
+
     setGameId(newGameId);
     setIsPrivateGame(true);
     setPrivateClicked(true);

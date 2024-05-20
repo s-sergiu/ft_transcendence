@@ -47,7 +47,8 @@ function GameInfo({ navigate, gameType, user }) {
 
   function fillInfos(type) {
     if (type === '1vs2') {
-      updateGameInfo(0, "Player-1", "Player-2", 0, 0, 0);
+      const newGameId = Math.floor(Math.random() * 99).toString();
+      updateGameInfo(newGameId, "Player-1", "Player-2", 0, 0, 0);
       return (
         <div>
         { !winner && <Game 
@@ -60,7 +61,8 @@ function GameInfo({ navigate, gameType, user }) {
           )
     } 
     else if (type === 'boot') {
-      updateGameInfo(0, user.name, "Bot", 1, 111, 0);
+      const newGameId = (Math.floor(Math.random() * (101)) + 100).toString();
+      updateGameInfo(newGameId, user.name, "Bot", 1, 111, 0);
       return (
         <div>{!winner && <Game
                 gameInfo = {gameInfo}
