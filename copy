@@ -3,11 +3,11 @@
 # copies all react filed
 cp -R debug/react/* react/frontend/src/.
 
-# django files
-# cp debug/django/api/views.py django/backend/api/views.py
-# cp debug/django/api/models.py django/backend/api/models.py
-# cp debug/django/backend/settings.py django/backend/backend/settings.py
-# cp debug/django/api/urls.py django/backend/api/urls.py
+#django files
+cp debug/django/api/views.py django/backend/api/views.py
+cp debug/django/api/models.py django/backend/api/models.py
+cp debug/django/backend/settings.py django/backend/backend/settings.py
+cp debug/django/api/urls.py django/backend/api/urls.py
 
 #gameserv files
 cp debug/gameserv/App.js  gameserv/server/App.js
