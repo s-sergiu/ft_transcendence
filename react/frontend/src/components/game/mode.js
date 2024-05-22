@@ -32,7 +32,7 @@ const [gameType, setGameType] = useState('');
     } else if (currentPage === 'online') {
       currentComponent = <OnlineMode navigate={navigate} user={user}/>;
     } else if (currentPage === 'game-info') {
-      currentComponent = gameType ? <GameInfo navigate={navigate} gameType={gameType} user={user}/> : null;
+      currentComponent = gameType ? <GameInfo navigate={navigate} gameType={gameType} user={user} gid={Math.floor(Math.random() * 500).toString()}/> : null;
     }
 
     setRenderedComponent(currentComponent);

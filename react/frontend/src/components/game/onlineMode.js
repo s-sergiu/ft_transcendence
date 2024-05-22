@@ -39,7 +39,7 @@ const OnlineMode = ({ navigate, user }) => {
   };
 
   const createPrivateGame = () => {
-    const newGameId = Math.floor(Math.random() * 999).toString();
+    const newGameId = (Math.floor(Math.random() * (199)) + 501).toString();
 
 
     setGameId(newGameId);

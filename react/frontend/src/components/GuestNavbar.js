@@ -53,7 +53,7 @@ function GuestNavbar(props) {
 
 	async function requestDB() {
 		const data = await getDB(id);
-		console.log(data[0]['fields'])	
+		// console.log(data[0]['fields'])	
 	}
 
 	async function generateDB() {
