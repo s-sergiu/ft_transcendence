@@ -1,33 +1,82 @@
 version: "3.8"
 
 services:
-  react:
-    build: react/.
-    container_name: react
+  gameserv:
+    build:
+      dockerfile: Dockerfile
+      context: gameserv/.
+      target: dev
+    container_name: gameserv
+    depends_on:
+      - react
+    ports:
+      - "4000:4000"
+    networks:
+      game-network:
+        ipv4_address: ${GAME_IP}
     environment:
+      - GAME_IP=${GAME_IP}
+      - HOST_NAME=${HOST_NAME}
       - HOST_IP=${HOST_IP}
+      - USER_GID=${USER_GID}
+    volumes:
+      - ./debug/gameserv:/debug
+    restart: on-failure
+  react:
+    build:
+      dockerfile: Dockerfile
+      context: react/.
+      target: ${STAGE}
+      args:
+        REACT_APP_DJANGO_PORT: ${DJANGO_PORT}
+        REACT_APP_HOST_NAME: ${HOST_NAME}
+        REACT_APP_REDIRECT_URI: ${REDIRECT_URI}
+        REACT_APP_HTTP_METHOD: ${HTTP_METHOD}
+    container_name: react
+    depends_on:
+      - django
+    environment:
+      - REACT_APP_GAME_IP=${GAME_IP}
+      - REACT_APP_DJANGO_PORT=${DJANGO_PORT}
+      - REACT_APP_HTTP_METHOD=${HTTP_METHOD}
+      - PORT=${REACT_PORT}
+      - REACT_APP_HOST_NAME=${HOST_NAME}
+      - REACT_APP_HOST_IP=${HOST_IP}
+      - REACT_APP_REDIRECT_URI=${REDIRECT_URI}
       - USER_GID=${USER_GID}
       - GENERATE_SOURCEMAP=${GENERATE_SOURCEMAP}
     ports:
-      - "3000:3000"
+      - "${REACT_PORT}:${REACT_PORT}"
     volumes:
       - ./debug/react:/debug/src
+    restart: on-failure
   django:
-    build: django/.
+    build:
+      dockerfile: Dockerfile
+      context: django/.
+      target: ${STAGE}
     container_name: django
+    ports:
+      - "${DJANGO_PORT}:${DJANGO_PORT}"
     depends_on:
       postgresql:
         condition: service_healthy
-    ports:
-      - "8000:8000"
     volumes:
       - ./debug/django:/debug/backend
     environment:
+      - DJANGO_DEBUG=${DJANGO_DEBUG}
+      - HTTP_METHOD=${HTTP_METHOD}
+      - REACT_PORT=${REACT_PORT}
+      - CLIENT_ID=${CLIENT_ID}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - CLIENT_SECRET=${CLIENT_SECRET}
       - HOST_IP=${HOST_IP}
+      - HOST_NAME=${HOST_NAME}
       - USER_GID=${USER_GID}
       - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD}
       - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
       - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
+    restart: on-failure
   postgresql:
     build: postgres/.
     container_name: postgresql
@@ -37,7 +86,15 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
+    restart: on-failure
     healthcheck:
       test: pg_isready -d django_db -U postgres -h postgresql -p 5432
       interval: 5s
       retries: 3
+
+networks:
+  game-network:
+    ipam:
+      driver: default
+      config:
+        - subnet: ${SUBNET}

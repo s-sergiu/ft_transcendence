@@ -11,29 +11,43 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-import os
+import os,sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-HOST_IP=os.environ.get('HOST_IP')
+HOST_NAME = os.environ.get('HOST_NAME')
+HOST_IP = os.environ.get('HOST_IP')
+REACT_PORT = os.environ.get('REACT_PORT')
+DJANGO_DEBUG = os.environ.get('DJANGO_DEBUG')
+HTTP_METHOD = os.environ.get('HTTP_METHOD')
+HOST_WITH_PORT = HTTP_METHOD + "://" + HOST_IP
+HOST_NAME_W_PORT = HTTP_METHOD + "://" + HOST_NAME
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-v^v38=4&1qx6=(i5bj9t@8y#@m3hh9(w*8us&e2qv9!ym26br('
+
+DEBUG=True
+if DJANGO_DEBUG == 'False':
+    SESSION_COOKIE_SECURE=True
+    CSRF_COOKIE_SECURE=True
+    DEBUG=False
+
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = [
-    HOST_IP
+    HOST_IP,
+    HOST_NAME,
 ]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'api.apps.ApiConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -131,10 +145,14 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
-	'http://127.0.0.1:3000',
+        HOST_WITH_PORT,
+        HOST_NAME_W_PORT,
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-	'http://127.0.0.1:3000',
+        HOST_WITH_PORT,
+        HOST_NAME_W_PORT,
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True

@@ -1,0 +1,55 @@
+.d-block, img{
+    width: 800px;
+    height: 900px;
+}
+
+h3{
+    color: rgb(2, 229, 210);
+    margin-bottom: 300px;
+}
+.custom-image {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-top: 60px;
+  }
+.right{
+    margin-top: 330px;
+    margin-left: 20px;
+    margin-bottom: 100px;
+}
+.right p{
+    font-size: 20px;
+}
+.right Button{
+    margin-top: 60px;
+    width: 120px;
+    height: 60px;
+    border-radius: 12px;
+    background-color: green;
+
+}
+.right Button :hover{
+    background-color: lightblue;
+
+}
+
+.left{
+    margin-top: 180px;
+    margin-left: 20px;
+    margin-bottom: 100px;
+}
+.left p{
+    font-size: 20px;
+}
+.left Button{
+    margin-top: 30px;
+    width: 120px;
+    height: 60px;
+    border-radius: 12px;
+    background-color: green;
+
+}
+.left Button :hover{
+    background-color: lightblue;
+
+}

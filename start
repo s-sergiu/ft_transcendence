@@ -1,0 +1,140 @@
+#!/bin/bash
+
+PRESS_ENTER="\e[1;38m"
+BG_RED="\e[41m"
+RED="\e[31m"
+BLUE="\e[34m"
+GREEN="\e[32m"
+ENDCOLOR="\e[0m"
+CYAN="\e[36m"
+MAGENTA="\e[95m"
+
+if [[ $OSTYPE == darwin* ]]
+	then
+		PRESS_ENTER=
+		BG_RED=
+		RED=
+		BLUE=
+		GREEN=
+		ENDCOLOR=
+		CYAN=
+		MAGENTA=
+fi
+
+main() {
+
+	user_gid=$(id -g)
+	gid_to_replace=$(grep USER_GID= .env | cut -d '=' -f2)
+
+	cp .env .env.old
+	cat .env.old | sed "s/$(grep STAGE= .env)/STAGE=$1/" > .env
+
+	if [[ $1 == 'dev' ]]
+		then
+			cp .env .env.old
+			cat .env.old | sed "s/$(grep GENERATE_SOURCEMAP= .env)/GENERATE_SOURCEMAP=false/" > .env
+			cp .env .env.old
+			cat .env.old | sed "s/$(grep HTTP_METHOD= .env)/HTTP_METHOD=http/" > .env
+			cp .env .env.old
+			cat .env.old | sed "s/$(grep REACT_PORT= .env)/REACT_PORT=80/" > .env
+		else
+			cp .env .env.old
+			cat .env.old | sed "s/$(grep GENERATE_SOURCEMAP= .env)/GENERATE_SOURCEMAP=true/" > .env
+			cp .env .env.old
+			cat .env.old | sed "s/$(grep HTTP_METHOD= .env)/HTTP_METHOD=https/" > .env
+			cp .env .env.old
+			cat .env.old | sed "s/$(grep REACT_PORT= .env)/REACT_PORT=443/" > .env
+	fi
+
+
+	if [[ $1 == 'dev' ]]
+		then
+			cp .env .env.old
+			cat .env.old | sed "s/$(grep DJANGO_DEBUG= .env)/DJANGO_DEBUG=True/" > .env
+		else
+			cp .env .env.old
+			cat .env.old | sed "s/$(grep DJANGO_DEBUG= .env)/DJANGO_DEBUG=False/" > .env
+	fi
+
+	if [[ $OSTYPE == darwin* ]]
+		then 
+			ip=$(ifconfig | grep en1 -A 1 | grep "inet " | awk '{ print $2 }')
+			host_name=$(hostname | tr '[:upper:]' '[:lower:]')
+		else 
+			ip=$(ip add | grep "BROADCAST,MULTICAST,UP,LOWER_UP" -A 2 | grep inet -m1 | awk '{print $2}' | cut -d '/' -f1)
+			host_name=$(hostnamectl hostname | tr '[:upper:]' '[:lower:]')
+	fi
+	ip_to_replace=$(grep HOST_IP= .env | cut -d '=' -f2)
+	hostname_to_replace=$(grep HOST_NAME= .env | awk '{ print $1 }' | cut -d '=' -f2)
+
+	cp .env .env.old
+	cat .env.old | sed "s/$gid_to_replace/$user_gid/"  > .env
+	cp .env .env.old
+	cat .env.old | sed "s/$ip_to_replace/$ip/"  > .env
+	cp .env .env.old
+	cat .env.old | sed "s/$hostname_to_replace/$host_name/"  > .env
+	rm .env.old
+
+	exec docker compose up --build
+}
+
+cleanup_database() {
+	docker rm postgresql
+}
+
+cleanup_network() {
+	docker network prune
+}
+
+cleanup_debug() {
+	rm -rf debug/
+}
+
+cleanup() {
+	docker kill $(docker ps)
+	docker rm $(docker ps -a)
+	docker rmi $(docker images)
+	docker system prune -af --volumes
+	rm -rf debug/
+}
+
+press_enter() {
+  echo ""
+  echo -en $PRESS_ENTER"	Press Enter to continue "$ENDCOLOR
+  read
+  clear
+}
+
+exit_case() {
+	exit
+}
+
+incorrect_selection() {
+  echo -e $BG_RED"Wrong choice! Try again."$ENDCOLOR
+}
+
+until [ "$selection" = "q" ]; do
+  clear
+  echo ""
+  echo -e $GREEN"    	1  -  Start server in production mode"$ENDCOLOR
+  echo -e $CYAN"    	2  -  Start server in development mode"$ENDCOLOR
+  echo -e $BLUE"    	3  -  Clean up docker files and debug folder"$ENDCOLOR
+  echo -e $BLUE"    	4  -  Clean up debug folder"$ENDCOLOR
+  echo -e $BLUE"    	5  -  Clean up database"$ENDCOLOR
+  echo -e $BLUE"    	6  -  Clean up docker networks"$ENDCOLOR
+  echo -e $RED"    	0  -  Exit" $ENDCOLOR
+  echo ""
+  echo -en $MAGENTA"  Enter selection: "$ENDCOLOR
+  read selection
+  echo ""
+  case $selection in
+    1 ) clear ; main "prod" ; press_enter ;;
+    2 ) clear ; main "dev" ; press_enter ;;
+    3 ) clear ; cleanup ; press_enter ;;
+    4 ) clear ; cleanup_debug ; press_enter ;;
+    5 ) clear ; cleanup_database ; press_enter ;;
+    6 ) clear ; cleanup_network ; press_enter ;;
+    0 ) clear ; exit ;;
+    * ) clear ; incorrect_selection ; press_enter ;;
+  esac
+done

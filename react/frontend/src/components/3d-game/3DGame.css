@@ -1,0 +1,8 @@
+
+.3d-game, canvas {
+	top: 14%;
+}
+
+canvas {
+	top: 14%!important;
+}

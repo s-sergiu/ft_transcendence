@@ -1,27 +1,33 @@
 import './App.css';
 import React from 'react';
 import { useState } from 'react';
-import UserNavbar from './UserNavbar.js';
-import GuestNavbar from './GuestNavbar.js';
+import GuestNavbar from './components/GuestNavbar.js';
+import UserNavbar from './components/UserNavbar.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
 
-	const [userLogged, setUserLogged] = useState(false);
+	const [login, setLogin] = useState(false);
+	const [user, setUser] = useState(false);
+	const [token, setToken] = useState(localStorage.getItem("token"));
 
-	if (userLogged) {
+	 if (user || login || token ) {
 		return (
 			<UserNavbar 
-				loginStatus = { setUserLogged }
+				login = { login }
+				setToken = { setToken }
+				setLoginDetails = { setLogin } 
 			/>
 		);
-	} else {
-		return (
-			<GuestNavbar 
-				loginStatus = { setUserLogged } 
-			/>
-		);
-	}
+	 } else {
+	 	return (
+	 		<GuestNavbar 
+	 			setToken = { setToken }
+	 			setLoginDetails = { setLogin } 
+	 		/>
+	 	);
+	 }
 }
 
 export default App;

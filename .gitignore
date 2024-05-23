@@ -1,2 +1,10 @@
+migrations
+TODO
+__pycache__
 .env
 debug
+react/frontend/src/package-lock.json
+react/frontend/src/package.json
+react/frontend/package-lock.json
+react/frontend/node_modules/
+react/frontend/src/node_modules/
