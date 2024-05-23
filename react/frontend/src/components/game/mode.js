@@ -54,7 +54,7 @@ const [gameType, setGameType] = useState('');
   };
 
   return (
-    <div>
+    <div className='div-container'>
       {renderedComponent}
       <h4 />
       <hr />

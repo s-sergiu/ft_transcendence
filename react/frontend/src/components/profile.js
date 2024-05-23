@@ -77,6 +77,7 @@ const Profile = (props) => {
   };
 
   return (
+    <div className='div_global'>
     <Container fluid className="profile-container">
       <Row>
         {/* Left sidebar */}
@@ -175,6 +176,7 @@ const Profile = (props) => {
         </Col>
       </Row>
     </Container>
+    </div>
   );
 };
 
