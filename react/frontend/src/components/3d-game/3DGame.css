@@ -1,8 +1,12 @@
 
 .3d-game, canvas {
 	top: 14%;
+	display: block;
 }
 
-canvas {
-	top: 14%!important;
+html, body {
+    margin: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
 }
