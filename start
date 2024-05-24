@@ -58,7 +58,7 @@ main() {
 
 	if [[ $OSTYPE == darwin* ]]
 		then 
-			ip=$(ifconfig | grep en1 -A 1 | grep "inet " | awk '{ print $2 }')
+			ip=$(ifconfig | grep en0 -A 2 | grep "inet " | awk '{ print $2 }')
 			host_name=$(hostname | tr '[:upper:]' '[:lower:]')
 		else 
 			ip=$(ip add | grep "BROADCAST,MULTICAST,UP,LOWER_UP" -A 2 | grep inet -m1 | awk '{print $2}' | cut -d '/' -f1)
