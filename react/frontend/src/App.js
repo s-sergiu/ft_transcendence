@@ -13,7 +13,7 @@ function App() {
 	const [user, setUser] = useState(false);
 	const [token, setToken] = useState(localStorage.getItem("token"));
 
-	 if (user || login || token ) {
+	 if (user || login || login42 || token ) {
 		return (
 			<UserNavbar 
 				login = { login }
