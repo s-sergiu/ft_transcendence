@@ -22,6 +22,10 @@ if [[ $OSTYPE == darwin* ]]
 fi
 
 main() {
+	if [[ $1 == 'dev' ]]
+		then
+			mkdir debug
+	fi
 
 	user_gid=$(id -g)
 	gid_to_replace=$(grep USER_GID= .env | cut -d '=' -f2)
