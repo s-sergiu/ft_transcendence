@@ -1,10 +1,10 @@
 import './App.css';
 import React from 'react';
 import { useState } from 'react';
-// import GuestNavbar from './components/GuestNavbar.js';
-// import UserNavbar from './components/UserNavbar.js';
+import GuestNavbar from './components/GuestNavbar.js';
+import UserNavbar from './components/UserNavbar.js';
 import	Mode from './components/game/mode.js'
-//import LoginPage from './LoginPage.js';
+import LoginPage from './LoginPage.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -14,24 +14,22 @@ function App() {
 	const [user, setUser] = useState(false);
 	const [token, setToken] = useState(localStorage.getItem("token"));
 
-	return <Mode />;
-
-	// if (user || login || token ) {
-	// 	return (
-	// 		<UserNavbar 
-	// 			login = { login }
-	// 			setToken = { setToken }
-	// 			setLoginDetails = { setLogin } 
-	// 		/>
-	// 	);
-	// } else {
-	// 	return (
-	// 		<GuestNavbar 
-	// 			setToken = { setToken }
-	// 			setLoginDetails = { setLogin } 
-	// 		/>
-	// 	);
-	// }
+	if (user || login || token ) {
+	return (
+ 		<UserNavbar 
+		login = { login }
+		setToken = { setToken }
+		setLoginDetails = { setLogin } 
+		/>
+	);
+	} else {
+	return (
+ 		<GuestNavbar 
+		setToken = { setToken }
+		setLoginDetails = { setLogin } 
+	 	/>
+	);
+	}
 }
 
 export default App;
