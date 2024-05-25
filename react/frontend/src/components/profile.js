@@ -20,7 +20,6 @@ const Profile = (props) => {
     // Fetch user data and match history from an API or database
     // Here you can fetch user stats, wins, losses, and match history
     // For demonstration purposes, let's mock some data
-
     // Mocked user data
     const mockUserData = {
       username: 'sergiu',

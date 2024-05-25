@@ -20,6 +20,7 @@ function App() {
 				login42 = { login42 }
 				setToken = { setToken }
 				setLogin = { setLogin } 
+				set42Login = { set42Login } 
 			/>
 		);
 	 } else {
