@@ -18,7 +18,7 @@ function GameInfo({ navigate, gameType, user }) {
   
 
   function updateGameInfo(id, play1, play2, gId, bit, stats) {
-    if (id == 0)
+    if (id === 0)
       id = Math.floor(Math.random() * 999).toString();
     // Set gameInfo only if it's different from the current state
     if (gameInfo.gameId !== id || gameInfo.player1 !== play1 || gameInfo.player2 !== play2 || gameInfo.playerId !== gId) {
