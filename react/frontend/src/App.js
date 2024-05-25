@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 
+	const [login42, set42Login] = useState(false);
 	const [login, setLogin] = useState(false);
 	const [user, setUser] = useState(false);
 	const [token, setToken] = useState(localStorage.getItem("token"));
@@ -16,6 +17,7 @@ function App() {
 		return (
 			<UserNavbar 
 				login = { login }
+				login42 = { login42 }
 				setToken = { setToken }
 				setLoginDetails = { setLogin } 
 			/>
@@ -24,7 +26,8 @@ function App() {
 	 	return (
 	 		<GuestNavbar 
 	 			setToken = { setToken }
-	 			setLoginDetails = { setLogin } 
+	 			set42Login = { set42Login } 
+	 			setLogin = { setLogin } 
 	 		/>
 	 	);
 	 }

@@ -19,7 +19,7 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME
 
 function GuestNavbar(props) {
-	const { setToken } = props;
+	const { setToken, set42Login, setLogin } = props;
 	const [login, showLogin] = useState(false);
 	const [id, setId] = useState(1);
 
@@ -171,7 +171,7 @@ function GuestNavbar(props) {
       </Container>
     </Navbar>
 	  <h1>NOT LOGGED</h1>
-	  { (login) ? (<LoginPage setLoginDetails = { props.setLoginDetails } />)
+	  { (login) ? (<LoginPage setLogin = { props.setLogin } />)
 		  : (<Mode />)
 	   }
     </div>

@@ -19,11 +19,11 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 
 function UserNavbar(props) {
 
-	const { setLoginDetails, setToken } = props
 	const [ gameToggle, setGameToggle ] = useState('');
 	const [ game3dToggle, set3dToggle ] = useState('');
 	const [ tournToggle, setTournToggle ] = useState('');
 	const [ profileToggle, setProfileToggle ] = useState('profile');
+	const { login, login42, setToken, setLoginDetails } = props;
 
 	function toggleNav(string) {
 
@@ -135,7 +135,7 @@ function UserNavbar(props) {
 		} else if (profileToggle) {
 			return (
 				<Profile 
-					loginData = { props.login } 
+					login = { login } 
 				/>
 			)
 		} else if (game3dToggle) {
