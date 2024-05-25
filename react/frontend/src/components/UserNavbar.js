@@ -23,7 +23,7 @@ function UserNavbar(props) {
 	const [ game3dToggle, set3dToggle ] = useState('');
 	const [ tournToggle, setTournToggle ] = useState('');
 	const [ profileToggle, setProfileToggle ] = useState('profile');
-	const { login, login42, setToken, setLoginDetails } = props;
+	const { login, login42, setToken, setLogin } = props;
 
 	function toggleNav(string) {
 
@@ -54,7 +54,7 @@ function UserNavbar(props) {
 	}
 	function Logout() {
 		localStorage.clear();
-		setLoginDetails(false);
+		setLogin(false);
 		setToken('');
 	}
 
@@ -84,19 +84,19 @@ function UserNavbar(props) {
 			getInfo().then( function(res) { 
 				if (res['error'] === 'csrftoken') {
 					console.log("Error: ", res.error);
-					setLoginDetails(false);
+					setLogin(false);
 					setToken('');
 					return undefined
 				} else if (res['error'] === 'Not authorized') {
 					console.log("Error : Not authorized - ", res.message)
 				} else {
 					res = res[0]['fields']
-					setLoginDetails(res);
+					setLogin(res);
 					//console.log("result", res)
 					window.history.pushState("home", "ReactApp", "/")
 				}	
 			});
-	}, [setLoginDetails, setToken]);
+	}, [setLogin, setToken]);
 	
 
   return (

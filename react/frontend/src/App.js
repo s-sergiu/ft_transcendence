@@ -19,7 +19,7 @@ function App() {
 				login = { login }
 				login42 = { login42 }
 				setToken = { setToken }
-				setLoginDetails = { setLogin } 
+				setLogin = { setLogin } 
 			/>
 		);
 	 } else {
