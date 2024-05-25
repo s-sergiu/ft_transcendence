@@ -25,6 +25,13 @@ function UserNavbar(props) {
 	const [ profileToggle, setProfileToggle ] = useState('profile');
 	const { login, login42, setToken, setLogin } = props;
 
+	var loginData;
+	if (login) {
+		loginData = login[0]['fields'];
+	} else {
+		loginData = login42;
+	}
+
 	function toggleNav(string) {
 
 		if (string === 'game') {
@@ -135,7 +142,7 @@ function UserNavbar(props) {
 		} else if (profileToggle) {
 			return (
 				<Profile 
-					login = { login } 
+					login = { loginData } 
 				/>
 			)
 		} else if (game3dToggle) {
