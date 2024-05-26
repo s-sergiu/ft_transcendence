@@ -9,7 +9,7 @@ import { debounce } from 'lodash';
 
 
 const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
-  console.log("GINFO :" + gameInfo.playerId);
+  console.log("GINFO :" + gameInfo.gameId);
   const [countdown, setCountdown] = useState(0);
   const [move, setMove] = useState(null);
   const [infos, setInfos] = useState(0);

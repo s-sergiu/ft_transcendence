@@ -331,7 +331,7 @@ io.on("connection", (socket) => {
     socket.on("move", (data, playerId, gid) => {
         // console.log('Key pressed:', data);
         id = gid;
-        if (playerId == 0 && id == 0)
+        if (playerId == 0 && id < 500)
         {
             GamesList[id].positions2.ly = GamesList[id].positions2.y;
             GamesList[id].positions.ly = GamesList[id].positions.y;

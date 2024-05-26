@@ -16,6 +16,9 @@ const Profile = (props) => {
   });
   const [editMode, setEditMode] = useState(false);
 
+	// console.log("LOGIN DAT: ", loginData[0]['fields']);
+	const loginDatas = loginData[0]['fields']
+
   useEffect(() => {
     // Fetch user data and match history from an API or database
     // Here you can fetch user stats, wins, losses, and match history
