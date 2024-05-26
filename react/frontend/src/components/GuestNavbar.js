@@ -145,21 +145,6 @@ function GuestNavbar(props) {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-          <Form className="d-flex">
-            <Button onClick = { e => generateDB() } variant="outline-success">Generate DB</Button>
-          </Form>
-          <Form className="d-flex">
-            <Button onClick = { e => requestDB() } variant="outline-success">Request DB</Button>
-          </Form>
-		  <InputGroup size="sm" className="mb-3">
-			<InputGroup.Text id="inputGroup-sizing-sm">Small</InputGroup.Text>
-			<Form.Control
-			  value={ id }
-			  onChange={e => setId(e.target.value)}
-			  aria-label="ID"
-			  aria-describedby="inputGroup-sizing-sm"
-			/>
-		  </InputGroup>
           </Nav>
           <Form className="d-flex">
             <Button onClick = { e => showLogin(true) } variant="outline-success">Login</Button>
