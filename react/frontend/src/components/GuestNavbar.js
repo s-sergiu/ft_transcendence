@@ -19,7 +19,7 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME
 
 function GuestNavbar(props) {
-	const { setToken } = props;
+	const { setToken, set42Login, setLogin } = props;
 	const [login, showLogin] = useState(false);
 	const [id, setId] = useState(1);
 
@@ -52,7 +52,7 @@ function GuestNavbar(props) {
 
 	async function requestDB() {
 		const data = await getDB(id);
-		console.log(data[0]['fields'])	
+		// console.log(data[0]['fields'])	
 	}
 
 	async function generateDB() {
@@ -145,21 +145,6 @@ function GuestNavbar(props) {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-          <Form className="d-flex">
-            <Button onClick = { e => generateDB() } variant="outline-success">Generate DB</Button>
-          </Form>
-          <Form className="d-flex">
-            <Button onClick = { e => requestDB() } variant="outline-success">Request DB</Button>
-          </Form>
-		  <InputGroup size="sm" className="mb-3">
-			<InputGroup.Text id="inputGroup-sizing-sm">Small</InputGroup.Text>
-			<Form.Control
-			  value={ id }
-			  onChange={e => setId(e.target.value)}
-			  aria-label="ID"
-			  aria-describedby="inputGroup-sizing-sm"
-			/>
-		  </InputGroup>
           </Nav>
           <Form className="d-flex">
             <Button onClick = { e => showLogin(true) } variant="outline-success">Login</Button>
@@ -171,7 +156,7 @@ function GuestNavbar(props) {
       </Container>
     </Navbar>
 	  <h1>NOT LOGGED</h1>
-	  { (login) ? (<LoginPage setLoginDetails = { props.setLoginDetails } />)
+	  { (login) ? (<LoginPage setLogin = { props.setLogin } />)
 		  : (<Mode />)
 	   }
     </div>
