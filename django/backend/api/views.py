@@ -48,12 +48,15 @@ def get_normal_user(data):
     return user.get()
 
 def get_or_create_normal_user(data):
-    orgs = User.objects.create_user(data['username'],
-                                    data['email'],
-                                    data['password'],
-                                    )
-    orgs.save()
-    return 
+    orgs = User.objects.filter(username = data['username']);
+    if orgs is None:
+        orgs = User.objects.create_user(data['username'],
+                                        data['email'],
+                                        data['password'],
+                                        )
+        orgs.save()
+        return (1);
+    return (2)
 
 def get_or_create_user(api_data, token):
     try:
@@ -95,8 +98,10 @@ def requestFromDB(request):
 
 def register(request):
     data= json.loads(request.body.decode("utf-8"))
-    get_or_create_normal_user(data)
-    return (JsonResponse({'200' : 'OK'}))
+    status = get_or_create_normal_user(data)
+    if status is 2:
+        return (JsonResponse({'Message' : 'User already exists!'}))
+    return (JsonResponse({'Message' : 'User registered!'}))
 
 def login(request):
     data = json.loads(request.body.decode("utf-8"))
