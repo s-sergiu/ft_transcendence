@@ -34,8 +34,10 @@ function Game3D() {
 	let paddleLength = 4;
 	let paddleWidth = 1;
 	let halfPaddleLength = paddleLength / 2;
+
 	let distance = 1;
 	let radius = 0.3;
+
 	let paddleSpeed = 20;
 	let randomSpeed = 20.0;
 

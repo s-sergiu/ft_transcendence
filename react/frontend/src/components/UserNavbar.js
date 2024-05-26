@@ -9,6 +9,7 @@ import Mode from './game/mode.js';
 import Profile from './profile';
 import { useEffect, useState } from 'react';
 import Tournament from './tournaments';
+import './css/navbar.css'
 //import Content from './Content';
 
 var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
@@ -17,11 +18,21 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 
 function UserNavbar(props) {
 
-	const { setLoginDetails, setToken } = props
 	const [ gameToggle, setGameToggle ] = useState('');
 	const [ game3dToggle, set3dToggle ] = useState('');
 	const [ tournToggle, setTournToggle ] = useState('');
 	const [ profileToggle, setProfileToggle ] = useState('profile');
+	const { login, login42, setToken, set42Login, setLogin } = props;
+
+	console.log(login42);
+	console.log(login);
+
+	var loginData;
+	if (login) {
+		loginData = login[0]['fields'];
+	} else {
+		loginData = login42;
+	}
 
 	function toggleNav(string) {
 
@@ -52,12 +63,14 @@ function UserNavbar(props) {
 	}
 	function Logout() {
 		localStorage.clear();
-		setLoginDetails(false);
+		setLogin(false);
+		set42Login(false);
 		setToken('');
 	}
 
 	useEffect(() => {
-
+	
+	console.log("test");
 	async function getInfo() {
 		let csrf;
 		if (document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)")) == null) {
@@ -79,23 +92,22 @@ function UserNavbar(props) {
 		})
 		return response.json();
 	}
-
-		getInfo().then( function(res) { 
-			if (res['error'] === 'csrftoken') {
-				console.log("Error: ", res.error);
-				setLoginDetails(false);
-				setToken('');
-				return undefined
-			} else if (res['error'] === 'Not authorized') {
-				console.log("Error : Not authorized - ", res.message)
-			} else {
-				res = res[0]['fields']
-				setLoginDetails(res);
-				//console.log("result", res)
-				window.history.pushState("home", "ReactApp", "/")
-			}	
-		});
-	}, [setLoginDetails, setToken]);
+			getInfo().then( function(res) { 
+				if (res['error'] === 'csrftoken') {
+					console.log("Error: ", res.error);
+					set42Login(false);
+					setToken('');
+					return undefined
+				} else if (res['error'] === 'Not authorized') {
+					console.log("Error : Not authorized - ", res.message)
+				} else {
+					res = res[0]['fields']
+					set42Login(res);
+					//console.log("result", res)
+					window.history.pushState("home", "ReactApp", "/")
+				}	
+			});
+	}, [set42Login, setToken]);
 	
 
   return (
@@ -134,7 +146,7 @@ function UserNavbar(props) {
 		} else if (profileToggle) {
 			return (
 				<Profile 
-					loginData = { props.login } 
+					login = { loginData } 
 				/>
 			)
 		} else if (game3dToggle) {

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Game from '../game/Ping';
 import Tournament from './tourn.js';
 
-function GameInfo({ navigate, gameType }) {
+function GameInfo({ navigate, gameType, user }) {
   const [gameInfo, setGameInfo] = useState({
     gameId: null,
     player1: null,
@@ -11,12 +11,15 @@ function GameInfo({ navigate, gameType }) {
     playerId: null,
   });
   const [bootid, setBootid] = useState(0);
+  const [winner, setWinner] = useState('');
   const [player1Name, setPlayer1Name] = useState('');
   const [player2Name, setPlayer2Name] = useState('');
   const [gameState, setGameState] = useState(0);
   
 
   function updateGameInfo(id, play1, play2, gId, bit, stats) {
+    if (id === 0)
+      id = Math.floor(Math.random() * 999).toString();
     // Set gameInfo only if it's different from the current state
     if (gameInfo.gameId !== id || gameInfo.player1 !== play1 || gameInfo.player2 !== play2 || gameInfo.playerId !== gId) {
       setGameInfo({
@@ -44,18 +47,31 @@ function GameInfo({ navigate, gameType }) {
 
   function fillInfos(type) {
     if (type === '1vs2') {
-      updateGameInfo(0, "Player-1", "Player-2", 0, 0, 0);
-      return <Game 
+      const newGameId = Math.floor(Math.random() * 99).toString();
+      updateGameInfo(newGameId, "Player-1", "Player-2", 0, 0, 0);
+      return (
+        <div>
+        { !winner && <Game 
                 gameInfo = {gameInfo}
                 bootid = {bootid}
-            />;
+                onWinnerChange={(newWinner) => setWinner(newWinner)}
+            />}
+        { winner && <h1>Winner is: {winner}</h1>}
+        </div>
+          )
     } 
     else if (type === 'boot') {
-      updateGameInfo(0, "Player", "Boot", 1, 111, 0);
-      return <Game
+      const newGameId = (Math.floor(Math.random() * (101)) + 100).toString();
+      updateGameInfo(newGameId, user.name, "Bot", 1, 111, 0);
+      return (
+        <div>{!winner && <Game
                 gameInfo = {gameInfo}
                 bootid = {bootid}
-            />;
+                onWinnerChange={(newWinner) => setWinner(newWinner)}
+                />}
+        { winner && <h1>Winner is: {winner}</h1>}
+        </div>
+      )
     } else if (type === 'tournament') {
       return (
         <Tournament 

@@ -17,6 +17,7 @@ services:
     environment:
       - GAME_IP=${GAME_IP}
       - HOST_NAME=${HOST_NAME}
+      - HOST_IP=${HOST_IP}
       - USER_GID=${USER_GID}
     volumes:
       - ./debug/gameserv:/debug
