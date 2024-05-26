@@ -32,6 +32,7 @@ function UserNavbar(props) {
 		loginData = login[0]['fields'];
 	} else {
 		loginData = login42;
+		var login42Enabled = 1;
 	}
 
 	function toggleNav(string) {
@@ -70,6 +71,7 @@ function UserNavbar(props) {
 
 	useEffect(() => {
 	
+	if (login42Enabled == 1) {
 	console.log("test");
 	async function getInfo() {
 		let csrf;
@@ -107,6 +109,7 @@ function UserNavbar(props) {
 					window.history.pushState("home", "ReactApp", "/")
 				}	
 			});
+		}
 	}, [set42Login, setToken]);
 	
 
