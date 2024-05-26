@@ -10,7 +10,9 @@ const LoginPage = (props) => {
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
   const [registerForm, setRegisterForm] = useState({ email: '', password: '' });
   const [showLoginForm, setShowLoginForm] = useState(true);
+  const [message, setMessage] = useState('');
   const { setLogin } = props
+	
 
   const handleLoginChange = (e) => {
     setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
@@ -29,11 +31,13 @@ const LoginPage = (props) => {
     // Handle login logic here
   };
 
-  const handleRegisterSubmit = (e) => {
+  const handleRegisterSubmit = async (e) => {
     e.preventDefault();
 	console.log(registerForm);
-	sendRegistrationForm(registerForm);
+	const reply = await sendRegistrationForm(registerForm);
 	toggleLoginForm(true);
+	console.log(reply.Message)
+	setMessage(reply.Message)
     // Handle registration logic here
   };
 
@@ -145,6 +149,7 @@ const LoginPage = (props) => {
                   Submit
                 </Button>
                 <br></br><br></br>
+				{ message } 
                 </div>
               </Form>
             </>
