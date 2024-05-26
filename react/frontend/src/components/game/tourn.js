@@ -77,7 +77,7 @@ const Tournament = ({gameInfo, bootid, updateGameInfo}) => {
   };
 
   return (
-    <div>
+    <div className='div-tourn'>
       <h2 class="bluebtn">Tournament</h2>
       { games.length <= 0 && <div>
       <div class ="trnmRow">
