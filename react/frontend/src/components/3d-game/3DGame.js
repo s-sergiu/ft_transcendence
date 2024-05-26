@@ -1,4 +1,3 @@
-
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import * as THREE from 'three';
@@ -6,7 +5,7 @@ import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
 import './3DGame.css';
 
 function Game3D() {
-
+	
 	let renderer;
 	let scene;
 	let camera;
@@ -35,8 +34,10 @@ function Game3D() {
 	let paddleLength = 4;
 	let paddleWidth = 1;
 	let halfPaddleLength = paddleLength / 2;
-	let distance = 5;
-	let radius = 0.7;
+
+	let distance = 1;
+	let radius = 0.3;
+
 	let paddleSpeed = 20;
 	let randomSpeed = 20.0;
 
@@ -210,6 +211,9 @@ function Game3D() {
 	}
 
 	function rightPaddleCollision(){
+		if (ballVelocity.x > 0) {
+            ballVelocity.x *= -1;
+        }
 		return (sphere.position.y + radius >= rightPaddle.position.y - halfPaddleLength &&
 			sphere.position.y - radius <= rightPaddle.position.y + halfPaddleLength &&
 			sphere.position.x + radius >= rightPaddle.position.x - paddleWidth / 2 &&
