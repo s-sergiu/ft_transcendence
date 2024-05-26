@@ -107,24 +107,24 @@ const Tournament = ({gameInfo, bootid, updateGameInfo, gid}) => {
           <p> {winner1} Won</p>
       <button onClick={startNextGame}>Start Next Game</button>
       </div>}
-        {games.length > 0 && !winner2 && temp == 1 && winner1 && <Game
+        {games.length > 0 && !winner2 && temp === 1 && winner1 && <Game
                 gameInfo = {gameInfo}
                 bootid = {bootid}
                 winner = {winner2}
                 onWinnerChange={(newWinner) => setWinner2(newWinner)}
             />}
 
-        {temp == 1 && winner2 && winner1 && <div>
+        {temp === 1 && winner2 && winner1 && <div>
           <p> {winner2} Won</p>
       <button onClick={Final}>Start Final Game</button>
       </div>}
-        {games.length > 0 &&  temp == 2 && !winner1 && <Game
+        {games.length > 0 &&  temp === 2 && !winner1 && <Game
                 gameInfo = {gameInfo}
                 bootid = {bootid}
                 winner = {winner1}
                 onWinnerChange={(newWinner) => setWinner1(newWinner)}
             />}
-        {temp == 2 && !winner2 && winner1 && <div>
+        {temp === 2 && !winner2 && winner1 && <div>
       {alert(`Felicitation >${winner1}< You WON The Tournament`)}
       <h2>End</h2>
       <h1>WINNER OF THE TOURNAMENT IS : <bold>{winner1}</bold></h1>

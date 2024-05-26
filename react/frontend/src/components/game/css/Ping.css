@@ -81,7 +81,7 @@
       overflow: hidden;
   } */
   
-  canvas {
+  canvas, .2d-game {
       position: relative;
       /* padding-top: 50%; */
       top: 0px;

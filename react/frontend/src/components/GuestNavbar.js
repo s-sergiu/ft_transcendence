@@ -14,13 +14,12 @@ import data from './users.json';
 import Game3D from './3d-game/3DGame.js';
 
 
-var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_IP + ":" + process.env.REACT_APP_DJANGO_PORT
+var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
 if (process.env.REACT_APP_HTTP_METHOD === 'https')
-	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_IP 
+	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME
 
 function GuestNavbar(props) {
-	const [isGameOn, setIsGameOn] = useState(false);//added by reda
-	const { setToken } = props;
+	const { setToken, set42Login, setLogin } = props;
 	const [login, showLogin] = useState(false);
 	const [id, setId] = useState(1);
 
@@ -94,15 +93,14 @@ function GuestNavbar(props) {
 	}
 
 	useEffect(() => {
+		console.log("log")
 		const urlParams = new URLSearchParams(window.location.search);
-
 		async function getToken(code) {
 			let csrf;
 			if (document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)")) == null) {
 				return({ "error" : "csrftoken" })
 			} else
 				csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
-
 			const response = await fetch(URL + '/api/get-token', {
 				mode:  'cors',
 				method: 'POST',
@@ -134,10 +132,6 @@ function GuestNavbar(props) {
 			})
 		}
 	}, [setToken]);
-	//added by reda
-  const handleGameToggle = () => {
-    setIsGameOn(!isGameOn);
-  };
 
   return (
     <div className="App">
@@ -177,7 +171,7 @@ function GuestNavbar(props) {
       </Container>
     </Navbar>
 	  <h1>NOT LOGGED</h1>
-	  { (login) ? (<LoginPage setLoginDetails = { props.setLoginDetails } />)
+	  { (login) ? (<LoginPage setLogin = { props.setLogin } />)
 		  : (<Mode />)
 	   }
     </div>
