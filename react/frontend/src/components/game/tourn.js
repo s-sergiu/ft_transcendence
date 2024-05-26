@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Game from '../game/Ping';
 
-const Tournament = ({gameInfo, bootid, updateGameInfo}) => {
+const Tournament = ({gameInfo, bootid, updateGameInfo, gid}) => {
   const [player1, setPlayer1] = useState('');
   const [player2, setPlayer2] = useState('');
   const [player3, setPlayer3] = useState('');
@@ -45,25 +45,22 @@ const Tournament = ({gameInfo, bootid, updateGameInfo}) => {
 
     // Update games state
     setGames(gamesArray);
-    const newGameId = (Math.floor(Math.random() * (201)) + 200).toString();
-    updateGameInfo(newGameId, gamesArray[0][0], gamesArray[0][1], 0, 0, 1);
+    updateGameInfo(gid, gamesArray[0][0], gamesArray[0][1], 0, 0, 1);
   };
 
   // Function to start next game
   const startNextGame = () => {
     if (games.length > 1) {
-      const newGameId = (Math.floor(Math.random() * (201)) + 200).toString();
       alert(`Second game started between >${games[1][0]}< and >${games[1][1]}<`);
-      updateGameInfo(newGameId, games[1][0], games[1][1], 0, 0, 1);
+      updateGameInfo(gid, games[1][0], games[1][1], 0, 0, 1);
       setTemp(1);
     }
   };
 
   const Final = () => {
     if (games.length > 1) {
-      const newGameId = (Math.floor(Math.random() * (201)) + 200).toString();
       alert(`Final game started between >${winner1}< and >${winner2}<`);
-      updateGameInfo(newGameId, winner1, winner2, 0, 0, 1);
+      updateGameInfo(gid, winner1, winner2, 0, 0, 1);
       setTemp(2);
       setWinner1('');
       setWinner2('');
@@ -110,24 +107,24 @@ const Tournament = ({gameInfo, bootid, updateGameInfo}) => {
           <p> {winner1} Won</p>
       <button onClick={startNextGame}>Start Next Game</button>
       </div>}
-        {games.length > 0 && !winner2 && temp == 1 && winner1 && <Game
+        {games.length > 0 && !winner2 && temp === 1 && winner1 && <Game
                 gameInfo = {gameInfo}
                 bootid = {bootid}
                 winner = {winner2}
                 onWinnerChange={(newWinner) => setWinner2(newWinner)}
             />}
 
-        {temp == 1 && winner2 && winner1 && <div>
+        {temp === 1 && winner2 && winner1 && <div>
           <p> {winner2} Won</p>
       <button onClick={Final}>Start Final Game</button>
       </div>}
-        {games.length > 0 &&  temp == 2 && !winner1 && <Game
+        {games.length > 0 &&  temp === 2 && !winner1 && <Game
                 gameInfo = {gameInfo}
                 bootid = {bootid}
                 winner = {winner1}
                 onWinnerChange={(newWinner) => setWinner1(newWinner)}
             />}
-        {temp == 2 && !winner2 && winner1 && <div>
+        {temp === 2 && !winner2 && winner1 && <div>
       {alert(`Felicitation >${winner1}< You WON The Tournament`)}
       <h2>End</h2>
       <h1>WINNER OF THE TOURNAMENT IS : <bold>{winner1}</bold></h1>

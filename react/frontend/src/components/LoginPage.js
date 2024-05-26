@@ -10,7 +10,7 @@ const LoginPage = (props) => {
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
   const [registerForm, setRegisterForm] = useState({ email: '', password: '' });
   const [showLoginForm, setShowLoginForm] = useState(true);
-  const { setLoginDetails } = props
+  const { setLogin } = props
 
   const handleLoginChange = (e) => {
     setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
@@ -24,7 +24,7 @@ const LoginPage = (props) => {
     e.preventDefault();
 	  console.log("console", loginForm);
 	  const response = await sendLoginData(loginForm);
-	  setLoginDetails(response);
+	  setLogin(response);
 	  console.log(response);
     // Handle login logic here
   };

@@ -1,9 +1,8 @@
-// ModeSelection.js
 import React from 'react';
-
+import './mode.css';
 function ModeSelection({ navigate, user }) {
   return (
-    <div>
+    <div className="mode-container">
       <h2>Choose Mode:</h2>
       <button onClick={() => navigate('local')}>Local</button>
       <button onClick={() => navigate('online')}>Online</button>
@@ -12,3 +11,4 @@ function ModeSelection({ navigate, user }) {
 }
 
 export default ModeSelection;
+
