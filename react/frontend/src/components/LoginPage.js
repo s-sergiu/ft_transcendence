@@ -33,6 +33,7 @@ const LoginPage = (props) => {
     e.preventDefault();
 	console.log(registerForm);
 	sendRegistrationForm(registerForm);
+	toggleLoginForm(true);
     // Handle registration logic here
   };
 
