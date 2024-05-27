@@ -24,19 +24,15 @@ const LoginPage = (props) => {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-	  console.log("console", loginForm);
 	  const response = await sendLoginData(loginForm);
 	  setLogin(response);
-	  console.log(response);
     // Handle login logic here
   };
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
-	console.log(registerForm);
 	const reply = await sendRegistrationForm(registerForm);
 	toggleLoginForm(true);
-	console.log(reply.Message)
 	setMessage(reply.Message)
     // Handle registration logic here
   };
@@ -170,13 +166,13 @@ const LoginPage = (props) => {
                   />
                 </Form.Group>
 
-                <Form.Group controlId="formBasicRegisterPassword">
+                <Form.Group controlId="formBasicRegisterUsername">
                   <Form.Label>username</Form.Label>
                   <Form.Control
                     type="username"
-                    placeholder="username"
+                    placeholder="Enter username"
                     name="username"
-                    value={registerForm.username}
+                    value={registerForm.user}
                     onChange={handleRegisterChange}
                   />
                 </Form.Group>
