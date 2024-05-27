@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.utils.crypto import get_random_string
 from django.views.decorators.csrf import get_token
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
@@ -69,6 +70,7 @@ def get_or_create_normal_user(data):
     return (1)
 
 def get_or_create_user(api_data, token):
+    unique_id = get_random_string(length=32)
     try:
         orgs = User.objects.filter(email=api_data['email'])
     except:
@@ -77,7 +79,8 @@ def get_or_create_user(api_data, token):
     t = Token.objects.get(access_token=token['code'])
     if not orgs:
         orgs = User.objects.create_user(api_data['first_name'],
-                                        api_data['email']
+                                        api_data['email'],
+                                        unique_id
                                             )
         orgs.save()
         extended = ExtendedUser.get_or_create(api_data, orgs, t)
