@@ -10,7 +10,10 @@ const LoginPage = (props) => {
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
   const [registerForm, setRegisterForm] = useState({ email: '', password: '' });
   const [showLoginForm, setShowLoginForm] = useState(true);
+  const [message, setMessage] = useState('');
+  const [registerMessage, setRegisterMessage] = useState('');
   const { setLogin } = props
+	
 
   const handleLoginChange = (e) => {
     setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
@@ -22,18 +25,26 @@ const LoginPage = (props) => {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-	  console.log("console", loginForm);
 	  const response = await sendLoginData(loginForm);
-	  setLogin(response);
-	  console.log(response);
+	if (response.Message === 'error') {
+		setMessage("Username or Password incorrect")
+	} else {
+		setLogin(response);
+	}
     // Handle login logic here
   };
 
-  const handleRegisterSubmit = (e) => {
+  const handleRegisterSubmit = async (e) => {
     e.preventDefault();
-	console.log(registerForm);
-	sendRegistrationForm(registerForm);
-	toggleLoginForm(true);
+	const reply = await sendRegistrationForm(registerForm);
+	if (reply.Message === 3) {
+		setRegisterMessage("Account with that email already exists")
+	} else if (reply.Message === 2) {
+		setRegisterMessage("Account with that username already exists")
+	} else {
+		toggleLoginForm(true);
+		setMessage("Succesfully registered!")
+	}
     // Handle registration logic here
   };
 
@@ -145,6 +156,7 @@ const LoginPage = (props) => {
                   Submit
                 </Button>
                 <br></br><br></br>
+				{ message } 
                 </div>
               </Form>
             </>
@@ -165,13 +177,13 @@ const LoginPage = (props) => {
                   />
                 </Form.Group>
 
-                <Form.Group controlId="formBasicRegisterPassword">
+                <Form.Group controlId="formBasicRegisterUsername">
                   <Form.Label>username</Form.Label>
                   <Form.Control
                     type="username"
-                    placeholder="username"
+                    placeholder="Enter username"
                     name="username"
-                    value={registerForm.username}
+                    value={registerForm.user}
                     onChange={handleRegisterChange}
                   />
                 </Form.Group>
@@ -193,6 +205,7 @@ const LoginPage = (props) => {
                 </Button>
                 </div>
               </Form>
+				{ registerMessage } 
             </>
           )}
         </Col>

@@ -52,7 +52,6 @@ function GuestNavbar(props) {
 
 	async function requestDB() {
 		const data = await getDB(id);
-		// console.log(data[0]['fields'])	
 	}
 
 	async function generateDB() {
@@ -93,7 +92,6 @@ function GuestNavbar(props) {
 	}
 
 	useEffect(() => {
-		console.log("log")
 		const urlParams = new URLSearchParams(window.location.search);
 		async function getToken(code) {
 			let csrf;
@@ -119,12 +117,10 @@ function GuestNavbar(props) {
 		if (urlParams.get('code')) {
 			getToken(urlParams.get('code')).then( (res) => {
 				if (res.error) {
-					console.log("Error: ", res.error)
 					return undefined
 				}
 				else {
 					res = res[0]['fields']
-					//console.log("guest: ", res)
 					setToken(res.access_token)
 					localStorage.setItem("token", res.access_token);
 					window.history.pushState("home", "ReactApp", "/")
