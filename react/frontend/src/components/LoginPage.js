@@ -37,6 +37,10 @@ const LoginPage = (props) => {
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
 	if (registerForm.password) {
+		if (!registerForm.user) {
+			setRegisterMessage("Please provide a username!")
+			return undefined
+		}
 		console.log("password exists")
 		const reply = await sendRegistrationForm(registerForm);
 		if (reply.Message === 3) {
