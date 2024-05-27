@@ -2,6 +2,25 @@ from django.db import models
 from django.contrib.auth.models import User
 import sys
 
+import hashlib
+from urllib.parse import urlencode
+from django import template
+from django.utils.safestring import mark_safe
+ 
+register = template.Library()
+ 
+@register.filter
+def gravatar_url(email, size=40):
+    default = "https://example.com/static/images/defaultavatar.jpg"
+    email_encoded = email.lower().encode('utf-8')
+    email_hash = hashlib.sha256(email_encoded).hexdigest()
+    params = urlencode({'d': default, 's': str(size)})
+    return f"https://www.gravatar.com/avatar/{email_hash}?{params}"
+ 
+@register.filter
+def gravatar(email, size=40):
+    url = gravatar_url(email, size)
+    return mark_safe(f'')
 
 # Create your models here.
 class Token(models.Model):
@@ -32,7 +51,7 @@ class ExtendedUser(models.Model):
     login = models.CharField(max_length = 64)
     first_name = models.CharField(max_length = 64)
     last_name = models.CharField(max_length = 64)
-    image_medium = models.ImageField(upload_to = '.')
+    image_medium = models.CharField(max_length = 256)
     image_small = models.CharField(max_length = 128)
     pool_month = models.CharField(max_length = 64)
     pool_year = models.CharField(max_length = 64)
@@ -41,8 +60,11 @@ class ExtendedUser(models.Model):
     def create_user(api_data, user):
         ext = ExtendedUser.objects.filter(email = api_data['email'])
         if not ext:
+            url = gravatar_url(api_data['email'], 160)
+            print(url, file=sys.stderr)
             ext = ExtendedUser(email = api_data['email'],
                                login = api_data['username'],
+                               image_medium = url,
                                user = user,
                                )
             ext.save()

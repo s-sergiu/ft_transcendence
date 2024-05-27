@@ -106,5 +106,6 @@ def login(request):
     user = authenticate(username=data['username'], password=data['password'])
     if user is None:
         return (JsonResponse({'Message' : 'error'}))
-    return (JsonResponse(serialize_object(user), safe=False))
+    ext = ExtendedUser.objects.get(login = data['username'])
+    return (JsonResponse(serialize_object(ext), safe=False))
 
