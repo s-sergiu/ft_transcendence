@@ -95,9 +95,9 @@ def register(request):
     data= json.loads(request.body.decode("utf-8"))
     status = get_or_create_normal_user(data)
     if status == 3:
-        return (JsonResponse({'Message' : 'account with that email address already exists!'}))
+        return (JsonResponse({'Message' : status}))
     if status == 2:
-        return (JsonResponse({'Message' : 'account with that username already exists!'}))
+        return (JsonResponse({'Message' : status}))
     return (JsonResponse({'Message' : 'User registered!'}))
 
 def login(request):
