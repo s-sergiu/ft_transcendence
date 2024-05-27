@@ -49,17 +49,24 @@ def get_normal_user(data):
 
 def get_or_create_normal_user(data):
     try:
+        orgs = User.objects.get(email=data['email'])
+    except:
+        orgs = None;
+    if orgs is not None:
+        return (3)
+    try:
         orgs = User.objects.get(username=data['username'])
-    except User.DoesNotExist:
-        orgs = None
+    except:
+        orgs = None;
+    if orgs is not None:
+        return (2)
     if orgs is None:
         orgs = User.objects.create_user(data['username'],
                                         data['email'],
                                         data['password'],
                                         )
         orgs.save()
-        return (1);
-    return (2)
+    return (1)
 
 def get_or_create_user(api_data, token):
     try:
@@ -102,8 +109,11 @@ def requestFromDB(request):
 def register(request):
     data= json.loads(request.body.decode("utf-8"))
     status = get_or_create_normal_user(data)
+    print(status, file=sys.stderr);
+    if status == 3:
+        return (JsonResponse({'Message' : 'account with that email address already exists!'}))
     if status == 2:
-        return (JsonResponse({'Message' : 'User already exists!'}))
+        return (JsonResponse({'Message' : 'account with that username already exists!'}))
     return (JsonResponse({'Message' : 'User registered!'}))
 
 def login(request):
