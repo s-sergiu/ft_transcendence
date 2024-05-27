@@ -59,6 +59,7 @@ def get_or_create_normal_user(data):
                                         data['password'],
                                         )
         orgs.save()
+        ExtendedUser.create_user(data, orgs);
     return (1)
 
 def get_or_create_user(api_data, token):
