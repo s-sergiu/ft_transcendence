@@ -11,6 +11,7 @@ const LoginPage = (props) => {
   const [registerForm, setRegisterForm] = useState({ email: '', password: '' });
   const [showLoginForm, setShowLoginForm] = useState(true);
   const [message, setMessage] = useState('');
+  const [registerMessage, setRegisterMessage] = useState('');
   const { setLogin } = props
 	
 
@@ -36,8 +37,14 @@ const LoginPage = (props) => {
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
 	const reply = await sendRegistrationForm(registerForm);
-	toggleLoginForm(true);
-	setMessage(reply.Message)
+	if (reply.Message === 3) {
+		setRegisterMessage("Account with that email already exists")
+	} else if (reply.Message === 2) {
+		setRegisterMessage("Account with that username already exists")
+	} else {
+		toggleLoginForm(true);
+		setMessage("Succesfully registered!")
+	}
     // Handle registration logic here
   };
 
@@ -198,6 +205,7 @@ const LoginPage = (props) => {
                 </Button>
                 </div>
               </Form>
+				{ registerMessage } 
             </>
           )}
         </Col>
