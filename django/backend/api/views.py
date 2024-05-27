@@ -48,7 +48,10 @@ def get_normal_user(data):
     return user.get()
 
 def get_or_create_normal_user(data):
-    orgs = User.objects.filter(username = data['username']);
+    try:
+        orgs = User.objects.get(username=data['username'])
+    except User.DoesNotExist:
+        orgs = None
     if orgs is None:
         orgs = User.objects.create_user(data['username'],
                                         data['email'],
@@ -99,7 +102,7 @@ def requestFromDB(request):
 def register(request):
     data= json.loads(request.body.decode("utf-8"))
     status = get_or_create_normal_user(data)
-    if status is 2:
+    if status == 2:
         return (JsonResponse({'Message' : 'User already exists!'}))
     return (JsonResponse({'Message' : 'User registered!'}))
 
