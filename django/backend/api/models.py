@@ -44,7 +44,6 @@ class ExtendedUser(models.Model):
             email_encoded = email.lower().encode('utf-8')
             email_hash = hashlib.sha256(email_encoded).hexdigest()
             url = 'https://www.gravatar.com/avatar/' + email_hash;
-            print(url, file=sys.stderr)
             ext = ExtendedUser(email = api_data['email'],
                                login = api_data['username'],
                                image_medium = url,
