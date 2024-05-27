@@ -36,15 +36,20 @@ const LoginPage = (props) => {
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
-	const reply = await sendRegistrationForm(registerForm);
-	if (reply.Message === 3) {
-		setRegisterMessage("Account with that email already exists")
-	} else if (reply.Message === 2) {
-		setRegisterMessage("Account with that username already exists")
+	if (registerForm.password) {
+		console.log("password exists")
+		const reply = await sendRegistrationForm(registerForm);
+		if (reply.Message === 3) {
+			setRegisterMessage("Account with that email already exists")
+		} else if (reply.Message === 2) {
+			setRegisterMessage("Account with that username already exists")
+		} else {
+			toggleLoginForm(true);
+			setMessage("Succesfully registered!")
+		}
 	} else {
-		toggleLoginForm(true);
-		setMessage("Succesfully registered!")
-	}
+		 setRegisterMessage("Please provide a password!")
+	}	
     // Handle registration logic here
   };
 

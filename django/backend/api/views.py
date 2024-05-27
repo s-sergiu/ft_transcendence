@@ -71,7 +71,7 @@ def get_or_create_user(api_data, token):
 
     t = Token.objects.get(access_token=token['code'])
     if not orgs:
-        orgs = User.objects.create_user(api_data['first_name'],
+        orgs = User.objects.create_user(api_data['login'],
                                         api_data['email'],
                                         unique_id
                                             )
