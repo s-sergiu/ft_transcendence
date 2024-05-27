@@ -24,9 +24,6 @@ function UserNavbar(props) {
 	const [ profileToggle, setProfileToggle ] = useState('profile');
 	const { login, login42, setToken, set42Login, setLogin } = props;
 
-	console.log(login42);
-	console.log(login);
-
 	var loginData;
 	if (login) {
 		loginData = login[0]['fields'];
@@ -72,7 +69,6 @@ function UserNavbar(props) {
 	useEffect(() => {
 	
 	if (login42Enabled == 1) {
-	console.log("test");
 	async function getInfo() {
 		let csrf;
 		if (document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)")) == null) {
@@ -96,16 +92,13 @@ function UserNavbar(props) {
 	}
 			getInfo().then( function(res) { 
 				if (res['error'] === 'csrftoken') {
-					console.log("Error: ", res.error);
 					set42Login(false);
 					setToken('');
 					return undefined
 				} else if (res['error'] === 'Not authorized') {
-					console.log("Error : Not authorized - ", res.message)
 				} else {
 					res = res[0]['fields']
 					set42Login(res);
-					//console.log("result", res)
 					window.history.pushState("home", "ReactApp", "/")
 				}	
 			});
