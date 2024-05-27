@@ -36,6 +36,10 @@ const LoginPage = (props) => {
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
+	if (!registerForm.email) {
+		setRegisterMessage("Please provide an email!")
+		return undefined
+	}
 	if (registerForm.password) {
 		if (!registerForm.user) {
 			setRegisterMessage("Please provide a username!")
