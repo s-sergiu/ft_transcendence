@@ -25,7 +25,11 @@ const LoginPage = (props) => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
 	  const response = await sendLoginData(loginForm);
-	  setLogin(response);
+	if (response.Message === 'user does not exist') {
+		setMessage(response.Message)
+	} else {
+		setLogin(response);
+	}
     // Handle login logic here
   };
 
