@@ -127,7 +127,7 @@ def login(request):
     print("end user auth auth", file=sys.stderr);
     if user is None:
         print("user is none", file=sys.stderr);
-        return (JsonResponse({'404' : 'ERROR'}))
+        return (JsonResponse({'Message' : 'user does not exist'}))
     else:
         print("user exists", file=sys.stderr);
         print(user, file=sys.stderr);
