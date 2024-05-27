@@ -25,8 +25,8 @@ const LoginPage = (props) => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
 	  const response = await sendLoginData(loginForm);
-	if (response.Message === 'user does not exist') {
-		setMessage(response.Message)
+	if (response.Message === 'error') {
+		setMessage("Username or Password incorrect")
 	} else {
 		setLogin(response);
 	}
