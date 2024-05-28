@@ -36,12 +36,12 @@ const LoginPage = (props) => {
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
-	if (!registerForm.email) {
+	if (registerForm.email == "") {
 		setRegisterMessage("Please provide an email!")
 		return undefined
 	}
 	if (registerForm.password) {
-		if (!registerForm.user) {
+		if (registerForm.user == "") {
 			setRegisterMessage("Please provide a username!")
 			return undefined
 		}
