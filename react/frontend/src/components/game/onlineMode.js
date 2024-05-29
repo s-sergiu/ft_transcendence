@@ -65,7 +65,6 @@ const OnlineMode = ({ navigate, user }) => {
             <>
               <button onClick={createPrivateGame}>Create Private Game</button>
               {gameId && <p>Your Game ID: {gameId}</p>}
-              {/* <p>Game ID: {gameId}</p> */}
             </>
             <hr />
             <>
@@ -78,17 +77,6 @@ const OnlineMode = ({ navigate, user }) => {
               />}
               <h1></h1>
               {!privateClicked && <button onClick={joinPrivateGame}>Join Private Game</button>}
-            </>
-            <>
-            {/* {!privateClicked && !joinClicked && <button onClick={displayListFr}>Invite</button>} */}
-                {/* <h1>Friends List</h1>
-                  <ul>
-                {friends.map((friend) => (
-                <li key={friend.id}>
-                {friend.name} {renderInviteButton(friend.id)}
-                </li>
-               ))}
-                  </ul> */}
             </>
         </div>
       ) : (

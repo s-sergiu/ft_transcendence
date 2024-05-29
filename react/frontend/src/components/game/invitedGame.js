@@ -26,17 +26,7 @@ const InvitedGame = ({ }) => {
       };
     }, []);
 
-
-  // const created = () => {
-  //   const newGameId = Math.floor(Math.random() * 99).toString();
-  //   setGameId(newGameId);
-  //   // setIsPrivateGame(true);
-  //   // setPrivateClicked(true);
-  //   socket.emit('createPrivateGame', { gameId: newGameId, playerName: my.name });
-  // };
-
   const joinInvitedGame = () => {
-    // alert("Joining game: " + privateGameId + "...");
     socket.emit('joinFriendGame', { email: Inviter.email, playerName: my.name });
   };
 

@@ -6,23 +6,18 @@ import OnlineMode from './onlineMode.js';
 import GameInfo from './gameInfo.js';
 import StartButton from './startBtn.js';
 import Chat from '../Chat/Xat.js';
-// import Game from './Ping.js';
 import { useEffect } from'react';
 import { set } from 'lodash';
 
 let user ={};
 
 function Mode() {
-  // const [user, setUser] = useState({name: 'null', email: 'null'});
   const [currentPage, setCurrentPage] = useState('start');
 const [gameType, setGameType] = useState('');
   useEffect(() => {
 
     let currentComponent;
 
-    // if (currentPage === 'game') {
-    //   currentComponent = <Game navigate={navigate}/>;
-    // }
     if (currentPage === 'start') {
       currentComponent = <StartButton navigate={navigate} user={user}/>;
     } else if (currentPage === 'modes') {
@@ -69,7 +64,6 @@ const [gameType, setGameType] = useState('');
       </div>
     </div>
   );
-  // return <div>{renderedComponent}</div>;
 }
 
 

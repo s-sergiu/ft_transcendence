@@ -11,12 +11,10 @@ const Tournament = ({gameInfo, bootid, updateGameInfo, gid}) => {
   const [temp, setTemp] = useState(0);
   const [games, setGames] = useState([]);
 
-  // Function to handle input change for each player
   const handleInputChange = (e, setPlayer) => {
     setPlayer(e.target.value);
   };
 
-  // Function to shuffle array (Fisher-Yates algorithm)
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -25,30 +23,23 @@ const Tournament = ({gameInfo, bootid, updateGameInfo, gid}) => {
     return array;
   };
 
-  // Function to start tournament
   const startTournament = () => {
-    // Shuffle the players
     const shuffledPlayers = shuffleArray([player1, player2, player3, player4]);
 
-    // Divide shuffled players into pairs for games
     const gamesArray = [];
     for (let i = 0; i < shuffledPlayers.length; i += 2) {
       const game = [shuffledPlayers[i], shuffledPlayers[i + 1]];
       gamesArray.push(game);
     }
 
-    // Start the first game
     if (gamesArray.length > 0) {
       alert(`First game started between >${gamesArray[0][0]}< and >${gamesArray[0][1]}<`);
-      // Here you can start the first game or perform any other action
     }
 
-    // Update games state
     setGames(gamesArray);
     updateGameInfo(gid, gamesArray[0][0], gamesArray[0][1], 0, 0, 1);
   };
 
-  // Function to start next game
   const startNextGame = () => {
     if (games.length > 1) {
       alert(`Second game started between >${games[1][0]}< and >${games[1][1]}<`);
@@ -130,9 +121,6 @@ const Tournament = ({gameInfo, bootid, updateGameInfo, gid}) => {
       <h1>WINNER OF THE TOURNAMENT IS : <bold>{winner1}</bold></h1>
       </div>}
 
-
-            
-      {/* {games.length > 0 && <button onClick={startNextGame}>Start Next Game</button>} */}
     </div>
   );
 };

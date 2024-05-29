@@ -23,14 +23,8 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
   const [lastpl, setLastpl] = useState(1);
   const [intervalId, setIntervalId] = useState(null);
   const [clientId, setClientId] = useState(gameInfo.playerId);
-  // const [bootid, setBootid] = useState(111);
   const [buttonClicked, setButtonClicked] = useState(false);
 
-  // useEffect(() => {
-  //   if (gameInfo2 && JSON.stringify(gameInfo2) !== JSON.stringify(gameInfo)) {
-  //     setGameInfo(gameInfo2);
-  //   }
-  // }, [gameInfo2, gameInfo]);
 
   const handleWinnerChange = (newWinner) => {
     onWinnerChange(newWinner);
@@ -40,8 +34,6 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
   useEffect(() => {
     const newSocket = io('http://' + process.env.REACT_APP_HOST_IP + ':4000');
     setSocket(newSocket);
-    // startGame();
-    // newSocket.emit("infos", gameInfo, gameInfo.gameId);
     return () => {
       newSocket.disconnect();
     };
@@ -66,7 +58,6 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
   useEffect(() => {
     if(socket && gameState){
       debouncedEmitBallMove(clientId, gameInfo.gameId);
-      // socket.emit("ballmove", clientId, gameInfo.gameId);
     }}, [ballposition]);
 
     useEffect(() => {
@@ -78,7 +69,6 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
     
     useEffect(() => {
       if(socket && gameState && move){
-        // console.log("move : " + ballposition);
         socket.emit("move", move, clientId, gameInfo.gameId);
         setMove(null);
       }}, [move]);
@@ -88,14 +78,17 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
           socket.emit("boot", bootid, gameInfo.gameId);
         }}, [ballposition]);
 
+        const preventDefault = (event) => {
+          event.preventDefault();
+        };
+
         useEffect(() => {
     
           window.addEventListener('keydown', onKeyDown);
-          document.addEventListener("keydown", function(event) {
-            event.preventDefault();
-          });
+          document.addEventListener('keydown', preventDefault);
           return () => {
             window.removeEventListener('keydown', onKeyDown);
+            document.removeEventListener('keydown', preventDefault);
           };
         }, []); 
 
@@ -103,14 +96,9 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
         const startGame = () => {
 			console.log(process.env.REACT_APP_HOST_IP);
           if(socket){
-            // start(1);
             setGameState(true);
-              // loop();
             setButtonClicked(true);
             socket.emit("startGame", gameInfo.gameId);
-            // loop();
-            // setGameState(true);
-            // setButtonClicked(true);
           }};
         const loop = () => {
           if (gameState) requestAnimationFrame(loop);
@@ -132,12 +120,10 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
               setGameState(true);
               loop();
               setButtonClicked(true);
-              // boot(111);
             }
           }
         };
         const onKeyDown = (event) => {
-          // console.log('Key pressed:', event.key);
           if (event.key === 'ArrowDown') setMove('down');
           else if (event.key === 'ArrowUp') setMove('up');
           if (event.key === 'w' || event.key === 'W') setMove('W');
@@ -149,7 +135,6 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
           if (socket) {
             if (!buttonClicked && online && clientId == 1){
                 startGame();
-                // setButtonClicked(true);
             }
             // /Emit/ //
             socket.emit("infos", gameInfo, gameInfo.gameId);
@@ -161,11 +146,6 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
               }
             });
             socket.on("ballposition", (data, data2, data3, gid) => {
-              // console.log("GIDD", gid);
-              // console.log("GIDD2", gameInfo.gameId);
-              // console.log("data", data);
-              // console.log("data2", data2);
-              // console.log("data3", data3);
               if (gameInfo.gameId == gid) {
                 setBallposition(data);
                 setPosition(data2);
@@ -182,21 +162,12 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
                 setBallposition(data);
                 setPosition(data2);
                 setOposition(data3);
-                // const canvas = context;
-                // canvas.clearRect(data.x, data.y, 10, 10);
-                // canvas.clearRect(0, 0, 10, 640);
-                // canvas.clearRect(630, 0, 10, 640);
-                // setCountdown(3);
-                // startCountdown();
-                // ddelay(3);
               }
             });
             socket.on("gameOver", (data, gid) => {
               if (gameInfo.gameId == gid) {
                 stop();
                 setBallposition(data);
-                // const canvas = context;
-                // canvas.clearRect(data.x, data.y, 10, 10);
               }
             });
             socket.on("dataup", (data1, data2, gid) => {
@@ -209,20 +180,12 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
                   setOposition(data1);
                 }
               }
-              // window.addEventListener('keydown', onKeyDown);
-              // document.addEventListener("keydown", function(event) {
-              //   event.preventDefault();
-              // });
-              // return () => {
-              //   window.removeEventListener('keydown', onKeyDown);
-              // };
         });
       }
     }, [socket]);
 
     return (
       <div className="responsive-wrapper">
-        {/* <div className="canvas-background"></div> */}
 
         <img id="ball" src={ballimg} style={{ display: 'none' }} />
         <img id="kan" src={kanimg} style={{ display: 'none' }} />
@@ -231,29 +194,9 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
         <div class="result-display">
           <span>{gameInfo.player1} : {scores.player1} </span> | <span>{gameInfo.player2} : {scores.player2}</span>
         </div>
-        {/* <div>
-          {[...Array(12)].map((_, index) => (
-            <p key={index}></p>
-          ))}
-        </div> */}
-        {/* <button style={{ position: 'absolute', left: '46%', top: '91%' }} onClick={() => start(2)} disabled={scores.player1 <= 10 && scores.player2 <= 10}>
-          Play Again
-        </button> */}
         {!online && !buttonClicked && <button style={{ position: 'absolute', left: '46%', top: '91%' }} onClick={() => startGame()} disabled={scores.player1 !== 0 || scores.player2 !== 0 || buttonClicked}>
           Start
         </button>}
-        {/* <div className="player-name" style={{ position: 'absolute', left: '30%', top: '0%' }}>
-          {gameInfo.player1}
-        </div>
-        <div className="player-name" style={{ position: 'absolute', left: '55%', top: '0%' }}>
-          {gameInfo.player2}
-        </div>
-        <div className="digital-number" style={{ position: 'absolute', left: '35%', top: '6%' }}>
-          {scores.player1}
-        </div>
-        <div className="digital-number" style={{ position: 'absolute', left: '60%', top: '6%' }}>
-          {scores.player2}
-        </div> */}
         {scores.player2 > 10 && <div className="Winner" style={{ position: 'absolute', left: '37%', top: '37%' }}>{gameInfo.player2}</div>}
         {scores.player1 > 10 && <div className="Winner" style={{ position: 'absolute', left: '37%', top: '37%' }}>{gameInfo.player1}</div>}
         {(scores.player1 > 10 || scores.player2 > 10) && <div className="Win" style={{ position: 'absolute', left: '33%', top: '46%' }}>WIN</div>}
