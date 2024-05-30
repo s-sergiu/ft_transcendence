@@ -9,20 +9,50 @@ const ballVelocity = 10;
 const barVelocity = 30;
 var bootVelocity = 22.5;
 const express = require('express');
-const http = require('http');
+const https = require('https');
+const fs = require('fs');
 const socketIo = require('socket.io');
 const cors = require('cors');
 const { create } = require('domain');
 
 const app = express();
-const server = http.createServer(app);
+const options = {
+    key: fs.readFileSync('./private-key.pem'),
+    cert: fs.readFileSync('./certificate.pem'),
+  };
+// const server = http.createServer(app);
+const server = https.createServer(options, app);
+// const io = socketIo(server, {
+//     cors: {
+// 		origin: "https://" + process.env.HOST_IP,
+//     }
+// });
 const io = socketIo(server, {
     cors: {
-		origin: "http://" + process.env.HOST_NAME,
+      origin: (origin, callback) => {
+        // Allow requests from specific origins
+        // if (origin === "http://" + process.env.HOST_IP || origin === "https://" + process.env.HOST_IP ||origin === "https://" + process.env.HOST_IP + port || origin === "https://" + process.env.HOST_NAME) {
+          callback(null, true);
+    //     } else {
+    //       callback(new Error('Not allowed by CORS'));
+    //     }
+      },
+      credentials: true
     }
-});
+  });
+  
 
-app.use(cors({ origin: "http://" + process.env.HOST_NAME }));
+// app.use(cors({ origin: "https://" + process.env.HOST_IP }));
+app.use(cors({
+    origin: (origin, callback) => {
+        // if (origin === "http://" + process.env.HOST_IP || origin === "https://" + process.env.HOST_IP ||origin === "https://" + process.env.HOST_IP + port || origin === "https://" + process.env.HOST_NAME) {
+        callback(null, true);
+    //   } else {
+    //     callback(new Error('Not allowed by CORS'));
+    //   }
+    },
+    credentials: true
+  }));
 
 
 GameData = {
@@ -108,7 +138,6 @@ function fetchIt()
             if (GamesList[i].gameInfo.playerId != gid.playerId)
             GamesList[i].gameInfo.playerId = gid.playerId;
     }
-            console.log(GamesList[i].gameInfo.player1);
             GamesList[i].gameInfo.player1 = gid.player1;
             GamesList[i].gameInfo.player2 = gid.player2;
             GamesList[i].gameInfo.gameId = gid.gameId;
@@ -190,7 +219,6 @@ io.on("connection", (socket) => {
         io.emit("gameOver", GamesList[id].ballpositions0, id);
     });
     socket.on("startGame", gid => {
-        console.log("START GAME", gid);
         id = gid;
         ballpositionTo_0();
         GamesList[id].scores.player1 = 0;
@@ -235,7 +263,6 @@ io.on("connection", (socket) => {
         }
         else if (playerId == 1)
             {
-                console.log("1 playerId : " + playerId);
                 switch(data) {
                 case "up":
                     if (GamesList[id].positions.y > 0)
@@ -257,7 +284,6 @@ io.on("connection", (socket) => {
             }
         else if (playerId == 2)
         {
-            console.log("2 playerId : " + playerId);
             GamesList[id].positions2.ly = GamesList[id].positions2.y;
                 switch(data) {
                 case "up":
@@ -409,6 +435,7 @@ io.on("connection", (socket) => {
                   delete privateGames[gameId];
                 } else {
                   socket.emit('error', { message: 'Invalid Game ID' });
+                  socket.emit('GameNotFound', { gameId, message: 'Game not found' });
                 }
               });
 
