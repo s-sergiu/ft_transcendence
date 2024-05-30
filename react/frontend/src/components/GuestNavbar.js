@@ -21,7 +21,6 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 function GuestNavbar(props) {
 	const { setToken, set42Login, setLogin } = props;
 	const [login, showLogin] = useState(false);
-	const [id, setId] = useState(1);
 
     function getCode() {
 		window.open(process.env.REACT_APP_REDIRECT_URI, "_self")
@@ -31,53 +30,6 @@ function GuestNavbar(props) {
 		let response = await getMessage();
 		document.cookie = "csrftoken=" + response.token;
 		getCode()
-	}
-
-	async function getDB(choice) {
-		let csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
-		const response = await fetch(URL + '/api/request-info', {
-			mode:  'cors',
-			method: 'POST',
-			credentials: 'include',
-			body: JSON.stringify({
-				choice : choice
-			}),
-			headers: {
-				"X-CSRFToken": csrf,
-				'Content-Type': 'application/json'
-			},
-		})
-		return response.json();
-	}
-
-	async function requestDB() {
-		const data = await getDB(id);
-	}
-
-	async function generateDB() {
-		let res = await getMessage();
-		document.cookie = "csrftoken=" + res.token;
-		let csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
-
-		const response = await fetch(URL + '/api/send-info', {
-		  mode:  'cors',
-		  method: 'POST',
-		  credentials: 'include',
-			body: JSON.stringify({
-				user1 : data[0],
-				user2 : data[1],
-				user3 : data[2],
-				user4 : data[3],
-				user5 : data[4],
-				user6 : data[5],
-				user7 : data[6],
-				user8 : data[7],
-			}),
-		  headers: {
-			"X-CSRFToken": csrf,
-			'Content-Type': 'application/json'
-		  },
-		})
 	}
 
 	async function getMessage() {
