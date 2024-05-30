@@ -12,7 +12,7 @@ const LoginPage = (props) => {
   const [showLoginForm, setShowLoginForm] = useState(true);
   const [message, setMessage] = useState('');
   const [registerMessage, setRegisterMessage] = useState('');
-  const { setLogin } = props
+  const { setLogged, setUserData } = props
 	
 
   const handleLoginChange = (e) => {
@@ -25,12 +25,12 @@ const LoginPage = (props) => {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-	  console.log(loginForm)
 	  const response = await sendLoginData(loginForm);
 	if (response.Message === 'error') {
 		setMessage("Username or Password incorrect")
 	} else {
-		setLogin(response);
+		setUserData(response);
+		setLogged(true);
 	}
     // Handle login logic here
   };
@@ -44,7 +44,6 @@ const LoginPage = (props) => {
 	} else if (!registerForm.username) {
 		setRegisterMessage("Please provide a username!")
 	} else {
-		console.log("password exists")
 		const reply = await sendRegistrationForm(registerForm);
 		if (reply.Message === 3) {
 			setRegisterMessage("Account with that email already exists")
