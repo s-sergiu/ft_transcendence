@@ -19,42 +19,12 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 
 function UserNavbar(props) {
 
-	let profileInfo;
-	const [ gameToggle, setGameToggle ] = useState('');
-	const [ game3dToggle, set3dToggle ] = useState('');
-	const [ tournToggle, setTournToggle ] = useState('');
-	const [ profileToggle, setProfileToggle ] = useState('profile');
+	var profileInfo;
+	const [ toggle, setNavToggle ] = useState('profile');
 	const { userData, setLogged } = props;
 	const [ login, setLogin ] = useState();
 	const { info } = GetInfo(localStorage.getItem("token"));
 
-	function toggleNav(string) {
-
-		if (string === 'game') {
-			setGameToggle(true);
-			setTournToggle(false);
-			setProfileToggle(false);
-			set3dToggle(false);
-		}
-		else if (string === 'tourn') {
-			setGameToggle(false);
-			setTournToggle(true);
-			setProfileToggle(false);
-			set3dToggle(false);
-		}
-		else if (string === 'profile') {
-			setGameToggle(false);
-			setTournToggle(false);
-			setProfileToggle(true);
-			set3dToggle(false);
-		}
-		else if (string === '3dgame') {
-			setGameToggle(false);
-			setTournToggle(false);
-			setProfileToggle(false);
-			set3dToggle(true);
-		}
-	}
 	function Logout() {
 		localStorage.clear();
 		setLogged(false);
@@ -87,10 +57,10 @@ function UserNavbar(props) {
             navbarScroll
           >
             <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link onClick = { e => toggleNav('game') } >Game</Nav.Link>
-            <Nav.Link onClick = { e => toggleNav('3dgame') } >3D Game</Nav.Link>
-            <Nav.Link onClick = { e => toggleNav('profile') } >Profile</Nav.Link>
-            <Nav.Link onClick = { e => toggleNav('tourn') } >Tournaments</Nav.Link>
+            <Nav.Link onClick = { e => setNavToggle('game') } >Game</Nav.Link>
+            <Nav.Link onClick = { e => setNavToggle('3dgame') } >3D Game</Nav.Link>
+            <Nav.Link onClick = { e => setNavToggle('profile') } >Profile</Nav.Link>
+            <Nav.Link onClick = { e => setNavToggle('tourn') } >Tournaments</Nav.Link>
 
             
           </Nav>
@@ -101,24 +71,18 @@ function UserNavbar(props) {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-	<div>
-	{	(() => { 
-		if (gameToggle) { 
-			return ( <Mode /> )
-		} else if (tournToggle) {
-			return ( <Tournament /> )
-		} else if (profileToggle) {
-			return (
-				<Profile 
-					login = { login } 
-				/>
-			)
-		} else if (game3dToggle) {
-			return ( <Game3D /> )
-		}
-	})
-	() }
-	  </div>
+	{ 
+		(toggle === 'profile') && <div> <Profile login = { login } />  </div>
+	}
+	{ 
+		(toggle=== 'game') && <div> <Mode />  </div>
+	}
+	{ 
+		(toggle=== 'tourn') && <div> <Tournament />  </div>
+	}
+	{ 
+		(toggle=== '3dgame') && <div> <Game3D />  </div>
+	}
     </div>
   );
 }
