@@ -31,6 +31,7 @@ const LoginPage = (props) => {
 	} else {
 		setUserData(response);
 		setLogged(true);
+		localStorage.clear()
 	}
     // Handle login logic here
   };
