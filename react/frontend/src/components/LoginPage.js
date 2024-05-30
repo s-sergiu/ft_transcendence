@@ -8,7 +8,7 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 
 const LoginPage = (props) => {
   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
-  const [registerForm, setRegisterForm] = useState({ email: '', password: '' });
+  const [registerForm, setRegisterForm] = useState({ email: '', username: '', password: '' });
   const [showLoginForm, setShowLoginForm] = useState(true);
   const [message, setMessage] = useState('');
   const [registerMessage, setRegisterMessage] = useState('');
