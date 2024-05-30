@@ -3,7 +3,7 @@ import { Container, Row, Col, Image, Button, Form } from 'react-bootstrap';
 import './css/profile.css'; 
 
 const Profile = (props) => {
-  const { loginData } = props;
+  const { login } = props;
   const [selectedSection, setSelectedSection] = useState(null); // Default selected section
   const [userInfo, setUserInfo] = useState({
     username: 'sergiu',
@@ -16,13 +16,10 @@ const Profile = (props) => {
   });
   const [editMode, setEditMode] = useState(false);
 
-	// console.log("LOGIN DAT: ", loginData[0]['fields']);
-	const loginDatas = loginData[0]['fields']
   useEffect(() => {
     // Fetch user data and match history from an API or database
     // Here you can fetch user stats, wins, losses, and match history
     // For demonstration purposes, let's mock some data
-
     // Mocked user data
     const mockUserData = {
       username: 'sergiu',
@@ -77,14 +74,15 @@ const Profile = (props) => {
       reader.readAsDataURL(file);
     }
   };
-
+if (login) {
   return (
+    <div className='div_global'>
     <Container fluid className="profile-container">
       <Row>
         {/* Left sidebar */}
         <Col sm={3} className="left-sidebar">
           <div className="profile-info">
-            <Image src={loginData.image_small} roundedCircle className="profile-pic" />
+            <Image src={login.image_medium} roundedCircle className="profile-pic" />
             <div className="change-picture-btn">
               <label htmlFor="upload-input" className="btn btn-primary">
                 Change Picture
@@ -106,9 +104,9 @@ const Profile = (props) => {
             <div className="personal-info">
               <h2>Personal Information</h2>
               <div className="user-info">
-                <p><strong>Username:</strong> {loginDatas.username}</p>
-                <p><strong>Full Name:</strong> {loginData.first_name} {loginData.last_name}</p>
-                <p><strong>Email:</strong> {loginData.email}</p>
+                <p><strong>Username:</strong> {login.login}</p>
+                <p><strong>Full Name:</strong> {login.first_name} {login.last_name}</p>
+                <p><strong>Email:</strong> {login.email}</p>
                 <p><strong>Wins:</strong> {userInfo.wins}</p>
                 <p><strong>Losses:</strong> {userInfo.losses}</p>
               </div>
@@ -177,7 +175,9 @@ const Profile = (props) => {
         </Col>
       </Row>
     </Container>
+    </div>
   );
+}
 };
 
 export default Profile;

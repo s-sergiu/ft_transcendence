@@ -7,10 +7,13 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME
 
 const LoginPage = (props) => {
-  const [loginForm, setLoginForm] = useState({ email: '', password: '' });
-  const [registerForm, setRegisterForm] = useState({ email: '', password: '' });
+  const [loginForm, setLoginForm] = useState({ username: '', password: '' });
+  const [registerForm, setRegisterForm] = useState({ email: '', username: '', password: '' });
   const [showLoginForm, setShowLoginForm] = useState(true);
-  const { setLoginDetails } = props
+  const [message, setMessage] = useState('');
+  const [registerMessage, setRegisterMessage] = useState('');
+  const { setLogged, setUserData } = props
+	
 
   const handleLoginChange = (e) => {
     setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
@@ -22,18 +25,36 @@ const LoginPage = (props) => {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-	  console.log("console", loginForm);
 	  const response = await sendLoginData(loginForm);
-	  setLoginDetails(response);
-	  console.log(response);
+	if (response.Message === 'error') {
+		setMessage("Username or Password incorrect")
+	} else {
+		setUserData(response);
+		setLogged(true);
+		localStorage.clear()
+	}
     // Handle login logic here
   };
 
-  const handleRegisterSubmit = (e) => {
+  const handleRegisterSubmit = async (e) => {
     e.preventDefault();
-	console.log(registerForm);
-	sendRegistrationForm(registerForm);
-    // Handle registration logic here
+	if (!registerForm.email) {
+		setRegisterMessage("Please provide an email!")
+	} else if (!registerForm.password) {
+		setRegisterMessage("Please provide a password!")
+	} else if (!registerForm.username) {
+		setRegisterMessage("Please provide a username!")
+	} else {
+		const reply = await sendRegistrationForm(registerForm);
+		if (reply.Message === 3) {
+			setRegisterMessage("Account with that email already exists")
+		} else if (reply.Message === 2) {
+			setRegisterMessage("Account with that username already exists")
+		} else {
+			toggleLoginForm(true);
+			setMessage("Succesfully registered!")
+		}
+	}	
   };
 
 	async function getMessage() {
@@ -60,7 +81,7 @@ const LoginPage = (props) => {
 		  method: 'POST',
 		  credentials: 'include',
 		  body: JSON.stringify({
-			username: data.email,
+			username: data.username,
 			password: data.password
 		  }),
 		  headers: {
@@ -117,13 +138,13 @@ const LoginPage = (props) => {
           {showLoginForm && (
             <>
               <Form onSubmit={handleLoginSubmit}>
-                <Form.Group controlId="formBasicEmail">
-                  <Form.Label>Email address</Form.Label>
+                <Form.Group controlId="formBasicUsername">
+                  <Form.Label>Username</Form.Label>
                   <Form.Control
                     type="username"
-                    placeholder="Enter email"
-                    name="email"
-                    value={loginForm.email}
+                    placeholder="Enter username"
+                    name="username"
+                    value={loginForm.username}
                     onChange={handleLoginChange}
                   />
                 </Form.Group>
@@ -144,6 +165,7 @@ const LoginPage = (props) => {
                   Submit
                 </Button>
                 <br></br><br></br>
+				{ message } 
                 </div>
               </Form>
             </>
@@ -164,11 +186,11 @@ const LoginPage = (props) => {
                   />
                 </Form.Group>
 
-                <Form.Group controlId="formBasicRegisterPassword">
+                <Form.Group controlId="formBasicRegisterUsername">
                   <Form.Label>username</Form.Label>
                   <Form.Control
                     type="username"
-                    placeholder="username"
+                    placeholder="Enter username"
                     name="username"
                     value={registerForm.username}
                     onChange={handleRegisterChange}
@@ -192,6 +214,7 @@ const LoginPage = (props) => {
                 </Button>
                 </div>
               </Form>
+				{ registerMessage } 
             </>
           )}
         </Col>

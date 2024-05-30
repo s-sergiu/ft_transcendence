@@ -22,6 +22,10 @@ if [[ $OSTYPE == darwin* ]]
 fi
 
 main() {
+	if [[ $1 == 'dev' ]]
+		then
+			mkdir debug
+	fi
 
 	user_gid=$(id -g)
 	gid_to_replace=$(grep USER_GID= .env | cut -d '=' -f2)
@@ -58,7 +62,7 @@ main() {
 
 	if [[ $OSTYPE == darwin* ]]
 		then 
-			ip=$(ifconfig | grep en1 -A 1 | grep "inet " | awk '{ print $2 }')
+			ip=$(ifconfig | grep en0 -A 2 | grep "inet " | awk '{ print $2 }')
 			host_name=$(hostname | tr '[:upper:]' '[:lower:]')
 		else 
 			ip=$(ip add | grep "BROADCAST,MULTICAST,UP,LOWER_UP" -A 2 | grep inet -m1 | awk '{print $2}' | cut -d '/' -f1)
@@ -75,7 +79,7 @@ main() {
 	cat .env.old | sed "s/$hostname_to_replace/$host_name/"  > .env
 	rm .env.old
 
-	exec docker compose up --build
+	exec docker-compose up --build
 }
 
 cleanup_database() {
@@ -91,10 +95,10 @@ cleanup_debug() {
 }
 
 cleanup() {
-	docker kill $(docker ps)
-	docker rm $(docker ps -a)
-	docker rmi $(docker images)
-	docker system prune -af --volumes
+	docker kill $(docker ps --format '{{.ID}}') 2> /dev/null
+	docker rm $(docker ps -a --format '{{.ID}}') 2> /dev/null
+	docker rmi $(docker images --format '{{.ID}}') 2> /dev/null
+	docker system prune -af --volumes 2> /dev/null
 	rm -rf debug/
 }
 

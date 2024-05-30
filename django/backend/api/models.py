@@ -1,8 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-import sys
-
-
+import sys, hashlib
+ 
 # Create your models here.
 class Token(models.Model):
     access_token = models.CharField(max_length = 64)
@@ -32,30 +31,34 @@ class ExtendedUser(models.Model):
     login = models.CharField(max_length = 64)
     first_name = models.CharField(max_length = 64)
     last_name = models.CharField(max_length = 64)
-    image_medium = models.ImageField(upload_to = '.')
+    image_medium = models.CharField(max_length = 256)
     image_small = models.CharField(max_length = 128)
     pool_month = models.CharField(max_length = 64)
     pool_year = models.CharField(max_length = 64)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     token = models.ForeignKey(Token, on_delete=models.CASCADE, null = True)
-    def create_users(api_data):
-        for x in range(1, 9):
-            usr1 = User.objects.create_user("test"+str(x))
-            usr1.save()
-            user = api_data['user'+str(x)];
-            ext = ExtendedUser(email = user['email'],
-                               login = user['login'],
-                               first_name = user['first_name'],
-                               last_name = user['last_name'],
-                               image_medium = user['image'],
-                               pool_month = user['month'],
-                               pool_year = user['year'],
-                               user = usr1,
+    def create_user(api_data, user):
+        ext = ExtendedUser.objects.filter(email = api_data['email'])
+        if not ext:
+            email = api_data['email']
+            email_encoded = email.lower().encode('utf-8')
+            email_hash = hashlib.sha256(email_encoded).hexdigest()
+            url = 'https://www.gravatar.com/avatar/' + email_hash;
+            ext = ExtendedUser(email = api_data['email'],
+                               login = api_data['username'],
+                               image_medium = url,
+                               user = user,
                                )
             ext.save()
         return ext
     def get_or_create(api_data, user, token):
-        ext = ExtendedUser.objects.filter(token = token.id)
+        ext = ExtendedUser.objects.filter(email = api_data['email'])
+        if ext is not None:
+            test = ext.get()
+        if (token.access_token != test.token.access_token):
+            ext.update(token = token);
+            delete = test.token
+            delete.delete()
         if not ext:
             ext = ExtendedUser(email = api_data['email'],
                                login = api_data['login'],
