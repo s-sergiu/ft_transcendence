@@ -34,7 +34,9 @@ function UserNavbar(props) {
 	}, [userData]);
 
 	useEffect(() => {
-		if (info) {
+		if (info && info.Message) {
+			console.error(info.Message)
+		} else if  (info) {
 			profileInfo = info[0]['fields']
 			setLogin(profileInfo);
 		}	
