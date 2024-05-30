@@ -1,4 +1,3 @@
-// GameInfo.js
 import React, { useState } from 'react';
 import Game from '../game/Ping';
 import Tournament from './tourn.js';
@@ -18,9 +17,6 @@ function GameInfo({ navigate, gameType, user, gid }) {
   
 
   function updateGameInfo(id, play1, play2, gId, bit, stats) {
-    // if (id == 0)
-    //   id = Math.floor(Math.random() * 999).toString();
-    // Set gameInfo only if it's different from the current state
     if (gameInfo.gameId !== id || gameInfo.player1 !== play1 || gameInfo.player2 !== play2 || gameInfo.playerId !== gId) {
       setGameInfo({
         gameId: id,
@@ -39,7 +35,6 @@ function GameInfo({ navigate, gameType, user, gid }) {
     setPlayer1Name(event.target.value);
   };
 
-  // Function to handle input change for player 2 name
   const handlePlayer2Change = (event) => {
     setPlayer2Name(event.target.value);
   };
@@ -78,26 +73,10 @@ function GameInfo({ navigate, gameType, user, gid }) {
                 updateGameInfo = {updateGameInfo}
                 gid = {gid}
         />
-        // <div>
-        // <label>Enter Player 1 Name:</label>
-        // <input type="text" value={player1Name} onChange={handlePlayer1Change} />
-        // <label>Enter Player 2 Name:</label>
-        // <input type="text" value={player2Name} onChange={handlePlayer2Change} />
-        
-        // {player2Name && gameState != 1 && <button onClick={() => setGameState(1)}>Start Tournament</button>}
-        // {gameState == 1 && updateGameInfo(0, player1Name, player2Name, 0,0, 7)}
-        // {gameState == 1 && <Game gameInfo={gameInfo} bootid={bootid} />}
-        // {/* {console.log("gameState: " + gameState)} */}
-        // </div> 
         )}
-
   }
-  
-  // Render form for filling 4 infos based on type
   return (
     <div>
-      {/* <h2>Game Information</h2>
-      <p>Type: {gameType}</p> */}
       {fillInfos(gameType)}
     </div>
   );

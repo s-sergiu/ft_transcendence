@@ -4,12 +4,6 @@ import Game from './Ping.js';
 
 const socket = io('http://' + process.env.REACT_APP_HOST_IP + ':4000');
 const my = { id: 1, name: 'Reda', email:'reda@gmail.com' };
-// const friends = [
-//   { id: 1, name: 'Alice' },
-//   { id: 2, name: 'Bob' },
-//   { id: 3, name: 'Charlie' },
-//   { id: 4, name: 'Diana' },
-// ];
 
 const InviteGame = ({ friends, user }) => {
     const [isWaitingForRandom, setIsWaitingForRandom] = useState(false);
@@ -31,18 +25,8 @@ const InviteGame = ({ friends, user }) => {
   const createInviteGame = () => {
     const newGameId = Math.floor(Math.random() * 99).toString();
     setGameId(newGameId);
-    // setIsPrivateGame(true);
-    // setPrivateClicked(true);
     socket.emit('createFriendGame', { email : my.email, gameId: newGameId, playerName: my.name });
   };
-
-  // const joinPrivateGame = () => {
-  //   setJoinClicked(true);
-  //   alert("Joining game: " + privateGameId + "...");
-  //   socket.emit('joinPrivateGame', { gameId: privateGameId, playerName: 'Player2' });
-  // };
-
-
   return (
     <div>
       {!gameInfo ? (
