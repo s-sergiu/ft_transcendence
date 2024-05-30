@@ -5,7 +5,7 @@ const useWebSocket = (url) => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const socket = io('http://localhost:4000');
+    const socket = io('https://localhost:4000');
 
     socket.on('connect', () => {
       console.log('WebSocket Connected:', socket.id);
