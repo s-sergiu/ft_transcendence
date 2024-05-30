@@ -7,7 +7,7 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME
 
 const LoginPage = (props) => {
-  const [loginForm, setLoginForm] = useState({ email: '', password: '' });
+  const [loginForm, setLoginForm] = useState({ username: '', password: '' });
   const [registerForm, setRegisterForm] = useState({ email: '', password: '' });
   const [showLoginForm, setShowLoginForm] = useState(true);
   const [message, setMessage] = useState('');
@@ -25,6 +25,7 @@ const LoginPage = (props) => {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
+	  console.log(loginForm)
 	  const response = await sendLoginData(loginForm);
 	if (response.Message === 'error') {
 		setMessage("Username or Password incorrect")
@@ -36,15 +37,13 @@ const LoginPage = (props) => {
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
-	if (!registerForm.email) {
+	if (!registerForm.email) 
 		setRegisterMessage("Please provide an email!")
-		return undefined
-	}
-	if (registerForm.password) {
-		if (!registerForm.user) {
-			setRegisterMessage("Please provide a username!")
-			return undefined
-		}
+	if (!registerForm.password) 
+		setRegisterMessage("Please provide a password!")
+	if (!registerForm.username) {
+		setRegisterMessage("Please provide a username!")
+	} else {
 		console.log("password exists")
 		const reply = await sendRegistrationForm(registerForm);
 		if (reply.Message === 3) {
@@ -55,10 +54,7 @@ const LoginPage = (props) => {
 			toggleLoginForm(true);
 			setMessage("Succesfully registered!")
 		}
-	} else {
-		 setRegisterMessage("Please provide a password!")
 	}	
-    // Handle registration logic here
   };
 
 	async function getMessage() {
@@ -85,7 +81,7 @@ const LoginPage = (props) => {
 		  method: 'POST',
 		  credentials: 'include',
 		  body: JSON.stringify({
-			username: data.email,
+			username: data.username,
 			password: data.password
 		  }),
 		  headers: {
@@ -142,13 +138,13 @@ const LoginPage = (props) => {
           {showLoginForm && (
             <>
               <Form onSubmit={handleLoginSubmit}>
-                <Form.Group controlId="formBasicEmail">
-                  <Form.Label>Email address</Form.Label>
+                <Form.Group controlId="formBasicUsername">
+                  <Form.Label>Username</Form.Label>
                   <Form.Control
                     type="username"
-                    placeholder="Enter email"
-                    name="email"
-                    value={loginForm.email}
+                    placeholder="Enter username"
+                    name="username"
+                    value={loginForm.username}
                     onChange={handleLoginChange}
                   />
                 </Form.Group>
@@ -196,7 +192,7 @@ const LoginPage = (props) => {
                     type="username"
                     placeholder="Enter username"
                     name="username"
-                    value={registerForm.user}
+                    value={registerForm.username}
                     onChange={handleRegisterChange}
                   />
                 </Form.Group>
