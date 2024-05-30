@@ -4,12 +4,9 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import Game3D from './3d-game/3DGame';
-import Mode from './game/mode.js';
-import Profile from './profile';
+import MainContent from './MainContent';
 import GetInfo from './GetInfo';
 import { useEffect, useState } from 'react';
-import Tournament from './tournaments';
 import './css/navbar.css'
 //import Content from './Content';
 
@@ -71,18 +68,7 @@ function UserNavbar(props) {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-	{ 
-		(toggle === 'profile') && <div> <Profile login = { login } />  </div>
-	}
-	{ 
-		(toggle=== 'game') && <div> <Mode />  </div>
-	}
-	{ 
-		(toggle=== 'tourn') && <div> <Tournament />  </div>
-	}
-	{ 
-		(toggle=== '3dgame') && <div> <Game3D />  </div>
-	}
+	<MainContent content = { toggle } login = { login } />
     </div>
   );
 }
