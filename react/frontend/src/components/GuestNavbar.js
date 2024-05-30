@@ -1,4 +1,6 @@
 
+import OpenURI from './OpenURI';
+import GetToken from './GetToken';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -21,65 +23,30 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 function GuestNavbar(props) {
 	const { setToken, set42Login, setLogin } = props;
 	const [login, showLogin] = useState(false);
+	const urlParams = new URLSearchParams(window.location.search);
 
-    function getCode() {
-		window.open(process.env.REACT_APP_REDIRECT_URI, "_self")
+	var code;
+	if (urlParams.get('code')) {
+		code = urlParams.get('code')	
 	}
-
-	async function getResponse() {
-		let response = await getMessage();
-		document.cookie = "csrftoken=" + response.token;
-		getCode()
-	}
-
-	async function getMessage() {
-		const response = await fetch(URL + '/api/get-csrf', {
-			mode:  'cors',
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-		})
-		return response.json();
-	}
+	const { token } = GetToken(code);
 
 	useEffect(() => {
-		const urlParams = new URLSearchParams(window.location.search);
-		async function getToken(code) {
-			let csrf;
-			if (document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)")) == null) {
-				return({ "error" : "csrftoken" })
-			} else
-				csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
-			const response = await fetch(URL + '/api/get-token', {
-				mode:  'cors',
-				method: 'POST',
-				credentials: 'include',
-				body: JSON.stringify({
-					code: code
-				}),
-				headers: {
-					"X-CSRFToken": csrf,
-					'Content-Type': 'application/json'
-				},
-			})
-			return response.json();
+		let token_code;
+		console.log("test")
+		console.log("outside", token)
+		if (token && token.error)
+			console.log("error", token);
+		else if (token) {
+			console.log(token[0]['fields']);
+			token_code = token[0]['fields'];
+			token_code = token_code.access_token;
+			localStorage.setItem("token", token_code);
+			console.log(token_code);
+			window.history.pushState("home", "ReactApp", "/")
+			setToken(token_code)
 		}
-
-		if (urlParams.get('code')) {
-			getToken(urlParams.get('code')).then( (res) => {
-				if (res.error) {
-					return undefined
-				}
-				else {
-					res = res[0]['fields']
-					setToken(res.access_token)
-					localStorage.setItem("token", res.access_token);
-					window.history.pushState("home", "ReactApp", "/")
-				}
-			})
-		}
-	}, [setToken]);
+	}, [token])
 
   return (
     <div className="App">
@@ -98,7 +65,7 @@ function GuestNavbar(props) {
             <Button onClick = { e => showLogin(true) } variant="outline-success">Login</Button>
           </Form>
           <Form className="d-flex">
-            <Button onClick = { e => getResponse() } variant="outline-success">Login 42</Button>
+            <Button onClick = { e => OpenURI() } variant="outline-success">Login 42</Button>
           </Form>
         </Navbar.Collapse>
       </Container>
@@ -109,6 +76,7 @@ function GuestNavbar(props) {
 	   }
     </div>
   );
+
 }
 
 export default GuestNavbar;
