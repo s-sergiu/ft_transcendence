@@ -12,8 +12,8 @@ const GetInfo = (token) =>  {
 
 	try {
 		csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
-	} catch (error) {
-		console.log(error);
+	} catch (err) {
+		console.error(err.message);
 	}
 	const fetchInfo = async () => {
 		try {
@@ -32,7 +32,7 @@ const GetInfo = (token) =>  {
 			const data = await response.json();
 			setInfo(data);
 		} catch (error) { 
-			console.log(error) 
+			console.error(error) 
 		}
 	}
 

@@ -13,23 +13,27 @@ const GetToken = (code) =>  {
 	try {
 		csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
 	} catch (error) {
-		console.log(error);
+		console.error(error.message);
 	}
 	const fetchToken = async () => {
-		const response = await fetch(URL + '/api/get-token', {
-			mode:  'cors',
-			method: 'POST',
-			credentials: 'include',
-			body: JSON.stringify({
-				code: code
-			}),
-			headers: {
-				"X-CSRFToken": csrf,
-				'Content-Type': 'application/json'
-			},
-		})
-		const data = await response.json();
-		setToken(data);
+		try {
+			const response = await fetch(URL + '/api/get-token', {
+				mode:  'cors',
+				method: 'POST',
+				credentials: 'include',
+				body: JSON.stringify({
+					code: code
+				}),
+				headers: {
+					"X-CSRFToken": csrf,
+					'Content-Type': 'application/json'
+				},
+			})
+			const data = await response.json();
+			setToken(data);
+		} catch (error) {
+			console.error(error);
+		}
 	}
 
 	useEffect(() => {
