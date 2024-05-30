@@ -8,7 +8,6 @@ import MainContent from './MainContent';
 import GetInfo from './GetInfo';
 import { useEffect, useState } from 'react';
 import './css/navbar.css'
-//import Content from './Content';
 
 var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
 if (process.env.REACT_APP_HTTP_METHOD === 'https')
@@ -18,8 +17,8 @@ function UserNavbar(props) {
 
 	var profileInfo;
 	const [ toggle, setNavToggle ] = useState('profile');
-	const { userData, setLogged } = props;
 	const [ login, setLogin ] = useState();
+	const { userData, setLogged } = props;
 	const { info } = GetInfo(localStorage.getItem("token"));
 
 	function Logout() {
