@@ -18,8 +18,8 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 
 function GuestNavbar(props) {
 	let token_code;
-	const { setToken, set42Login, setLogin } = props;
-	const [login, showLogin] = useState(false);
+	const { setLogged, setUserData } = props;
+	const [ login, showLogin ] = useState(false);
 	const { token } = GetToken(urlParams.get('code'));
 
 	useEffect(() => {
@@ -28,7 +28,7 @@ function GuestNavbar(props) {
 			token_code = token_code.access_token;
 			localStorage.setItem("token", token_code);
 			window.history.pushState("home", "ReactApp", "/")
-			setToken(token_code)
+			setLogged(token_code)
 		}
 	}, [token])
 
@@ -39,12 +39,6 @@ function GuestNavbar(props) {
         <Navbar.Brand onClick = { e => showLogin(false) } href="#">transcendence</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
-          <Nav
-            className="me-auto my-2 my-lg-0"
-            style={{ maxHeight: '100px' }}
-            navbarScroll
-          >
-          </Nav>
           <Form className="d-flex">
             <Button onClick = { e => showLogin(true) } variant="outline-success">Login</Button>
           </Form>
@@ -55,9 +49,9 @@ function GuestNavbar(props) {
       </Container>
     </Navbar>
 	  <h1>NOT LOGGED</h1>
-	  { (login) ? (<LoginPage setLogin = { props.setLogin } />)
-		  : (<h1> test </h1>)
-	   }
+		{ 
+			(login) ? (<LoginPage setLogged = { setLogged } setUserData = { setUserData } />) : (<h1> test </h1>)
+		}
     </div>
   );
 
