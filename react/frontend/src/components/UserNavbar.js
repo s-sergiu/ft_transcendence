@@ -7,6 +7,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Game3D from './3d-game/3DGame';
 import Mode from './game/mode.js';
 import Profile from './profile';
+import GetInfo from './GetInfo';
 import { useEffect, useState } from 'react';
 import Tournament from './tournaments';
 import './css/navbar.css'
@@ -18,19 +19,14 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 
 function UserNavbar(props) {
 
+	let profileInfo;
 	const [ gameToggle, setGameToggle ] = useState('');
 	const [ game3dToggle, set3dToggle ] = useState('');
 	const [ tournToggle, setTournToggle ] = useState('');
 	const [ profileToggle, setProfileToggle ] = useState('profile');
-	const { login, login42, setToken, set42Login, setLogin } = props;
-
-	var loginData;
-	if (login) {
-		loginData = login[0]['fields'];
-	} else {
-		loginData = login42;
-		var login42Enabled = 1;
-	}
+	const { userData, setLogged } = props;
+	const [ login, setLogin ] = useState();
+	const { info } = GetInfo(localStorage.getItem("token"));
 
 	function toggleNav(string) {
 
@@ -61,50 +57,22 @@ function UserNavbar(props) {
 	}
 	function Logout() {
 		localStorage.clear();
-		setLogin(false);
-		set42Login(false);
-		setToken('');
+		setLogged(false);
 	}
+	
+	useEffect(() => {
+		if (userData) {
+			profileInfo = userData[0]['fields']
+			setLogin(profileInfo);
+		}	
+	}, [userData]);
 
 	useEffect(() => {
-	
-	if (login42Enabled == 1) {
-	async function getInfo() {
-		let csrf;
-		if (document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)")) == null) {
-			return({ "error" : "csrftoken" })
-		} else
-			csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
-		let token = localStorage.getItem("token");
-		const response = await fetch(URL + '/api/get-info', {
-		  mode:  'cors',
-		  method: 'POST',
-		  credentials: 'include',
-		  body: JSON.stringify({
-			code: token
-		  }),
-		  headers: {
-			"X-CSRFToken": csrf,
-			'Content-Type': 'application/json'
-		  },
-		})
-		return response.json();
-	}
-			getInfo().then( function(res) { 
-				if (res['error'] === 'csrftoken') {
-					set42Login(false);
-					setToken('');
-					return undefined
-				} else if (res['error'] === 'Not authorized') {
-				} else {
-					res = res[0]['fields']
-					set42Login(res);
-					window.history.pushState("home", "ReactApp", "/")
-				}	
-			});
-		}
-	}, [set42Login, setToken]);
-	
+		if (info) {
+			profileInfo = info[0]['fields']
+			setLogin(profileInfo);
+		}	
+	}, [info]);
 
   return (
     <div className="App">
@@ -142,7 +110,7 @@ function UserNavbar(props) {
 		} else if (profileToggle) {
 			return (
 				<Profile 
-					login = { loginData } 
+					login = { login } 
 				/>
 			)
 		} else if (game3dToggle) {
