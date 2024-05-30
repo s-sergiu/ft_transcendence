@@ -16,20 +16,24 @@ const GetInfo = (token) =>  {
 		console.log(error);
 	}
 	const fetchInfo = async () => {
-		const response = await fetch(URL + '/api/get-info', {
-		  mode:  'cors',
-		  method: 'POST',
-		  credentials: 'include',
-		  body: JSON.stringify({
-			code: token
-		  }),
-		  headers: {
-			"X-CSRFToken": csrf,
-			'Content-Type': 'application/json'
-		  },
-		})
-		const data = await response.json();
-		setInfo(data);
+		try {
+			const response = await fetch(URL + '/api/get-info', {
+			  mode:  'cors',
+			  method: 'POST',
+			  credentials: 'include',
+			  body: JSON.stringify({
+				code: token
+			  }),
+			  headers: {
+				"X-CSRFToken": csrf,
+				'Content-Type': 'application/json'
+			  },
+			})
+			const data = await response.json();
+			setInfo(data);
+		} catch (error) { 
+			console.log(error) 
+		}
 	}
 
 	useEffect(() => {
