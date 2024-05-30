@@ -7,42 +7,26 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import Chat from './Chat/Xat.js';
-import Mode from './game/mode.js';
 import LoginPage from './LoginPage';
-import Content from './Content';
 import { useEffect, useState } from 'react';
-import data from './users.json';
-import Game3D from './3d-game/3DGame.js';
 
 
+const urlParams = new URLSearchParams(window.location.search);
 var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
 if (process.env.REACT_APP_HTTP_METHOD === 'https')
 	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME
 
 function GuestNavbar(props) {
+	let token_code;
 	const { setToken, set42Login, setLogin } = props;
 	const [login, showLogin] = useState(false);
-	const urlParams = new URLSearchParams(window.location.search);
-
-	var code;
-	if (urlParams.get('code')) {
-		code = urlParams.get('code')	
-	}
-	const { token } = GetToken(code);
+	const { token } = GetToken(urlParams.get('code'));
 
 	useEffect(() => {
-		let token_code;
-		console.log("test")
-		console.log("outside", token)
-		if (token && token.error)
-			console.log("error", token);
-		else if (token) {
-			console.log(token[0]['fields']);
+		if (token && !token.error) {
 			token_code = token[0]['fields'];
 			token_code = token_code.access_token;
 			localStorage.setItem("token", token_code);
-			console.log(token_code);
 			window.history.pushState("home", "ReactApp", "/")
 			setToken(token_code)
 		}
@@ -72,7 +56,7 @@ function GuestNavbar(props) {
     </Navbar>
 	  <h1>NOT LOGGED</h1>
 	  { (login) ? (<LoginPage setLogin = { props.setLogin } />)
-		  : (<Mode />)
+		  : (<h1> test </h1>)
 	   }
     </div>
   );
