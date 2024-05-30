@@ -9,16 +9,13 @@ function StartButton({ navigate, user}) {
 
 useEffect(() => {
   if (user.name && user.email) {
-    // console.log('user email:', user.email);
     setUserExist(true);
     setIsFormValid(true);
-    // console.log('userExist :', userExist);
   }
   }, []);
 
   const handleStart = () => {
     if (isFormValid) {
-      // console.log('user :', user.name);
       navigate('modes');
     }
   };
@@ -39,8 +36,6 @@ useEffect(() => {
     user.email = email;
     setIsFormValid(isValid);
   };
-  // if(!name && !email && user)
-  //   checkUser();
     return (
     <div>
     {!userExist && (

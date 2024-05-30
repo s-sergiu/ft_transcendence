@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.utils.crypto import get_random_string
 from django.views.decorators.csrf import get_token
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
@@ -39,23 +40,30 @@ def getToken(request):
     t = Token.get_or_create(data);
     return (JsonResponse(serialize_object(t), safe=False))
 
-def get_normal_user(data):
-    print("in user" , file=sys.stderr)
-    print(data, file=sys.stderr)
-    user = User.objects.filter(email=data['email'] )
-    print("inside user" , file=sys.stderr)
-    print(user, file=sys.stderr)
-    return user.get()
-
 def get_or_create_normal_user(data):
-    orgs = User.objects.create_user(data['username'],
-                                    data['email'],
-                                    data['password'],
-                                    )
-    orgs.save()
-    return 
+    try:
+        orgs = User.objects.get(email=data['email'])
+    except:
+        orgs = None;
+    if orgs is not None:
+        return (3)
+    try:
+        orgs = User.objects.get(username=data['username'])
+    except:
+        orgs = None;
+    if orgs is not None:
+        return (2)
+    if orgs is None:
+        orgs = User.objects.create_user(data['username'],
+                                        data['email'],
+                                        data['password'],
+                                        )
+        orgs.save()
+        ExtendedUser.create_user(data, orgs);
+    return (1)
 
 def get_or_create_user(api_data, token):
+    unique_id = get_random_string(length=32)
     try:
         orgs = User.objects.filter(email=api_data['email'])
     except:
@@ -63,8 +71,9 @@ def get_or_create_user(api_data, token):
 
     t = Token.objects.get(access_token=token['code'])
     if not orgs:
-        orgs = User.objects.create_user(api_data['first_name'],
-                                        api_data['email']
+        orgs = User.objects.create_user(api_data['login'],
+                                        api_data['email'],
+                                        unique_id
                                             )
         orgs.save()
         extended = ExtendedUser.get_or_create(api_data, orgs, t)
@@ -83,33 +92,20 @@ def getUserInfo(request):
     users = get_or_create_user(data,token);
     return (JsonResponse(serialize_object(users), safe=False))
 
-def populateDB(request):
-    data = json.loads(request.body.decode("utf-8"))
-    ExtendedUser.create_users(data);
-    return None
-
-def requestFromDB(request):
-    choice = json.loads(request.body.decode("utf-8"))
-    ext = ExtendedUser.objects.get(id = choice['choice'])
-    return (JsonResponse(serialize_object(ext), safe=False))
-
 def register(request):
     data= json.loads(request.body.decode("utf-8"))
-    get_or_create_normal_user(data)
-    return (JsonResponse({'200' : 'OK'}))
+    status = get_or_create_normal_user(data)
+    if status == 3:
+        return (JsonResponse({'Message' : status}))
+    if status == 2:
+        return (JsonResponse({'Message' : status}))
+    return (JsonResponse({'Message' : 'User registered!'}))
 
 def login(request):
     data = json.loads(request.body.decode("utf-8"))
     user = authenticate(username=data['username'], password=data['password'])
-    print("user auth", file=sys.stderr);
-    print(user, file=sys.stderr);
-    print("end user auth auth", file=sys.stderr);
     if user is None:
-        print("user is none", file=sys.stderr);
-        return (JsonResponse({'404' : 'ERROR'}))
-    else:
-        print("user exists", file=sys.stderr);
-        print(user, file=sys.stderr);
-    print("exising function exists", file=sys.stderr);
-    return (JsonResponse(serialize_object(user), safe=False))
+        return (JsonResponse({'Message' : 'error'}))
+    ext = ExtendedUser.objects.get(login = data['username'])
+    return (JsonResponse(serialize_object(ext), safe=False))
 

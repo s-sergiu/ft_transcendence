@@ -78,3 +78,30 @@
   outline: none;
   box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
 }
+.bluebtn{
+  margin-top: 60px;
+  margin-left: 330px;
+  margin-right: 330px;
+  border: 3px solid orange;
+  border-radius: 30px;
+  background-color: #343a40;
+}
+.trnmRow{
+  margin-top: 30px;
+  background-color: #343a40;
+  margin-left: 180px;
+  margin-right: 180px;
+  color: white;
+  padding-top: 40px;
+  padding-bottom: 60px;  
+  border-radius: 30px;
+  border: 3px solid orange;
+}
+.trnmRow input{
+    margin-left: 30px;
+    margin-bottom: 9px;
+    border: 3px solid orange;
+}
+.div-tourn button{
+  margin-top: 60px;
+}

@@ -95,10 +95,10 @@ cleanup_debug() {
 }
 
 cleanup() {
-	docker kill $(docker ps)
-	docker rm $(docker ps -a)
-	docker rmi $(docker images)
-	docker system prune -af --volumes
+	docker kill $(docker ps --format '{{.ID}}') 2> /dev/null
+	docker rm $(docker ps -a --format '{{.ID}}') 2> /dev/null
+	docker rmi $(docker images --format '{{.ID}}') 2> /dev/null
+	docker system prune -af --volumes 2> /dev/null
 	rm -rf debug/
 }
 

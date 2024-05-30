@@ -82,7 +82,7 @@ const Profile = (props) => {
         {/* Left sidebar */}
         <Col sm={3} className="left-sidebar">
           <div className="profile-info">
-            <Image src={login.image_small} roundedCircle className="profile-pic" />
+            <Image src={login.image_medium} roundedCircle className="profile-pic" />
             <div className="change-picture-btn">
               <label htmlFor="upload-input" className="btn btn-primary">
                 Change Picture
@@ -104,7 +104,7 @@ const Profile = (props) => {
             <div className="personal-info">
               <h2>Personal Information</h2>
               <div className="user-info">
-                <p><strong>Username:</strong> {login.username}</p>
+                <p><strong>Username:</strong> {login.login}</p>
                 <p><strong>Full Name:</strong> {login.first_name} {login.last_name}</p>
                 <p><strong>Email:</strong> {login.email}</p>
                 <p><strong>Wins:</strong> {userInfo.wins}</p>
