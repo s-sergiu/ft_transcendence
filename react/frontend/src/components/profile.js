@@ -74,7 +74,7 @@ const Profile = (props) => {
       reader.readAsDataURL(file);
     }
   };
-
+if (login) {
   return (
     <div className='div_global'>
     <Container fluid className="profile-container">
@@ -177,6 +177,7 @@ const Profile = (props) => {
     </Container>
     </div>
   );
+}
 };
 
 export default Profile;
