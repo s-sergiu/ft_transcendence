@@ -10,11 +10,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import LoginPage from './LoginPage';
 import { useEffect, useState } from 'react';
 
-
 const urlParams = new URLSearchParams(window.location.search);
-var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
-if (process.env.REACT_APP_HTTP_METHOD === 'https')
-	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME
 
 function GuestNavbar(props) {
 	let token_code;
