@@ -55,6 +55,8 @@ class ExtendedUser(models.Model):
         ext = ExtendedUser.objects.filter(email = api_data['email'])
         if ext:
             test = ext.get()
+            if test.token is None:
+                return None
             if (token.access_token != test.token.access_token):
                 ext.update(token = token);
                 delete = test.token
