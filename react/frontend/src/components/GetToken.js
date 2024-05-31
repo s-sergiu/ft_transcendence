@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 
 var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
-if (process.env.react_app_http_method === 'https')
+if (process.env.REACT_APP_HTTP_METHOD === 'https')
 	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME
 
 const GetToken = (code) =>  {
