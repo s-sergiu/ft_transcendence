@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Image, Button, Form } from 'react-bootstrap';
 import './css/profile.css'; 
+import pic6 from './profile.png'
 
 const Profile = (props) => {
   const { login } = props;
@@ -77,6 +78,8 @@ const Profile = (props) => {
 if (login) {
   return (
     <div className='div_global'>
+      <h1 class="display-4">Welcome your dashboard</h1>
+      <img src={pic6} class="img-thumbnail1" alt="..."></img>
     <Container fluid className="profile-container">
       <Row>
         {/* Left sidebar */}

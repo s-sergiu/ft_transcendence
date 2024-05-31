@@ -1,5 +1,4 @@
 .div_global{
-  background-color: #c3cccc;
   width: 100%;
   height: 100%;
 }
@@ -14,7 +13,7 @@
 .left-sidebar {
   background-color: #469191;
   padding: 20px;
-  margin-top: 220px;
+  margin-top: 180px;
   border-radius: 30px;
   border-right: 1px solid #dee2e6; 
 }
@@ -22,7 +21,7 @@
 .right-sidebar {
   background-color:  #469191;
   padding: 20px;
-  margin-top: 220px;
+  margin-top: 180px;
   border-radius: 30px;
   border-left: 1px solid #dee2e6; 
 }
@@ -63,7 +62,7 @@
 
 .change-picture-btn label {
   display: inline-block;
-  background-color: #007bff;
+  background-color: #469191;
   color: #fff;
   padding: 8px 16px;
   border-radius: 4px;
@@ -72,7 +71,7 @@
 }
 
 .change-picture-btn label:hover {
-  background-color: #0056b3;
+  background-color: #469191;
   transform: scale(1.05);
 }
 
@@ -105,7 +104,7 @@
 }
 
 .personal-info .edit-button {
-  background-color: #007bff;
+  background-color: #469191;
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -115,7 +114,7 @@
 }
 
 .personal-info .edit-button:hover {
-  background-color: #0056b3;
+  background-color: #469191;
 }
 
 .matches-info {
@@ -237,4 +236,14 @@
 
 .matches-info td {
   animation: fadeIn 1s ease-in-out;
+}
+
+.img-thumbnail1 {
+  width: 20%;
+}
+.display-4{
+  margin-top: 20px;
+  align-items: center;
+  border-radius: 30px;
+  padding-left: 30px;
 }
