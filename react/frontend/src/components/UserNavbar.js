@@ -34,7 +34,7 @@ function UserNavbar(props) {
 	}, [userData]);
 
 	useEffect(() => {
-		if (info && info.Message) {
+		if (info && info.Message === 'User already exists!') {
 			alert(info.Message)
 			setLogged(false);
 		} else if  (info && !info.Message) {

@@ -93,7 +93,7 @@ def getUserInfo(request):
         return (JsonResponse(data))
     users = get_or_create_user(data,token);
     if users is None:
-        return (JsonResponse({'Message':'user already exists!'}))
+        return (JsonResponse({'Message':'User already exists!'}))
     return (JsonResponse(serialize_object(users), safe=False))
 
 def register(request):
