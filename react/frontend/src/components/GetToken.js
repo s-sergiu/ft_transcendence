@@ -17,20 +17,22 @@ const GetToken = (code) =>  {
 	}
 	const fetchToken = async () => {
 		try {
-			const response = await fetch(URL + '/api/get-token', {
-				mode:  'cors',
-				method: 'POST',
-				credentials: 'include',
-				body: JSON.stringify({
-					code: code
-				}),
-				headers: {
-					"X-CSRFToken": csrf,
-					'Content-Type': 'application/json'
-				},
-			})
-			const data = await response.json();
-			setToken(data);
+			if (code != null) {
+				const response = await fetch(URL + '/api/get-token', {
+					mode:  'cors',
+					method: 'POST',
+					credentials: 'include',
+					body: JSON.stringify({
+						code: code
+					}),
+					headers: {
+						"X-CSRFToken": csrf,
+						'Content-Type': 'application/json'
+					},
+				})
+				const data = await response.json();
+				setToken(data);
+			}
 		} catch (error) {
 			console.error(error);
 		}
