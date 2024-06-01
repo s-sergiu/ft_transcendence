@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import './css/LoginPage.css'
+import pic3 from './login.png'
 
 var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
 if (process.env.REACT_APP_HTTP_METHOD === 'https')
@@ -125,6 +126,7 @@ const LoginPage = (props) => {
 
   return (
     <div className='component'>
+      <img src={pic3} class="img-thumbnail" alt="..."></img>
     <Container>
       <Row className="justify-content-md-center ss">
         <Col md="6">
