@@ -211,9 +211,9 @@ function Game3D() {
 	}
 
 	function rightPaddleCollision(){
-		if (ballVelocity.x > 0) {
-            ballVelocity.x *= -1;
-        }
+		// if (ballVelocity.x > 0) {
+        //     ballVelocity.x *= -1;
+        // }
 		return (sphere.position.y + radius >= rightPaddle.position.y - halfPaddleLength &&
 			sphere.position.y - radius <= rightPaddle.position.y + halfPaddleLength &&
 			sphere.position.x + radius >= rightPaddle.position.x - paddleWidth / 2 &&
@@ -221,20 +221,21 @@ function Game3D() {
 	}
 
 	function collisionDetection(){
+		const speed = ballVelocity.length(); 
 		//moving towards the left paddle
 		if (leftPaddleCollision()) {
 			const collisionPoint = (sphere.position.y - radius - (leftPaddle.position.y + halfPaddleLength)) / paddleLength;
 			const angle = Math.PI / 3 * collisionPoint;
-			const xComponent = Math.cos(angle) * -ballVelocity.x - Math.sin(angle) * ballVelocity.y;
-			const yComponent = Math.sin(angle) * -ballVelocity.x + Math.cos(angle) * ballVelocity.y;
+			const xComponent = Math.cos(angle) * speed;
+			const yComponent = Math.sin(angle) * -speed;
 			ballVelocity.set(xComponent, yComponent);
 		}
 		//moving towards the right paddle
 		else if (rightPaddleCollision()) {
 			const collisionPoint = (sphere.position.y + radius - (rightPaddle.position.y + halfPaddleLength)) / paddleLength;
-			const angle = -(Math.PI / 3 * collisionPoint) + Math.PI;
-			const xComponent = Math.cos(angle) * -ballVelocity.x - Math.sin(angle) * ballVelocity.y;
-			const yComponent = Math.sin(angle) * -ballVelocity.x + Math.cos(angle) * ballVelocity.y;
+			const angle = -(Math.PI / 3 * collisionPoint);
+			const xComponent = Math.cos(angle) * -speed;
+			const yComponent = Math.sin(angle) * speed;
 			ballVelocity.set(xComponent, yComponent);
 		}
 	}
