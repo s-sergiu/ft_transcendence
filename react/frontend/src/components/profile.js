@@ -112,16 +112,6 @@ if (login) {
                       onChange={handleInputChange}
                     />
                   </Form.Group>
-                  <Form.Group controlId="formEmail">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                      type="email"
-                      placeholder="Enter email"
-                      name="email"
-                      value={userInfo.email}
-                      onChange={handleInputChange}
-                    />
-                  </Form.Group>
                   <Button variant="primary" type="submit">Save Changes</Button>
                 </Form>
               ) : (
