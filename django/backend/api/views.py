@@ -113,3 +113,11 @@ def login(request):
     ext = ExtendedUser.objects.get(login = data['username'])
     return (JsonResponse(serialize_object(ext), safe=False))
 
+def changeInfo(request):
+    data = json.loads(request.body.decode("utf-8"))
+    print(data['info']['email'], file=sys.stderr)
+    ext = ExtendedUser.objects.filter(email = data['info']['email'])
+    ext.update(login = data['info']['username'])
+    print(ext, file=sys.stderr)
+    print("tesT", file=sys.stderr)
+    return (JsonResponse({'Message' : 'changeInfo'}))
