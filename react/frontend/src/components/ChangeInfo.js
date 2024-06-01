@@ -13,13 +13,13 @@ const ChangeInfo = (info) => {
 	}
 	const modifyInfo = async (body) => {
 		try {
-			console.log("info: ", body)
 			const response = await fetch(URL + '/api/change-info', {
 				mode:  'cors',
 				method: 'POST',
 				credentials: 'include',
 				body: JSON.stringify({
-					info : body,
+					email : body.login,
+					info : body.userInfo,
 				}),
 				headers: {
 					"X-CSRFToken": csrf,
@@ -27,7 +27,6 @@ const ChangeInfo = (info) => {
 				},
 			})
 			const data = await response.json();
-			console.log(data);
 		} catch (error) {
 			console.error(error);
 		}
