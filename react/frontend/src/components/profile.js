@@ -1,47 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Image, Button, Form } from 'react-bootstrap';
 import './css/profile.css'; 
+import ChangeInfo from './ChangeInfo';
 import pic6 from './profile.png'
 
 const Profile = (props) => {
   const { login } = props;
   const [selectedSection, setSelectedSection] = useState(null); // Default selected section
   const [userInfo, setUserInfo] = useState({
-    username: 'sergiu',
-    fullName: 'sergiu',
-    email: 'sergiu@example.com',
+    username: '',
+    fullName: '',
+    email: '',
     profilePic: 'profile-pic.jpg',
     wins: 0,
     losses: 0,
     matchHistory: [],
   });
   const [editMode, setEditMode] = useState(false);
-
-  useEffect(() => {
-    // Fetch user data and match history from an API or database
-    // Here you can fetch user stats, wins, losses, and match history
-    // For demonstration purposes, let's mock some data
-    // Mocked user data
-    const mockUserData = {
-      username: 'sergiu',
-      fullName: 'sergiu',
-      email:'sergiu@gmail.com',
-      profilePic: 'profile-pic.jpg',
-      wins: 10,
-      losses: 5,
-    };
-
-    // Mocked match history
-    const mockMatchHistory = [
-      { id: 1, opponent: 'Player1', result: 'Win', date: '2024-05-10' },
-      { id: 2, opponent: 'Player2', result: 'Loss', date: '2024-05-09' },
-      { id: 3, opponent: 'Player3', result: 'Win', date: '2024-05-08' },
-      // Add more mock data as needed
-    ];
-
-    // Set user data and match history in state
-    setUserInfo({ ...mockUserData, matchHistory: mockMatchHistory });
-  }, []); // Run only once on component mount
 
   const handleSectionClick = (section) => {
     setSelectedSection(section);
@@ -60,6 +35,7 @@ const Profile = (props) => {
     e.preventDefault();
     // Logic to update user information
     console.log('Form submitted with:', userInfo);
+	console.log(ChangeInfo(userInfo));
     setEditMode(false);
   };
 
