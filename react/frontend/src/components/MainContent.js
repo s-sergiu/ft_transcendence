@@ -10,7 +10,7 @@ function MainContent (props) {
 	if (content === 'profile') {
 		return (<Profile login = { login } />);
 	} else if (content === 'game') {
-		return (<Mode />);
+		return (<Mode login = { login } />);
 	} else if (content === 'tourn') {
 		return (<Tournament />);
 	} else if (content === '3dgame') {

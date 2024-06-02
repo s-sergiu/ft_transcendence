@@ -34,6 +34,9 @@ const Profile = (props) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    props.login.login = userInfo.username;
+    props.login.first_name = userInfo.fullName.split(' ')[0];
+    props.login.last_name = userInfo.fullName.split(' ')[1];
     // Logic to update user information
 	console.log(login.email)
 	console.log("after: ", userInfo);
@@ -51,6 +54,8 @@ const Profile = (props) => {
 
     reader.onloadend = () => {
       setUserInfo({ ...userInfo, profilePic: reader.result });
+      console.log('Uploaded image', reader.result);
+      props.login.image_medium = reader.result;
     };
 
     if (file) {
