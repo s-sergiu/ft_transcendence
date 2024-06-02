@@ -11,8 +11,13 @@ import { set } from 'lodash';
 
 let user ={};
 
-function Mode() {
+function Mode(props) {
   const [currentPage, setCurrentPage] = useState('start');
+  // user = login.login;
+  user.name = props.login.login;
+  user.email = props.login.email;
+  console.log("Props ", props);
+  console.log("user ", user);
 const [gameType, setGameType] = useState('');
   useEffect(() => {
 
