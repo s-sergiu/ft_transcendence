@@ -1,10 +1,14 @@
 import Button from 'react-bootstrap/Button';
+import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import * as THREE from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
 import './3DGame.css';
 
 function Game3D() {
+	const [leftScore, setLeftScore] = useState(0);
+	const [rightScore, setRightScore] = useState(0);
+	const [gameOver, setGameOver] = useState(false);
 	
 	let renderer;
 	let scene;
@@ -211,9 +215,6 @@ function Game3D() {
 	}
 
 	function rightPaddleCollision(){
-		// if (ballVelocity.x > 0) {
-        //     ballVelocity.x *= -1;
-        // }
 		return (sphere.position.y + radius >= rightPaddle.position.y - halfPaddleLength &&
 			sphere.position.y - radius <= rightPaddle.position.y + halfPaddleLength &&
 			sphere.position.x + radius >= rightPaddle.position.x - paddleWidth / 2 &&
@@ -221,6 +222,7 @@ function Game3D() {
 	}
 
 	function collisionDetection(){
+		//get vector length
 		const speed = ballVelocity.length(); 
 		//moving towards the left paddle
 		if (leftPaddleCollision()) {
@@ -244,7 +246,18 @@ function Game3D() {
 		sphere.position.x += ballVelocity.x * delta;
 		sphere.position.y += ballVelocity.y * delta;
 
-		if (sphere.position.x <= -halfBoardWidth + radius || sphere.position.x >= halfBoardWidth - radius) {
+		if (sphere.position.x <= -halfBoardWidth + radius) {
+			setRightScore(prevScore => prevScore + 1);
+			if (rightScore >= 2) {
+				alert('Player2 Wins!');
+			}
+			resetBall();
+		}
+		if  (sphere.position.x >= halfBoardWidth - radius) {
+			setLeftScore(prevScore => prevScore + 1);
+			if (leftScore >= 2) {
+				alert('Player1 Wins!');
+			}
 			resetBall();
 		}
 		if (sphere.position.y >= halfBoardHeight - radius) {
@@ -255,6 +268,11 @@ function Game3D() {
 			sphere.position.y = -halfBoardHeight + radius;
 		}
 	}
+
+	// function resetScores() {
+	// 	setLeftScore(0);
+	// 	setRightScore(0);
+	// }
 
 	function animateGame(){
 		delta = clock.getDelta();
@@ -272,12 +290,16 @@ function Game3D() {
 		renderer.setAnimationLoop(animateGame);
 	}
 	return (
-		  <div>
-		  <Form className="d-flex">
-            <Button onClick = { e => play()} variant="outline-success">Play</Button>
-          </Form>
-		  <canvas class="3d-game" id="canvas"></canvas>
-		  </div>
+		<div>
+			<Form className="d-flex">
+            	<Button onClick = { e => play()} variant="outline-success">Play</Button>
+        	</Form>
+			<div className="scores">
+				<p>Player1: {leftScore}</p>
+				<p>Player2: {rightScore}</p>
+			</div>
+		  	<canvas class="3d-game" id="canvas"></canvas>
+		</div>
 	);
 }
 
