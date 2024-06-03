@@ -113,12 +113,6 @@ def login(request):
     ext = ExtendedUser.objects.get(login = data['username'])
     return (JsonResponse(serialize_object(ext), safe=False))
 
-def fetchFromDB(request):
-    data = json.loads(request.body.decode("utf-8"))
-    print("here", file=sys.stderr)
-    print(data, file=sys.stderr)
-    return (JsonResponse({'Message': data}))
-
 def changeInfo(request):
     data = json.loads(request.body.decode("utf-8"))
     print(data, file=sys.stderr)
