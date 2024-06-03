@@ -6,11 +6,11 @@ RUN npm install
 COPY server/. .
 
 FROM base as dev
-COPY script.sh .
-RUN chmod +x script.sh
-CMD ["./script.sh"]
+COPY dev-script.sh .
+RUN chmod +x dev-script.sh
+CMD ["./dev-script.sh"]
 
 FROM base as prod
-COPY script.sh .
-RUN chmod +x script.sh
-CMD ["./script.sh"]
+COPY prod-script.sh .
+RUN chmod +x prod-script.sh
+CMD ["./prod-script.sh"]

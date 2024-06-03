@@ -5,7 +5,7 @@ services:
     build:
       dockerfile: Dockerfile
       context: gameserv/.
-      target: dev
+      target: ${STAGE}
     container_name: gameserv
     depends_on:
       - react
@@ -13,6 +13,7 @@ services:
       - "4000:4000"
     environment:
       - GAME_IP=${GAME_IP}
+      - HTTP_METHOD=${HTTP_METHOD}
       - HOST_NAME=${HOST_NAME}
       - HOST_IP=${HOST_IP}
       - USER_GID=${USER_GID}
