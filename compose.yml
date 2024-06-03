@@ -11,9 +11,6 @@ services:
       - react
     ports:
       - "4000:4000"
-    networks:
-      game-network:
-        ipv4_address: ${GAME_IP}
     environment:
       - GAME_IP=${GAME_IP}
       - HOST_NAME=${HOST_NAME}
@@ -92,9 +89,3 @@ services:
       interval: 5s
       retries: 3
 
-networks:
-  game-network:
-    ipam:
-      driver: default
-      config:
-        - subnet: ${SUBNET}

@@ -12,3 +12,4 @@ then
 fi
 
 gunicorn --bind=django:8000 backend.wsgi
+

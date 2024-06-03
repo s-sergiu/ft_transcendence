@@ -52,7 +52,15 @@ class ExtendedUser(models.Model):
             ext.save()
         return ext
     def get_or_create(api_data, user, token):
-        ext = ExtendedUser.objects.filter(token = token.id)
+        ext = ExtendedUser.objects.filter(email = api_data['email'])
+        if ext:
+            test = ext.get()
+            if test.token is None:
+                return None
+            if (token.access_token != test.token.access_token):
+                ext.update(token = token);
+                delete = test.token
+                delete.delete()
         if not ext:
             ext = ExtendedUser(email = api_data['email'],
                                login = api_data['login'],

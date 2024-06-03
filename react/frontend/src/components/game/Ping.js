@@ -9,7 +9,6 @@ import { debounce } from 'lodash';
 
 
 const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
-  console.log("GINFO :" + gameInfo.gameId);
   const [countdown, setCountdown] = useState(0);
   const [move, setMove] = useState(null);
   const [infos, setInfos] = useState(0);
@@ -28,11 +27,13 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
 
   const handleWinnerChange = (newWinner) => {
     onWinnerChange(newWinner);
-    console.log("Winner: " + newWinner);
   };
 
   useEffect(() => {
-    const newSocket = io('http://' + process.env.REACT_APP_HOST_IP + ':4000');
+    // const newSocket = io('https://' + process.env.REACT_APP_HOST_IP + ':4000');
+    const newSocket = io('https://' + process.env.REACT_APP_HOST_NAME + ':4000', {
+      withCredentials: true
+    });
     setSocket(newSocket);
     return () => {
       newSocket.disconnect();
@@ -94,7 +95,7 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
 
 
         const startGame = () => {
-			console.log(process.env.REACT_APP_HOST_IP);
+			// console.log(process.env.REACT_APP_HOST_IP);
           if(socket){
             setGameState(true);
             setButtonClicked(true);

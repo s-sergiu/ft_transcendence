@@ -4,107 +4,41 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import Game3D from './3d-game/3DGame';
-import Mode from './game/mode.js';
-import Profile from './profile';
+import MainContent from './MainContent';
+import GetInfo from './GetInfo';
 import { useEffect, useState } from 'react';
-import Tournament from './tournaments';
 import './css/navbar.css'
-//import Content from './Content';
-
-var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
-if (process.env.REACT_APP_HTTP_METHOD === 'https')
-	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME 
 
 function UserNavbar(props) {
 
-	const [ gameToggle, setGameToggle ] = useState('');
-	const [ game3dToggle, set3dToggle ] = useState('');
-	const [ tournToggle, setTournToggle ] = useState('');
-	const [ profileToggle, setProfileToggle ] = useState('profile');
-	const { login, login42, setToken, set42Login, setLogin } = props;
+	var profileInfo;
+	const [ toggle, setNavToggle ] = useState('profile');
+	const [ login, setLogin ] = useState();
+	const { userData, setLogged } = props;
+	const { info } = GetInfo(localStorage.getItem("token"));
 
-	var loginData;
-	if (login) {
-		loginData = login[0]['fields'];
-	} else {
-		loginData = login42;
-		var login42Enabled = 1;
-	}
-
-	function toggleNav(string) {
-
-		if (string === 'game') {
-			setGameToggle(true);
-			setTournToggle(false);
-			setProfileToggle(false);
-			set3dToggle(false);
-		}
-		else if (string === 'tourn') {
-			setGameToggle(false);
-			setTournToggle(true);
-			setProfileToggle(false);
-			set3dToggle(false);
-		}
-		else if (string === 'profile') {
-			setGameToggle(false);
-			setTournToggle(false);
-			setProfileToggle(true);
-			set3dToggle(false);
-		}
-		else if (string === '3dgame') {
-			setGameToggle(false);
-			setTournToggle(false);
-			setProfileToggle(false);
-			set3dToggle(true);
-		}
-	}
 	function Logout() {
 		localStorage.clear();
-		setLogin(false);
-		set42Login(false);
-		setToken('');
+		setLogged(false);
 	}
+	
+	useEffect(() => {
+		console.log(login)
+		if (userData) {
+			profileInfo = userData[0]['fields']
+			setLogin(profileInfo);
+		}	
+	}, [userData]);
 
 	useEffect(() => {
-	
-	if (login42Enabled == 1) {
-	async function getInfo() {
-		let csrf;
-		if (document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)")) == null) {
-			return({ "error" : "csrftoken" })
-		} else
-			csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
-		let token = localStorage.getItem("token");
-		const response = await fetch(URL + '/api/get-info', {
-		  mode:  'cors',
-		  method: 'POST',
-		  credentials: 'include',
-		  body: JSON.stringify({
-			code: token
-		  }),
-		  headers: {
-			"X-CSRFToken": csrf,
-			'Content-Type': 'application/json'
-		  },
-		})
-		return response.json();
-	}
-			getInfo().then( function(res) { 
-				if (res['error'] === 'csrftoken') {
-					set42Login(false);
-					setToken('');
-					return undefined
-				} else if (res['error'] === 'Not authorized') {
-				} else {
-					res = res[0]['fields']
-					set42Login(res);
-					window.history.pushState("home", "ReactApp", "/")
-				}	
-			});
-		}
-	}, [set42Login, setToken]);
-	
+		if (info && info.Message === 'User already exists!') {
+			alert(info.Message)
+			setLogged(false);
+		} else if  (info && !info.Message) {
+			profileInfo = info[0]['fields']
+			setLogin(profileInfo);
+		}	
+	}, [info]);
 
   return (
     <div className="App">
@@ -116,13 +50,12 @@ function UserNavbar(props) {
           <Nav
             className="me-auto my-2 my-lg-0"
             style={{ maxHeight: '100px' }}
-            navbarScroll
           >
             <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link onClick = { e => toggleNav('game') } >Game</Nav.Link>
-            <Nav.Link onClick = { e => toggleNav('3dgame') } >3D Game</Nav.Link>
-            <Nav.Link onClick = { e => toggleNav('profile') } >Profile</Nav.Link>
-            <Nav.Link onClick = { e => toggleNav('tourn') } >Tournaments</Nav.Link>
+            <Nav.Link onClick = { e => setNavToggle('game') } >Game</Nav.Link>
+            <Nav.Link onClick = { e => setNavToggle('3dgame') } >3D Game</Nav.Link>
+            <Nav.Link onClick = { e => setNavToggle('profile') } >Profile</Nav.Link>
+            <Nav.Link onClick = { e => setNavToggle('tourn') } >Tournaments</Nav.Link>
 
             
           </Nav>
@@ -133,24 +66,7 @@ function UserNavbar(props) {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-	<div>
-	{	(() => { 
-		if (gameToggle) { 
-			return ( <Mode /> )
-		} else if (tournToggle) {
-			return ( <Tournament /> )
-		} else if (profileToggle) {
-			return (
-				<Profile 
-					login = { loginData } 
-				/>
-			)
-		} else if (game3dToggle) {
-			return ( <Game3D /> )
-		}
-	})
-	() }
-	  </div>
+	<MainContent content = { toggle } login = { login } />
     </div>
   );
 }

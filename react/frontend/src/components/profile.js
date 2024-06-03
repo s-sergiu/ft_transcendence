@@ -1,46 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Image, Button, Form } from 'react-bootstrap';
 import './css/profile.css'; 
+import ChangeInfo from './ChangeInfo';
+import FetchInfo from './FetchInfo';
+import pic6 from './profile.png'
 
 const Profile = (props) => {
   const { login } = props;
   const [selectedSection, setSelectedSection] = useState(null); // Default selected section
   const [userInfo, setUserInfo] = useState({
-    username: 'sergiu',
-    fullName: 'sergiu',
-    email: 'sergiu@example.com',
-    profilePic: 'profile-pic.jpg',
+    login: '',
+    fullName: '',
+    profilePic: '',
     wins: 0,
     losses: 0,
     matchHistory: [],
   });
+
   const [editMode, setEditMode] = useState(false);
-
-  useEffect(() => {
-    // Fetch user data and match history from an API or database
-    // Here you can fetch user stats, wins, losses, and match history
-    // For demonstration purposes, let's mock some data
-    // Mocked user data
-    const mockUserData = {
-      username: 'sergiu',
-      fullName: 'sergiu',
-      email:'sergiu@gmail.com',
-      profilePic: 'profile-pic.jpg',
-      wins: 10,
-      losses: 5,
-    };
-
-    // Mocked match history
-    const mockMatchHistory = [
-      { id: 1, opponent: 'Player1', result: 'Win', date: '2024-05-10' },
-      { id: 2, opponent: 'Player2', result: 'Loss', date: '2024-05-09' },
-      { id: 3, opponent: 'Player3', result: 'Win', date: '2024-05-08' },
-      // Add more mock data as needed
-    ];
-
-    // Set user data and match history in state
-    setUserInfo({ ...mockUserData, matchHistory: mockMatchHistory });
-  }, []); // Run only once on component mount
 
   const handleSectionClick = (section) => {
     setSelectedSection(section);
@@ -57,9 +34,18 @@ const Profile = (props) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    props.login.login = userInfo.username;
+    props.login.first_name = userInfo.fullName.split(' ')[0];
+    props.login.last_name = userInfo.fullName.split(' ')[1];
     // Logic to update user information
+	console.log(login.email)
+	console.log("after: ", userInfo);
     console.log('Form submitted with:', userInfo);
+	const info = { login, userInfo } 
+	console.log(info)
+	ChangeInfo(info);
     setEditMode(false);
+	console.log("result: ", FetchInfo(login.email));
   };
 
   const handleImageChange = (e) => {
@@ -68,6 +54,8 @@ const Profile = (props) => {
 
     reader.onloadend = () => {
       setUserInfo({ ...userInfo, profilePic: reader.result });
+      console.log('Uploaded image', reader.result);
+      props.login.image_medium = reader.result;
     };
 
     if (file) {
@@ -75,8 +63,11 @@ const Profile = (props) => {
     }
   };
 
+if (login) {
   return (
     <div className='div_global'>
+      <h1 className="display-4">Welcome your dashboard</h1>
+      <img src={pic6} className="img-thumbnail1" alt="..."></img>
     <Container fluid className="profile-container">
       <Row>
         {/* Left sidebar */}
@@ -104,7 +95,7 @@ const Profile = (props) => {
             <div className="personal-info">
               <h2>Personal Information</h2>
               <div className="user-info">
-                <p><strong>Username:</strong> {login.login}</p>
+                <p><strong>Login:</strong> {login.login}</p>
                 <p><strong>Full Name:</strong> {login.first_name} {login.last_name}</p>
                 <p><strong>Email:</strong> {login.email}</p>
                 <p><strong>Wins:</strong> {userInfo.wins}</p>
@@ -117,8 +108,8 @@ const Profile = (props) => {
                     <Form.Control
                       type="text"
                       placeholder="Enter username"
-                      name="username"
-                      value={userInfo.username}
+                      name="login"
+                      value={userInfo.login}
                       onChange={handleInputChange}
                     />
                   </Form.Group>
@@ -129,16 +120,6 @@ const Profile = (props) => {
                       placeholder="Enter full name"
                       name="fullName"
                       value={userInfo.fullName}
-                      onChange={handleInputChange}
-                    />
-                  </Form.Group>
-                  <Form.Group controlId="formEmail">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                      type="email"
-                      placeholder="Enter email"
-                      name="email"
-                      value={userInfo.email}
                       onChange={handleInputChange}
                     />
                   </Form.Group>
@@ -177,6 +158,7 @@ const Profile = (props) => {
     </Container>
     </div>
   );
+}
 };
 
 export default Profile;

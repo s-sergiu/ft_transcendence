@@ -83,6 +83,8 @@ def get_or_create_user(api_data, token):
 
 def getUserInfo(request):
     token = json.loads(request.body.decode("utf-8"))
+    if token['code'] is None:
+        return (JsonResponse({'Message': 'Token is empty!'}))
     url = 'https://api.intra.42.fr/v2/me'
     headers = {'authorization': f'Bearer {token['code']}'}
     api_call = requests.get(url, headers = headers)
@@ -90,6 +92,8 @@ def getUserInfo(request):
     if (list(data.keys())[0] == 'error'):
         return (JsonResponse(data))
     users = get_or_create_user(data,token);
+    if users is None:
+        return (JsonResponse({'Message':'User already exists!'}))
     return (JsonResponse(serialize_object(users), safe=False))
 
 def register(request):
@@ -109,3 +113,14 @@ def login(request):
     ext = ExtendedUser.objects.get(login = data['username'])
     return (JsonResponse(serialize_object(ext), safe=False))
 
+def changeInfo(request):
+    data = json.loads(request.body.decode("utf-8"))
+    print(data, file=sys.stderr)
+    print(list(data['email'].keys()), file=sys.stderr)
+    print(list(data['info'].keys()), file=sys.stderr)
+    ext = ExtendedUser.objects.filter(email = data['email']['email'])
+    orgs = User.objects.filter(email = data['email']['email'])
+    orgs.update(username = data['info']['login'])
+    ext.update(login = data['info']['login'])
+    print(ext, file=sys.stderr)
+    return (JsonResponse({'Message' : 'changeInfo'}))

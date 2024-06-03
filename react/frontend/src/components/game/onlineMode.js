@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import Game from './Ping.js';
 
-const socket = io('http://' + process.env.REACT_APP_HOST_IP + ':4000');
+const socket = io('https://' + process.env.REACT_APP_HOST_NAME + ':4000');
+//const socket = 0;
 
 
 const OnlineMode = ({ navigate, user }) => {
@@ -49,9 +50,17 @@ const OnlineMode = ({ navigate, user }) => {
   };
 
   const joinPrivateGame = () => {
-    setJoinClicked(true);
-    alert("Joining game: " + privateGameId + "...");
-    socket.emit('joinPrivateGame', { gameId: privateGameId, playerName: user.name });
+    if (Number.isInteger(parseInt(privateGameId)) && privateGameId.length < 4) {
+      setJoinClicked(true);
+      alert("Joining game: " + privateGameId + "...");
+      socket.emit('joinPrivateGame', { gameId: privateGameId, playerName: user.name });
+      socket.on('GameNotFound', (gameData) => {
+        alert("Game not found");
+        setJoinClicked(false);
+      });
+    } else {
+      alert("Please enter a valid game ID");
+    }
   };
 
   return (

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import './css/LoginPage.css'
+import pic3 from './login.png'
 
 var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
 if (process.env.REACT_APP_HTTP_METHOD === 'https')
@@ -8,11 +9,11 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 
 const LoginPage = (props) => {
   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
-  const [registerForm, setRegisterForm] = useState({ email: '', password: '' });
+  const [registerForm, setRegisterForm] = useState({ email: '', username: '', password: '' });
   const [showLoginForm, setShowLoginForm] = useState(true);
   const [message, setMessage] = useState('');
   const [registerMessage, setRegisterMessage] = useState('');
-  const { setLogin } = props
+  const { setLogged, setUserData } = props
 	
 
   const handleLoginChange = (e) => {
@@ -25,12 +26,13 @@ const LoginPage = (props) => {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-	  console.log(loginForm)
 	  const response = await sendLoginData(loginForm);
 	if (response.Message === 'error') {
 		setMessage("Username or Password incorrect")
 	} else {
-		setLogin(response);
+		setUserData(response);
+		setLogged(true);
+		localStorage.clear()
 	}
     // Handle login logic here
   };
@@ -44,7 +46,6 @@ const LoginPage = (props) => {
 	} else if (!registerForm.username) {
 		setRegisterMessage("Please provide a username!")
 	} else {
-		console.log("password exists")
 		const reply = await sendRegistrationForm(registerForm);
 		if (reply.Message === 3) {
 			setRegisterMessage("Account with that email already exists")
@@ -125,6 +126,7 @@ const LoginPage = (props) => {
 
   return (
     <div className='component'>
+      <img src={pic3} className="img-thumbnail" alt="..."></img>
     <Container>
       <Row className="justify-content-md-center ss">
         <Col md="6">

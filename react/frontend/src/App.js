@@ -8,27 +8,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 
-	const [login42, set42Login] = useState(false);
-	const [login, setLogin] = useState(false);
-	const [user, setUser] = useState(false);
-	const [token, setToken] = useState(localStorage.getItem("token"));
+	const [login, setLogged] = useState(false);
+	const [userData, setUserData] = useState();
 
-	 if (user || login || login42 || token ) {
+	 if (login) {
 		return (
 			<UserNavbar 
-				login = { login }
-				login42 = { login42 }
-				setToken = { setToken }
-				setLogin = { setLogin } 
-				set42Login = { set42Login } 
+				setLogged = { setLogged } 
+				userData = { userData } 
 			/>
 		);
 	 } else {
 	 	return (
 	 		<GuestNavbar 
-	 			setToken = { setToken }
-	 			set42Login = { set42Login } 
-	 			setLogin = { setLogin } 
+	 			setLogged = { setLogged } 
+				setUserData = { setUserData }
 	 		/>
 	 	);
 	 }
