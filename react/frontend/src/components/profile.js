@@ -44,7 +44,6 @@ const Profile = (props) => {
 	console.log(info)
 	ChangeInfo(info);
     setEditMode(false);
-	console.log("result: ", FetchInfo(login.email));
   };
 
   const handleImageChange = (e) => {
