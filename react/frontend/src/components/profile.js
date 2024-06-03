@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Image, Button, Form } from 'react-bootstrap';
 import './css/profile.css'; 
 import ChangeInfo from './ChangeInfo';
-import FetchInfo from './FetchInfo';
 import pic6 from './profile.png'
 
 const Profile = (props) => {
