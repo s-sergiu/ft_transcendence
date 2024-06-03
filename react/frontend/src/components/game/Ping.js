@@ -30,10 +30,9 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
   };
 
   useEffect(() => {
+	var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":4000"
     // const newSocket = io('https://' + process.env.REACT_APP_HOST_IP + ':4000');
-    const newSocket = io('https://' + process.env.REACT_APP_HOST_NAME + ':4000', {
-      withCredentials: true
-    });
+    const newSocket = io(URL);
     setSocket(newSocket);
     return () => {
       newSocket.disconnect();

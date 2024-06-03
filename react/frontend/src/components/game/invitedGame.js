@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import Game from './Ping.js';
 
-const socket = io('https://' + process.env.REACT_APP_HOST_NAME + ':4000');
-//const socket = 0;
+var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":4000"
+const socket = io(URL);
 const my = { id: 1, name: 'Sergiu', email: 'serguiu@gmail.com' };
 const Inviter = { id: 2, nname: 'Reda', email:'reda@gmail.com' };
 const friends = [
