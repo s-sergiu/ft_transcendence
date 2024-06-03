@@ -9,3 +9,8 @@ FROM base as dev
 COPY script.sh .
 RUN chmod +x script.sh
 CMD ["./script.sh"]
+
+FROM base as prod
+COPY script.sh .
+RUN chmod +x script.sh
+CMD ["./script.sh"]

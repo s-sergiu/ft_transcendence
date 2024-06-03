@@ -1,4 +1,5 @@
 
+import GetCSRF from './GetCSRF';
 import { useEffect, useState } from 'react';
 
 var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
@@ -9,6 +10,7 @@ const GetToken = (code) =>  {
 
 	const [token, setToken] = useState();
 	let csrf;
+	GetCSRF();
 
 	try {
 		csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];

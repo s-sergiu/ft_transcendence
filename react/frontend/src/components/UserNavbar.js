@@ -23,6 +23,7 @@ function UserNavbar(props) {
 	}
 	
 	useEffect(() => {
+		console.log(login)
 		if (userData) {
 			profileInfo = userData[0]['fields']
 			setLogin(profileInfo);
@@ -49,7 +50,6 @@ function UserNavbar(props) {
           <Nav
             className="me-auto my-2 my-lg-0"
             style={{ maxHeight: '100px' }}
-            navbarScroll
           >
             <Nav.Link href="#action1">Home</Nav.Link>
             <Nav.Link onClick = { e => setNavToggle('game') } >Game</Nav.Link>

@@ -115,9 +115,12 @@ def login(request):
 
 def changeInfo(request):
     data = json.loads(request.body.decode("utf-8"))
-    print(data['info']['email'], file=sys.stderr)
-    ext = ExtendedUser.objects.filter(email = data['info']['email'])
-    ext.update(login = data['info']['username'])
+    print(data, file=sys.stderr)
+    print(list(data['email'].keys()), file=sys.stderr)
+    print(list(data['info'].keys()), file=sys.stderr)
+    ext = ExtendedUser.objects.filter(email = data['email']['email'])
+    orgs = User.objects.filter(email = data['email']['email'])
+    orgs.update(username = data['info']['login'])
+    ext.update(login = data['info']['login'])
     print(ext, file=sys.stderr)
-    print("tesT", file=sys.stderr)
     return (JsonResponse({'Message' : 'changeInfo'}))
