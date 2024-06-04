@@ -271,7 +271,7 @@ function Game3D() {
 		renderer.setAnimationLoop(animateGame);
 	}
 	return (
-		  <div>
+		  <div className='div-game'>
 		  <Form className="d-flex">
             <Button onClick = { e => play()} variant="outline-success">Play</Button>
           </Form>
