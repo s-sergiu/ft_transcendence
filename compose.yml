@@ -7,8 +7,6 @@ services:
       context: gameserv/.
       target: ${STAGE}
     container_name: gameserv
-    depends_on:
-      - react
     ports:
       - "4000:4000"
     environment:
