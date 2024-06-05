@@ -5,15 +5,15 @@ const useWebSocket = (url) => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const socket = io('https://localhost:4000');
+    const socket = io(url);
 
     socket.on('connect', () => {
       console.log('WebSocket Connected:', socket.id);
     });
 
-    // socket.on('connect_error', (error) => {
-    //   console.error('Connection Error:', error);
-    // });
+    socket.on('connect_error', (error) => {
+      console.error('Connection Error:', error);
+    });
 
     setSocket(socket);
 
@@ -25,14 +25,5 @@ const useWebSocket = (url) => {
 
   return socket;
 };
-
-// useEffect(() => {
-//   const newSocket = io('http://localhost:8000');
-//   setSocket(newSocket);
-//   return () => {
-//     newSocket.disconnect();
-//   };
-// }, []);
-// };
 
 export default useWebSocket;
