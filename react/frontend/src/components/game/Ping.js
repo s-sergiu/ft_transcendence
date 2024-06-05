@@ -4,6 +4,7 @@ import './css/Ping.css';
 import kanimg from './assets/kan2.png';
 import ballimg from './assets/ball.png';
 import barimg from './assets/bar.png';
+import ChangeMatchData from '../ChangeMatchData.js';
 
 import { debounce } from 'lodash';
 
@@ -68,6 +69,14 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
 
     useEffect(() => {
         if (scores.player1 > 3 || scores.player2 > 3) {
+          const data = {
+            player1: gameInfo.player1,
+            player2: gameInfo.player2,
+            score1: scores.player1,
+            score2: scores.player2,
+            timenow: new Date().getTime(),
+          };
+            ChangeMatchData(data);
           handleWinnerChange(scores.player1 > 3? gameInfo.player1 : gameInfo.player2);
         }
       }, [scores]);
