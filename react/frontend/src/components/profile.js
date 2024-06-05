@@ -65,7 +65,7 @@ if (login) {
   return (
     <div className='div_global'>
       <h1 className="display-4">Welcome your dashboard</h1>
-      <img src={pic6} className="img-thumbnail1" alt="..."></img>
+      <img src={pic6} className="img-thumbnail" alt="..."></img>
     <Container fluid className="profile-container">
       <Row>
         {/* Left sidebar */}

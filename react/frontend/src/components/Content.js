@@ -5,10 +5,20 @@ import slide2 from './img/background2.jpg';
 import slide3 from './img/background3.jpg';
 import slide4 from './img/background4.jpg';
 import slide33 from './img/background33.jpg';
+import a from './abdel.jpg'
+import s from './shettima.jpeg'
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import { MDBContainer, MDBFooter } from 'mdb-react-ui-kit';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/content.css'
+
+const people = [
+  { name: 'Abdelilah Noury', imageUrl: a },
+  { name: 'Sergiu Ster', imageUrl: slide33 },
+  { name: 'Reda Doukali', imageUrl: slide33 },
+  { name: 'Shettima Ali', imageUrl: s },
+  { name: 'Djallal Mekki', imageUrl: slide33 },
+];
  
 function Content() {
     return (
@@ -89,13 +99,34 @@ function Content() {
              </Container>
             <br></br>
 
-      <MDBFooter bgColor='dark' className='text-center text-white text-lg-left'>
+            <Container className="made-by-section">
+              <h2>Made by:</h2>
+              <Row className="d-flex justify-content-center">
+                {people.map((person, index) => (
+                  <Col key={index} md={2} className="person-box">
+                    <Image src={person.imageUrl} roundedCircle className="person-image" />
+                    <h5>{person.name}</h5>
+                  </Col>
+                ))}
+              </Row>
+            </Container>
+                <br></br><br></br><br></br>
+            <footer className="footer">
+      <Row>
+        <Col className="text-center py-3">
+          <p>© 2024 Your Company. All rights reserved.</p>
+        </Col>
+      </Row>
+
+  </footer>
+
+      {/* <MDBFooter bgColor='dark' className='text-center text-white text-lg-left'>
       <MDBContainer className='p-4 pb-0'>
         <h4>made by</h4>
         <p>Transcendence 42team</p>
         &copy; {new Date().getFullYear()} Copyright{' '}
       </MDBContainer>
-    </MDBFooter>
+    </MDBFooter> */}
         </div>
           );
         }
