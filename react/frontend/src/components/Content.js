@@ -5,8 +5,10 @@ import slide2 from './img/background2.jpg';
 import slide3 from './img/background3.jpg';
 import slide4 from './img/background4.jpg';
 import slide33 from './img/background33.jpg';
-import a from './abdel.jpg'
-import s from './shettima.jpeg'
+import a from './abdel.jpg';
+import s from './shettima.jpeg';
+import ssergiu_pic from './sergiu.png';
+import djmekki_pic from './djmekki.jpg';
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import { MDBContainer, MDBFooter } from 'mdb-react-ui-kit';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -14,10 +16,10 @@ import './css/content.css'
 
 const people = [
   { name: 'Abdelilah Noury', imageUrl: a },
-  { name: 'Sergiu Ster', imageUrl: slide33 },
+  { name: 'Sergiu Ster', imageUrl: ssergiu_pic },
   { name: 'Reda Doukali', imageUrl: slide33 },
   { name: 'Shettima Ali', imageUrl: s },
-  { name: 'Djallal Mekki', imageUrl: slide33 },
+  { name: 'Djallal Mekki', imageUrl: djmekki_pic },
 ];
  
 function Content() {
