@@ -17,6 +17,7 @@ const { create } = require('domain');
 
 const app = express();
 const options = {
+	path: "/socket.io",
     key: fs.readFileSync('./private-key.pem'),
     cert: fs.readFileSync('./certificate.pem'),
   };
