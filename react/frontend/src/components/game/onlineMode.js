@@ -2,7 +2,17 @@ import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import Game from './Ping.js';
 
-const socket = io('https://' + process.env.REACT_APP_HOST_IP + ':4000');
+var URL;
+var socket;
+if (process.env.REACT_APP_HTTP_METHOD === 'http') {
+	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":4000";
+	socket = io(URL);
+} else {
+	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME 
+	socket = io(URL, {   path: "/socket.io" });
+}
+
+//const socket = 0;
 
 
 const OnlineMode = ({ navigate, user }) => {

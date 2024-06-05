@@ -2,26 +2,33 @@ let waitingPlayer = null;
 const privateGames = {};
 let users = {};
 const port = 4000;
-const host = process.env.REACT_APP_HOST_NAME;
+const host = "0.0.0.0";
 var id = 0;
 createIndex = 0;
 const ballVelocity = 10;
 const barVelocity = 30;
 var bootVelocity = 22.5;
 const express = require('express');
-const https = require('https');
+const https = require(process.env.HTTP_METHOD);
 const fs = require('fs');
 const socketIo = require('socket.io');
 const cors = require('cors');
 const { create } = require('domain');
 
 const app = express();
-const options = {
-    key: fs.readFileSync('./private-key.pem'),
-    cert: fs.readFileSync('./certificate.pem'),
-  };
+var options;
+var server;
+if (process.env.HTTP_METHOD === 'https') {
+	options = {
+		path: "/socket.io",
+		key: fs.readFileSync('./private-key.pem'),
+		cert: fs.readFileSync('./certificate.pem'),
+	  };
+	server = https.createServer(options, app);
+} else {
+	server = https.createServer(app);
+}
 // const server = http.createServer(app);
-const server = https.createServer(options, app);
 // const io = socketIo(server, {
 //     cors: {
 // 		origin: "https://" + process.env.HOST_IP,

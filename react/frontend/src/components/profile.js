@@ -8,14 +8,14 @@ const Profile = (props) => {
   const { login } = props;
   const [selectedSection, setSelectedSection] = useState(null); // Default selected section
   const [userInfo, setUserInfo] = useState({
-    username: '',
+    login: '',
     fullName: '',
-    email: '',
-    profilePic: 'profile-pic.jpg',
+    profilePic: '',
     wins: 0,
     losses: 0,
     matchHistory: [],
   });
+
   const [editMode, setEditMode] = useState(false);
 
   const handleSectionClick = (section) => {
@@ -37,8 +37,12 @@ const Profile = (props) => {
     props.login.first_name = userInfo.fullName.split(' ')[0];
     props.login.last_name = userInfo.fullName.split(' ')[1];
     // Logic to update user information
+	console.log(login.email)
+	console.log("after: ", userInfo);
     console.log('Form submitted with:', userInfo);
-	console.log(ChangeInfo(userInfo));
+	const info = { login, userInfo } 
+	console.log(info)
+	ChangeInfo(info);
     setEditMode(false);
   };
 
@@ -89,7 +93,7 @@ if (login) {
             <div className="personal-info">
               <h2>Personal Information</h2>
               <div className="user-info">
-                <p><strong>Username:</strong> {login.login}</p>
+                <p><strong>Login:</strong> {login.login}</p>
                 <p><strong>Full Name:</strong> {login.first_name} {login.last_name}</p>
                 <p><strong>Email:</strong> {login.email}</p>
                 <p><strong>Wins:</strong> {userInfo.wins}</p>
@@ -102,8 +106,8 @@ if (login) {
                     <Form.Control
                       type="text"
                       placeholder="Enter username"
-                      name="username"
-                      value={userInfo.username}
+                      name="login"
+                      value={userInfo.login}
                       onChange={handleInputChange}
                     />
                   </Form.Group>
