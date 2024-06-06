@@ -103,7 +103,7 @@ function ChatPage({ userData }) {
             socket={socket}
           />
         )}
-        <NotificationsComponent />
+        {/* <NotificationsComponent /> */}
       </NotificationProvider>
     </div>
   );

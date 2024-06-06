@@ -9,6 +9,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import LoginPage from './LoginPage';
 import { useEffect, useState } from 'react';
+import ChatPage from './Chat/ChatPage';
 
 const urlParams = new URLSearchParams(window.location.search);
 
@@ -43,6 +44,7 @@ function GuestNavbar(props) {
           </Form>
         </Navbar.Collapse>
       </Container>
+	  {/* <ChatPage /> */}
     </Navbar>
 	  <h1>NOT LOGGED</h1>
 		{ 
