@@ -7,6 +7,7 @@ import slide4 from './img/background4.jpg';
 import slide33 from './img/background33.jpg';
 import a from './abdel.jpg';
 import s from './shettima.jpeg';
+import r from './reda.jpg'
 import ssergiu_pic from './sergiu.png';
 import djmekki_pic from './djmekki.jpg';
 import { Container, Row, Col, Image } from 'react-bootstrap';
@@ -17,7 +18,7 @@ import './css/content.css'
 const people = [
   { name: 'Abdelilah Noury', imageUrl: a },
   { name: 'Sergiu Ster', imageUrl: ssergiu_pic },
-  { name: 'Reda Doukali', imageUrl: slide33 },
+  { name: 'Reda Doukali', imageUrl: r },
   { name: 'Shettima Ali', imageUrl: s },
   { name: 'Djallal Mekki', imageUrl: djmekki_pic },
 ];
