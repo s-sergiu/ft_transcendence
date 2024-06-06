@@ -12,17 +12,19 @@ import { NotificationProvider } from './NotificationContext';
 import ChatIcon from './ChatIcon';
 import ChatBox from './ChatBox';
 import avatarUrl from './chat-avatar.png';
+import io from 'socket.io-client';
 
-axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.xsrfHeaderName = 'X-CSRFToken';
-axios.defaults.withCredentials = true;
 
 const urlParams = new URLSearchParams(window.location.search);
-const client = axios.create({
-  baseURL: "http://127.0.0.1:8000"
-});
-
-const url = 'http://localhost:8000';
+var URL;
+var socket;
+if (process.env.REACT_APP_HTTP_METHOD === 'http') {
+	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":4000";
+	socket = io(URL);
+} else {
+	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME 
+	socket = io(URL, {   path: "/socket.io" });
+}
 
 function ChatPage({ userData }) {
     const [contacts, setContacts] = useState([
@@ -39,7 +41,6 @@ function ChatPage({ userData }) {
       ]);
     
       const userId = new URLSearchParams(window.location.search).get('user') || 'default-user-id';
-      const socket = useWebSocket(url);
     
       useEffect(() => {
         if (socket) {
