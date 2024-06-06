@@ -5,7 +5,15 @@ import useWebSocket from './useWebSocket';
 
 const NotificationItem = ({ id, message, type, senderId }) => { // Include senderId prop
     const { removeNotification } = useContext(NotificationContext);
-    const socket = useWebSocket('http://localhost:8000'); // Assuming this is your socket URL
+	var URL;
+	var socket;
+	if (process.env.REACT_APP_HTTP_METHOD === 'http') {
+		URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":4000";
+		socket = io(URL);
+	} else {
+		URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME 
+		socket = io(URL, {   path: "/socket.io" });
+	}
     const navigate = useNavigate(); // Get the navigation function
 
     const handleAccept = () => {
