@@ -12,12 +12,12 @@ const ChangeMatchData = (info) => {
 	}
 	const modifyInfo = async (body) => {
 		try {
-			const response = await fetch(URL + '/api/change-info', {
+			const response = await fetch(URL + '/api/change-match-data', {
 				mode:  'cors',
 				method: 'POST',
 				credentials: 'include',
 				body: JSON.stringify({
-					matchData : body.data,
+					matchData : body,
 				}),
 				headers: {
 					"X-CSRFToken": csrf,
