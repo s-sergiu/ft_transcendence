@@ -17,3 +17,4 @@ const NotificationsComponent = () => {
 };
 
 export default NotificationsComponent;
+

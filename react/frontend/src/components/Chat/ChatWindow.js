@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Header from './Header';
-import { Howl } from 'howler';
-import { useNotifications } from './NotificationContext';
-
 
 const ChatWindow = ({ contact, onClose, onBack, socket }) => {
   const [message, setMessage] = useState('');
@@ -25,40 +22,6 @@ const ChatWindow = ({ contact, onClose, onBack, socket }) => {
       setMessage('');
     }
   };
-
-  const [windowFocused, setWindowFocused] = useState(true);
-  const { addNotification } = useNotifications();
-
-
-  const messageSound = new Howl({
-    src: ['/path/to/your/notification.mp3']
-  });
- 
-  useEffect(() => {
-    const onFocus = () => setWindowFocused(true);
-    const onBlur = () => setWindowFocused(false);
-
-    window.addEventListener('focus', onFocus);
-    window.addEventListener('blur', onBlur);
-
-    return () => {
-      window.removeEventListener('focus', onFocus);
-      window.removeEventListener('blur', onBlur);
-    };
-  }, []);
-
-  useEffect(() => {
-    const receiveMessage = (msg) => {
-      setChatHistory(currentHistory => [...currentHistory, msg]);
-      if (!windowFocused) {
-        addNotification(`New message from ${contact.name}`, 'message');
-        messageSound.play();
-      }
-    };
-
-    socket.on('new-message', receiveMessage);
-    return () => socket.off('new-message', receiveMessage);
-  }, [socket, windowFocused, contact.name, addNotification]);
 
   return (
     <div className="chat-window">

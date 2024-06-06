@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import NotificationItem from './NotificationItem';
-import { NotificationContext } from './NotificationContext';
+import { NotificationContext } from './NotificationContext'; // Direct import of NotificationContext
 
 const NotificationList = () => {
   const { notifications } = useContext(NotificationContext);

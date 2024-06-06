@@ -5,27 +5,8 @@ import Header from './Header';
 import DeleteContact from './DeleteContact';
 import avatarUrl from './chat-avatar.png';
 import logoPic from './pingpong-icon.webp';
-import { useNotifications } from './NotificationContext';
-
 
 const Contacts = ({ contacts, onBack, onClose, profilePic, onChat, onBlock, onViewProfile, onDelete, socket }) => {
-
-  const { addNotification } = useNotifications();
-
-  const handleSendFriendRequest = (recipientId) => {
-    if (socket) { 
-        console.log('Sending friend request to:', recipientId); 
-        socket.emit('send-friend-request', { recipientId });
-    }
-};
-
-const handleSendGameInvite = (recipientId) => {
-    if (socket) {
-        socket.emit('send-game-invite', { recipientId });
-    }
-};
-
-
   return (
     <div>
       <Header
@@ -46,11 +27,10 @@ const handleSendGameInvite = (recipientId) => {
             <button onClick={() => onBlock(contact)}>Block</button>
             <DeleteContact 
               contact={contact} 
-              onDeleteConfirm={() => onDelete(contact.id)}
+              onDeleteConfirm={() => onDelete(contact.id)}  // Ensure this prop is correctly utilized
               />
             <button onClick={() => onViewProfile(contact)}>View Profile</button>
-            <button onClick={() => handleSendFriendRequest(contact.id)}>Send Friend Request</button>
-            <button onClick={() => handleSendGameInvite(contact.id)}>Send Game Invite</button>          </div>
+          </div>
         </div>
       ))}
     </div>
