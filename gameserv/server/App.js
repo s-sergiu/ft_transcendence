@@ -16,12 +16,19 @@ const cors = require('cors');
 const { create } = require('domain');
 
 const app = express();
-const options = {
-    key: fs.readFileSync('./private-key.pem'),
-    cert: fs.readFileSync('./certificate.pem'),
-  };
+var options;
+var server;
+if (process.env.HTTP_METHOD === 'https') {
+	options = {
+		path: "/socket.io",
+		key: fs.readFileSync('./private-key.pem'),
+		cert: fs.readFileSync('./certificate.pem'),
+	  };
+	server = https.createServer(options, app);
+} else {
+	server = https.createServer(app);
+}
 // const server = http.createServer(app);
-const server = https.createServer(options, app);
 // const io = socketIo(server, {
 //     cors: {
 // 		origin: "https://" + process.env.HOST_IP,
