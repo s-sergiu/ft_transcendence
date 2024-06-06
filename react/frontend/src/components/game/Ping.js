@@ -69,14 +69,16 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
 
     useEffect(() => {
         if (scores.player1 > 3 || scores.player2 > 3) {
-          const data = {
-            player1: gameInfo.player1,
-            player2: gameInfo.player2,
-            score1: scores.player1,
-            score2: scores.player2,
-            timenow: new Date().getTime(),
-          };
-            ChangeMatchData(data);
+		if (clientId === 1) {
+			const data = {
+				player1: gameInfo.player1,
+				player2: gameInfo.player2,
+				score1: scores.player1,
+				score2: scores.player2,
+				timenow: new Date().getTime(),
+			  };
+			ChangeMatchData(data);
+		}
           handleWinnerChange(scores.player1 > 3? gameInfo.player1 : gameInfo.player2);
         }
       }, [scores]);
