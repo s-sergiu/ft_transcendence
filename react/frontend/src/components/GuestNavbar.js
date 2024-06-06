@@ -9,6 +9,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import LoginPage from './LoginPage';
 import { useEffect, useState } from 'react';
+import ChatPage from './Chat/ChatPage';
 import Content from './Content'
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -44,6 +45,7 @@ function GuestNavbar(props) {
           </Form>
         </Navbar.Collapse>
       </Container>
+	  {/* <ChatPage /> */}
     </Navbar>
 		{ 
 			(login) ? (<LoginPage setLogged = { setLogged } setUserData = { setUserData } />) : (<Content/>)

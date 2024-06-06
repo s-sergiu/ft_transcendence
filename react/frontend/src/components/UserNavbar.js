@@ -8,6 +8,9 @@ import MainContent from './MainContent';
 import GetInfo from './GetInfo';
 import { useEffect, useState } from 'react';
 import './css/navbar.css'
+import ChatIcon from './Chat/ChatIcon';
+import App from '../App';
+import ChatPage from './Chat/ChatPage';
 
 function UserNavbar(props) {
 
@@ -66,6 +69,7 @@ function UserNavbar(props) {
         </Navbar.Collapse>
       </Container>
     </Navbar>
+	<ChatPage />
 	<MainContent content = { toggle } login = { login } />
     </div>
   );
