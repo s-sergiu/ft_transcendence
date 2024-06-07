@@ -9,6 +9,8 @@ urlpatterns = [
     path("change-info", views.changeInfo, name="change-info"),
     path("change-match-data", views.changeMatchData, name="change-match-data"),
     path("get-match-data", views.getMatchData, name="get-match-data"),
+    path("get-match-wins", views.getMatchWins, name="get-match-wins"),
+    path("get-match-loss", views.getMatchLoss, name="get-match-loss"),
     path("register", views.register, name="register"),
     path("login", views.login, name="login"),
 ]
