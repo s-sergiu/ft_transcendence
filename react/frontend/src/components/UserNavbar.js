@@ -38,7 +38,6 @@ function UserNavbar(props) {
 			setLogged(false);
 		} else if  (info && !info.Message) {
 			profileInfo = info[0]['fields']
-			console.log(info);
 			setLogin(profileInfo);
 		}	
 	}, [profileInfo, info]);
