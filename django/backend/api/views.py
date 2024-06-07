@@ -114,6 +114,18 @@ def login(request):
     ext = ExtendedUser.objects.get(login = data['username'])
     return (JsonResponse(serialize_object(ext), safe=False))
 
+def getMatchLoss(request):
+    data = json.loads(request.body.decode("utf-8"))
+    loss = MatchData.get_loss(data['code']).count();
+    print(loss, file=sys.stderr)
+    return (JsonResponse({'result' : loss}))
+
+def getMatchWins(request):
+    data = json.loads(request.body.decode("utf-8"))
+    wins = MatchData.get_wins(data['code']).count();
+    print(wins, file=sys.stderr)
+    return (JsonResponse({'result' : wins}))
+
 def getMatchData(request):
     data = json.loads(request.body.decode("utf-8"))
     match = MatchData.get_entry(data['code']);
