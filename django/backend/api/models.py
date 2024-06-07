@@ -2,7 +2,30 @@ from django.db import models
 from django.contrib.auth.models import User
 import sys, hashlib
  
-# Create your models here.
+class MatchData(models.Model):
+    player1 = models.CharField(max_length = 64)
+    player2 = models.CharField(max_length = 64)
+    score1 = models.CharField(max_length = 2)
+    score2 = models.CharField(max_length = 2)
+    timenow = models.CharField(max_length = 64)
+    winner = models.CharField(max_length = 64)
+    def add_entry(data):
+        if (data['score1'] > data['score2']): 
+            win = data['player1'];
+        else:
+            win = data['player2'];
+        m = MatchData( player1 = data['player1'],
+                       player2 = data['player2'],
+                       score1 = data['score1'],
+                       score2 = data['score2'],
+                       timenow = data['timenow'],
+                       winner = win
+                      )
+        m.save()
+    def get_entry(data):
+        m = MatchData.objects.filter(player1 = data);
+        return m;
+
 class Token(models.Model):
     access_token = models.CharField(max_length = 64)
     token_type = models.CharField(max_length = 6, null = True)
