@@ -116,26 +116,18 @@ def login(request):
 def getMatchData(request):
     data = json.loads(request.body.decode("utf-8"))
     match = MatchData.get_entry(data['code']);
-    print(data, file=sys.stderr)
-    print(match, file=sys.stderr)
     ser = serializers.serialize('json', match.all())
     return (JsonResponse(ser, safe=False))
-    return (JsonResponse({'Message' : 'changeInfo'}))
 
 def changeMatchData(request):
     data = json.loads(request.body.decode("utf-8"))
     MatchData.add_entry(data['matchData']);
-    print(data, file=sys.stderr)
     return (JsonResponse({'Message' : 'changeInfo'}))
 
 def changeInfo(request):
     data = json.loads(request.body.decode("utf-8"))
-    print(data, file=sys.stderr)
-    print(list(data['email'].keys()), file=sys.stderr)
-    print(list(data['info'].keys()), file=sys.stderr)
     ext = ExtendedUser.objects.filter(email = data['email']['email'])
     orgs = User.objects.filter(email = data['email']['email'])
     orgs.update(username = data['info']['login'])
     ext.update(login = data['info']['login'])
-    print(ext, file=sys.stderr)
     return (JsonResponse({'Message' : 'changeInfo'}))

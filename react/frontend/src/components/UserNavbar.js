@@ -26,7 +26,6 @@ function UserNavbar(props) {
 	}
 	
 	useEffect(() => {
-		console.log(login)
 		if (userData) {
 			profileInfo = userData[0]['fields']
 			setLogin(profileInfo);

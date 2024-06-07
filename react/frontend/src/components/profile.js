@@ -38,11 +38,7 @@ const Profile = (props) => {
     props.login.first_name = userInfo.fullName.split(' ')[0];
     props.login.last_name = userInfo.fullName.split(' ')[1];
     // Logic to update user information
-	console.log(login.email)
-	console.log("after: ", userInfo);
-    console.log('Form submitted with:', userInfo);
 	const info = { login, userInfo } 
-	console.log(info)
 	ChangeInfo(info);
     setEditMode(false);
   };
