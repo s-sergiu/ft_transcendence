@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Image, Button, Form } from 'react-bootstrap';
 import './css/profile.css'; 
 import ChangeInfo from './ChangeInfo';
+import MatchHistory from './MatchHistory';
 import pic6 from './profile.png'
 
 const Profile = (props) => {
@@ -18,7 +19,7 @@ const Profile = (props) => {
 
   const [editMode, setEditMode] = useState(false);
 
-  const handleSectionClick = (section) => {
+  const handleSectionClick = async (section) => {
     setSelectedSection(section);
   };
 
@@ -60,7 +61,7 @@ const Profile = (props) => {
       reader.readAsDataURL(file);
     }
   };
-
+	
 if (login) {
   return (
     <div className='div_global'>
@@ -128,29 +129,7 @@ if (login) {
               )}
             </div>
           )}
-          {selectedSection === 'matches' && (
-            <div className="matches-info">
-              <h2>Matches History</h2>
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Opponent</th>
-                    <th>Result</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {userInfo.matchHistory.map(match => (
-                    <tr key={match.id}>
-                      <td>{match.opponent}</td>
-                      <td>{match.result}</td>
-                      <td>{match.date}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+          {selectedSection === 'matches' && (<MatchHistory />)}
         </Col>
       </Row>
     </Container>
