@@ -23,7 +23,7 @@ class MatchData(models.Model):
                       )
         m.save()
     def get_entry(data):
-        m = MatchData.objects.filter(player1 = data);
+        m = MatchData.objects.filter(player1 = data) | MatchData.objects.filter(player2 =data);
         return m;
 
 class Token(models.Model):
