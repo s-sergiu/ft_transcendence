@@ -9,21 +9,35 @@ class MatchData(models.Model):
     score2 = models.CharField(max_length = 2)
     timenow = models.CharField(max_length = 64)
     winner = models.CharField(max_length = 64)
+    loser = models.CharField(max_length = 64)
     def add_entry(data):
         if (data['score1'] > data['score2']): 
             win = data['player1'];
+            lose = data['player2'];
         else:
             win = data['player2'];
+            lose = data['player1'];
         m = MatchData( player1 = data['player1'],
                        player2 = data['player2'],
                        score1 = data['score1'],
                        score2 = data['score2'],
                        timenow = data['timenow'],
-                       winner = win
+                       winner = win,
+                       loser = lose,
                       )
         m.save()
     def get_entry(data):
         m = MatchData.objects.filter(player1 = data) | MatchData.objects.filter(player2 =data);
+        return m;
+    def get_wins(data):
+        m = MatchData.objects.filter(winner = data) 
+        if m is None:
+            return 0;
+        return m;
+    def get_loss(data):
+        m = MatchData.objects.filter(loser = data) 
+        if m is None:
+            return 0;
         return m;
 
 class Token(models.Model):
