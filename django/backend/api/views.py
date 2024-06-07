@@ -89,6 +89,7 @@ def getUserInfo(request):
     headers = {'authorization': f'Bearer {token['code']}'}
     api_call = requests.get(url, headers = headers)
     data = api_call.json()
+    print(data['location'], file=sys.stderr);
     if (list(data.keys())[0] == 'error'):
         return (JsonResponse(data))
     users = get_or_create_user(data,token);
@@ -127,7 +128,8 @@ def changeMatchData(request):
 def changeInfo(request):
     data = json.loads(request.body.decode("utf-8"))
     ext = ExtendedUser.objects.filter(email = data['email']['email'])
-    orgs = User.objects.filter(email = data['email']['email'])
-    orgs.update(username = data['info']['login'])
-    ext.update(login = data['info']['login'])
+    print(data['info'], file=sys.stderr);
+    ext.update(location = data['info']['location'])
+    ext.update(first_name = data['info']['first_name'])
+    ext.update(last_name = data['info']['last_name'])
     return (JsonResponse({'Message' : 'changeInfo'}))

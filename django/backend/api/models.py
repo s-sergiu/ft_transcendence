@@ -54,6 +54,7 @@ class ExtendedUser(models.Model):
     login = models.CharField(max_length = 64)
     first_name = models.CharField(max_length = 64)
     last_name = models.CharField(max_length = 64)
+    location = models.CharField(max_length = 64, null = True)
     image_medium = models.CharField(max_length = 256)
     image_small = models.CharField(max_length = 128)
     pool_month = models.CharField(max_length = 64)
@@ -69,6 +70,9 @@ class ExtendedUser(models.Model):
             url = 'https://www.gravatar.com/avatar/' + email_hash;
             ext = ExtendedUser(email = api_data['email'],
                                login = api_data['username'],
+                               first_name = api_data['first_name'],
+                               last_name = api_data['last_name'],
+                               location = api_data['location'],
                                image_medium = url,
                                user = user,
                                )
@@ -89,6 +93,7 @@ class ExtendedUser(models.Model):
                                login = api_data['login'],
                                first_name = api_data['first_name'],
                                last_name = api_data['last_name'],
+                               location = api_data['location'],
                                image_medium = api_data['image']['versions']['medium'],
                                image_small = api_data['image']['versions']['small'],
                                pool_month = api_data['pool_month'],
