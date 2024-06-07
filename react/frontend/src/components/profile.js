@@ -10,7 +10,9 @@ const Profile = (props) => {
   const [selectedSection, setSelectedSection] = useState(null); // Default selected section
   const [userInfo, setUserInfo] = useState({
     login: '',
-    fullName: '',
+    first_name: '',
+    last_name: '',
+	location: '',
     profilePic: '',
     wins: 0,
     losses: 0,
@@ -34,12 +36,16 @@ const Profile = (props) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    props.login.login = userInfo.username;
-    props.login.first_name = userInfo.fullName.split(' ')[0];
-    props.login.last_name = userInfo.fullName.split(' ')[1];
-    // Logic to update user information
-	const info = { login, userInfo } 
-	ChangeInfo(info);
+	if (userInfo.first_name && userInfo.location) {
+		props.login.first_name = userInfo.first_name;
+		props.login.last_name = userInfo.last_name;
+		props.login.location = userInfo.location;
+		setUserInfo( { ...userInfo, location: props.login.location });
+		
+		// Logic to update user information
+		const info = { login, userInfo } 
+		ChangeInfo(info);
+	}
     setEditMode(false);
   };
 
@@ -93,28 +99,39 @@ if (login) {
                 <p><strong>Login:</strong> {login.login}</p>
                 <p><strong>Full Name:</strong> {login.first_name} {login.last_name}</p>
                 <p><strong>Email:</strong> {login.email}</p>
+                <p><strong>Location:</strong> {(login.location) ? login.location : "None"}</p>
                 <p><strong>Wins:</strong> {userInfo.wins}</p>
                 <p><strong>Losses:</strong> {userInfo.losses}</p>
               </div>
               {editMode ? (
                 <Form onSubmit={handleFormSubmit}>
-                  <Form.Group controlId="formUsername">
-                    <Form.Label>Username</Form.Label>
+                  <Form.Group controlId="formFirstName">
+                    <Form.Label>First Name</Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="Enter username"
-                      name="login"
-                      value={userInfo.login}
+                      placeholder="Enter first name"
+                      name="first_name"
+                      value={userInfo.first_name}
                       onChange={handleInputChange}
                     />
                   </Form.Group>
-                  <Form.Group controlId="formFullName">
-                    <Form.Label>Full Name</Form.Label>
+                  <Form.Group controlId="formLastName">
+                    <Form.Label>Last Name</Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="Enter full name"
-                      name="fullName"
-                      value={userInfo.fullName}
+                      placeholder="Enter last name"
+                      name="last_name"
+                      value={userInfo.last_name}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="formLocation">
+                    <Form.Label>Location</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter location"
+                      name="location"
+                      value={userInfo.location}
                       onChange={handleInputChange}
                     />
                   </Form.Group>
