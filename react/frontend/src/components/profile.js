@@ -3,6 +3,8 @@ import { Container, Row, Col, Image, Button, Form } from 'react-bootstrap';
 import './css/profile.css'; 
 import ChangeInfo from './ChangeInfo';
 import MatchHistory from './MatchHistory';
+import GetMatchWins from './GetMatchWins';
+import GetMatchLoss from './GetMatchLoss';
 import pic6 from './profile.png'
 
 const Profile = (props) => {
@@ -18,7 +20,8 @@ const Profile = (props) => {
     losses: 0,
     matchHistory: [],
   });
-
+  const { wins } = GetMatchWins('ssergiu');
+  const { loss } = GetMatchLoss('ssergiu');
   const [editMode, setEditMode] = useState(false);
 
   const handleSectionClick = async (section) => {
@@ -100,8 +103,8 @@ if (login) {
                 <p><strong>Full Name:</strong> {login.first_name} {login.last_name}</p>
                 <p><strong>Email:</strong> {login.email}</p>
                 <p><strong>Location:</strong> {(login.location) ? login.location : "None"}</p>
-                <p><strong>Wins:</strong> {userInfo.wins}</p>
-                <p><strong>Losses:</strong> {userInfo.losses}</p>
+                <p><strong>Wins:</strong> {wins.result}</p>
+                <p><strong>Losses:</strong> {loss.result}</p>
               </div>
               {editMode ? (
                 <Form onSubmit={handleFormSubmit}>
