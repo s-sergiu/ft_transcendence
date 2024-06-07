@@ -20,8 +20,15 @@ const Profile = (props) => {
     losses: 0,
     matchHistory: [],
   });
-  const { wins } = GetMatchWins('ssergiu');
-  const { loss } = GetMatchLoss('ssergiu');
+	const getLoginName = () => {
+		if (login && login.login) {
+			return login.login
+		}
+		return null
+	}
+
+  const { wins } = GetMatchWins(getLoginName());
+  const { loss } = GetMatchLoss(getLoginName());
   const [editMode, setEditMode] = useState(false);
 
   const handleSectionClick = async (section) => {
@@ -67,6 +74,8 @@ const Profile = (props) => {
     }
   };
 	
+	console.log(wins);
+	console.log(loss);
 if (login) {
   return (
     <div className='div_global'>
@@ -103,8 +112,8 @@ if (login) {
                 <p><strong>Full Name:</strong> {login.first_name} {login.last_name}</p>
                 <p><strong>Email:</strong> {login.email}</p>
                 <p><strong>Location:</strong> {(login.location) ? login.location : "None"}</p>
-                <p><strong>Wins:</strong> {wins.result}</p>
-                <p><strong>Losses:</strong> {loss.result}</p>
+                <p><strong>Wins:</strong> {(wins) ? (wins.result) : ("0")}</p>
+                <p><strong>Losses:</strong> {(loss) ? (loss.result) : ("0")}</p>
               </div>
               {editMode ? (
                 <Form onSubmit={handleFormSubmit}>
