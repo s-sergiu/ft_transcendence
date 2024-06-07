@@ -10,6 +10,7 @@
   animation: fadeIn 1s ease-in-out;
   padding-bottom: 40%;
   margin-top: 200px;
+  display: fixed;
 }
 
 .left-sidebar {
@@ -240,8 +241,10 @@
   animation: fadeIn 1s ease-in-out;
 }
 
-.img-thumbnail1 {
+.img-thumbnail {
   width: 20%;
+  align-items: center;
+
 }
 .display-4{
   margin-top: 20px;

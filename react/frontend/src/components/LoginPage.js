@@ -126,7 +126,7 @@ const LoginPage = (props) => {
 
   return (
     <div className='component'>
-      {/* <img src={pic3} className="img-thumbnail" alt="..."></img> */}
+      <img src={pic3} className="img-thumbnail" alt="..."></img>
     <Container>
       <Row className="justify-content-md-center ss">
         <Col md="6">
