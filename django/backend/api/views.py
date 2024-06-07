@@ -4,7 +4,7 @@ from django.views.decorators.csrf import get_token
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.core import serializers
-from .models import Token, ExtendedUser
+from .models import Token, ExtendedUser, MatchData
 import json, os, sys, requests
 
 ID=os.environ.get('CLIENT_ID')
@@ -113,8 +113,18 @@ def login(request):
     ext = ExtendedUser.objects.get(login = data['username'])
     return (JsonResponse(serialize_object(ext), safe=False))
 
+def getMatchData(request):
+    data = json.loads(request.body.decode("utf-8"))
+    match = MatchData.get_entry(data['code']);
+    print(data, file=sys.stderr)
+    print(match, file=sys.stderr)
+    ser = serializers.serialize('json', match.all())
+    return (JsonResponse(ser, safe=False))
+    return (JsonResponse({'Message' : 'changeInfo'}))
+
 def changeMatchData(request):
     data = json.loads(request.body.decode("utf-8"))
+    MatchData.add_entry(data['matchData']);
     print(data, file=sys.stderr)
     return (JsonResponse({'Message' : 'changeInfo'}))
 
