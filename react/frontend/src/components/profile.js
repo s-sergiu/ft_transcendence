@@ -129,7 +129,7 @@ if (login) {
               )}
             </div>
           )}
-          {selectedSection === 'matches' && (<MatchHistory />)}
+          {selectedSection === 'matches' && (<MatchHistory user = { login.login } />)}
         </Col>
       </Row>
     </Container>

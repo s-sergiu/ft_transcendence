@@ -2,8 +2,10 @@
 import GetMatchData from './GetMatchData';
 import { useState, useEffect } from 'react';
 
-function MatchHistory () {
-	const { data }= GetMatchData('sergiu123');
+function MatchHistory (props) {
+	const { user } = props;
+	console.log(user);
+	const { data } = GetMatchData(user);
 	if (data) {
 		console.log(data);
 		var test = JSON.parse(data);
