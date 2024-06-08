@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Image, Button, Form } from 'react-bootstrap';
 import './css/profile.css'; 
 import ChangeInfo from './ChangeInfo';
+import MatchHistory from './MatchHistory';
+import GetMatchWins from './GetMatchWins';
+import GetMatchLoss from './GetMatchLoss';
 import pic6 from './profile.png'
 
 const Profile = (props) => {
@@ -9,16 +12,26 @@ const Profile = (props) => {
   const [selectedSection, setSelectedSection] = useState(null); // Default selected section
   const [userInfo, setUserInfo] = useState({
     login: '',
-    fullName: '',
+    first_name: '',
+    last_name: '',
+	location: '',
     profilePic: '',
     wins: 0,
     losses: 0,
     matchHistory: [],
   });
+	const getLoginName = () => {
+		if (login && login.login) {
+			return login.login
+		}
+		return null
+	}
 
+  const { wins } = GetMatchWins(getLoginName());
+  const { loss } = GetMatchLoss(getLoginName());
   const [editMode, setEditMode] = useState(false);
 
-  const handleSectionClick = (section) => {
+  const handleSectionClick = async (section) => {
     setSelectedSection(section);
   };
 
@@ -28,21 +41,24 @@ const Profile = (props) => {
   };
 
   const handleEditClick = () => {
+	userInfo.first_name = login.first_name;
+	userInfo.last_name = login.last_name;
+	userInfo.location = login.location;
     setEditMode(!editMode);
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    props.login.login = userInfo.username;
-    props.login.first_name = userInfo.fullName.split(' ')[0];
-    props.login.last_name = userInfo.fullName.split(' ')[1];
-    // Logic to update user information
-	console.log(login.email)
-	console.log("after: ", userInfo);
-    console.log('Form submitted with:', userInfo);
-	const info = { login, userInfo } 
-	console.log(info)
-	ChangeInfo(info);
+	if (userInfo.first_name && userInfo.location) {
+		props.login.first_name = userInfo.first_name;
+		props.login.last_name = userInfo.last_name;
+		props.login.location = userInfo.location;
+		setUserInfo( { ...userInfo, location: props.login.location });
+		
+		// Logic to update user information
+		const info = { login, userInfo } 
+		ChangeInfo(info);
+	}
     setEditMode(false);
   };
 
@@ -60,7 +76,9 @@ const Profile = (props) => {
       reader.readAsDataURL(file);
     }
   };
-
+	
+	console.log(wins);
+	console.log(loss);
 if (login) {
   return (
     <div className='div_global'>
@@ -96,28 +114,39 @@ if (login) {
                 <p><strong>Login:</strong> {login.login}</p>
                 <p><strong>Full Name:</strong> {login.first_name} {login.last_name}</p>
                 <p><strong>Email:</strong> {login.email}</p>
-                <p><strong>Wins:</strong> {userInfo.wins}</p>
-                <p><strong>Losses:</strong> {userInfo.losses}</p>
+                <p><strong>Location:</strong> {(login.location) ? login.location : "None"}</p>
+                <p><strong>Wins:</strong> {(wins) ? (wins.result) : ("0")}</p>
+                <p><strong>Losses:</strong> {(loss) ? (loss.result) : ("0")}</p>
               </div>
               {editMode ? (
                 <Form onSubmit={handleFormSubmit}>
-                  <Form.Group controlId="formUsername">
-                    <Form.Label>Username</Form.Label>
+                  <Form.Group controlId="formFirstName">
+                    <Form.Label>First Name</Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="Enter username"
-                      name="login"
-                      value={userInfo.login}
+                      placeholder="Enter first name"
+                      name="first_name"
+                      value={userInfo.first_name}
                       onChange={handleInputChange}
                     />
                   </Form.Group>
-                  <Form.Group controlId="formFullName">
-                    <Form.Label>Full Name</Form.Label>
+                  <Form.Group controlId="formLastName">
+                    <Form.Label>Last Name</Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="Enter full name"
-                      name="fullName"
-                      value={userInfo.fullName}
+                      placeholder="Enter last name"
+                      name="last_name"
+                      value={userInfo.last_name}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="formLocation">
+                    <Form.Label>Location</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter location"
+                      name="location"
+                      value={userInfo.location}
                       onChange={handleInputChange}
                     />
                   </Form.Group>
@@ -128,29 +157,7 @@ if (login) {
               )}
             </div>
           )}
-          {selectedSection === 'matches' && (
-            <div className="matches-info">
-              <h2>Matches History</h2>
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Opponent</th>
-                    <th>Result</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {userInfo.matchHistory.map(match => (
-                    <tr key={match.id}>
-                      <td>{match.opponent}</td>
-                      <td>{match.result}</td>
-                      <td>{match.date}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+          {selectedSection === 'matches' && (<MatchHistory user = { login.login } />)}
         </Col>
       </Row>
     </Container>

@@ -16,8 +16,6 @@ function Mode(props) {
   // user = login.login;
   user.name = props.login.login;
   user.email = props.login.email;
-  console.log("Props ", props);
-  console.log("user ", user);
 const [gameType, setGameType] = useState('');
   useEffect(() => {
 

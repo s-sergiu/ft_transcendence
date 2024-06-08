@@ -26,7 +26,6 @@ function UserNavbar(props) {
 	}
 	
 	useEffect(() => {
-		console.log(login)
 		if (userData) {
 			profileInfo = userData[0]['fields']
 			setLogin(profileInfo);
@@ -41,7 +40,7 @@ function UserNavbar(props) {
 			profileInfo = info[0]['fields']
 			setLogin(profileInfo);
 		}	
-	}, [info]);
+	}, [profileInfo, info]);
 
   return (
     <div className="App">
@@ -54,11 +53,10 @@ function UserNavbar(props) {
             className="me-auto my-2 my-lg-0"
             style={{ maxHeight: '100px' }}
           >
-            <Nav.Link href="#action1">Home</Nav.Link>
+            <Nav.Link onClick = { e => setNavToggle('friends') } >Friends</Nav.Link>
             <Nav.Link onClick = { e => setNavToggle('game') } >Game</Nav.Link>
             <Nav.Link onClick = { e => setNavToggle('3dgame') } >3D Game</Nav.Link>
             <Nav.Link onClick = { e => setNavToggle('profile') } >Profile</Nav.Link>
-            <Nav.Link onClick = { e => setNavToggle('tourn') } >Tournaments</Nav.Link>
 
             
           </Nav>

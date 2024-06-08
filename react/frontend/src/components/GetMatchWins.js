@@ -5,43 +5,41 @@ var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST
 if (process.env.REACT_APP_HTTP_METHOD === 'https')
 	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME
 
-const GetInfo = (token) =>  {
+const GetMatchWins = (body) =>  {
 
-	const [info, setInfo] = useState();
 	let csrf;
+	const [ wins, setWins ] = useState();
 
 	try {
 		csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
 	} catch (err) {
 		console.error(err.message);
 	}
-	const fetchInfo = async () => {
+	const fetchWins = async () => {
 		try {
-			const response = await fetch(URL + '/api/get-info', {
+			const response = await fetch(URL + '/api/get-match-wins', {
 			  mode:  'cors',
 			  method: 'POST',
 			  credentials: 'include',
 			  body: JSON.stringify({
-				code: token
+				code: body
 			  }),
 			  headers: {
 				"X-Csrftoken": csrf,
 				'Content-Type': 'application/json'
 			  },
 			})
-			const data = await response.json();
-			setInfo(data);
+			const resp = await response.json();
+			setWins(resp);
 		} catch (error) { 
 			console.error(error) 
 		}
 	}
-
-	useEffect(() => {
-		fetchInfo();
-	}, []);
-
-	return { info }
+	useEffect (() => {
+		fetchWins()
+	}, [])
+	return { wins }
 }
 
-export default GetInfo;
+export default GetMatchWins;
 

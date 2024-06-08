@@ -106,6 +106,9 @@ const LoginPage = (props) => {
 		  body: JSON.stringify({
 			username: data.username,
 			email: data.email,
+			first_name: data.first_name,
+			last_name: data.last_name,
+			location: data.location,
 			password: data.password
 		  }),
 		  headers: {
@@ -195,6 +198,39 @@ const LoginPage = (props) => {
                     placeholder="Enter username"
                     name="username"
                     value={registerForm.username}
+                    onChange={handleRegisterChange}
+                  />
+                </Form.Group>
+
+                <Form.Group controlId="formBasicRegisterFirstName">
+                  <Form.Label>username</Form.Label>
+                  <Form.Control
+                    type="first_name"
+                    placeholder="Enter your first name"
+                    name="first_name"
+                    value={registerForm.first_name}
+                    onChange={handleRegisterChange}
+                  />
+                </Form.Group>
+
+                <Form.Group controlId="formBasicRegisterLastName">
+                  <Form.Label>username</Form.Label>
+                  <Form.Control
+                    type="last_name"
+                    placeholder="Enter your last name"
+                    name="last_name"
+                    value={registerForm.last_name}
+                    onChange={handleRegisterChange}
+                  />
+                </Form.Group>
+
+                <Form.Group controlId="formBasicRegisterLocation">
+                  <Form.Label>username</Form.Label>
+                  <Form.Control
+                    type="location"
+                    placeholder="Enter your location"
+                    name="location"
+                    value={registerForm.location}
                     onChange={handleRegisterChange}
                   />
                 </Form.Group>
