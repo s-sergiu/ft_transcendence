@@ -25,7 +25,7 @@ const GetMatchWins = (body) =>  {
 				code: body
 			  }),
 			  headers: {
-				"X-CSRFToken": csrf,
+				"X-Csrftoken": csrf,
 				'Content-Type': 'application/json'
 			  },
 			})
