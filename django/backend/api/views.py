@@ -126,6 +126,12 @@ def getMatchWins(request):
     print(wins, file=sys.stderr)
     return (JsonResponse({'result' : wins}))
 
+def getUserList(request):
+    userlist = User.objects.all()
+    ser = serializers.serialize('json', userlist)
+    return (JsonResponse(ser, safe=False))
+    return (JsonResponse({'Message' : 'Userlist'}))
+
 def getMatchData(request):
     data = json.loads(request.body.decode("utf-8"))
     match = MatchData.get_entry(data['code']);
