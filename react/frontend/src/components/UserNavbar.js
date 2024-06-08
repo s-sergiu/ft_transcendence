@@ -53,7 +53,7 @@ function UserNavbar(props) {
             className="me-auto my-2 my-lg-0"
             style={{ maxHeight: '100px' }}
           >
-            <Nav.Link href="#action1">Home</Nav.Link>
+            <Nav.Link onClick = { e => setNavToggle('friends') } >Friends</Nav.Link>
             <Nav.Link onClick = { e => setNavToggle('game') } >Game</Nav.Link>
             <Nav.Link onClick = { e => setNavToggle('3dgame') } >3D Game</Nav.Link>
             <Nav.Link onClick = { e => setNavToggle('profile') } >Profile</Nav.Link>
