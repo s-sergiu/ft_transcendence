@@ -41,6 +41,9 @@ const Profile = (props) => {
   };
 
   const handleEditClick = () => {
+	userInfo.first_name = login.first_name;
+	userInfo.last_name = login.last_name;
+	userInfo.location = login.location;
     setEditMode(!editMode);
   };
 
