@@ -203,7 +203,7 @@ const LoginPage = (props) => {
                 </Form.Group>
 
                 <Form.Group controlId="formBasicRegisterFirstName">
-                  <Form.Label>username</Form.Label>
+                  <Form.Label>first name</Form.Label>
                   <Form.Control
                     type="first_name"
                     placeholder="Enter your first name"
@@ -214,7 +214,7 @@ const LoginPage = (props) => {
                 </Form.Group>
 
                 <Form.Group controlId="formBasicRegisterLastName">
-                  <Form.Label>username</Form.Label>
+                  <Form.Label>last name</Form.Label>
                   <Form.Control
                     type="last_name"
                     placeholder="Enter your last name"
@@ -225,7 +225,7 @@ const LoginPage = (props) => {
                 </Form.Group>
 
                 <Form.Group controlId="formBasicRegisterLocation">
-                  <Form.Label>username</Form.Label>
+                  <Form.Label>location</Form.Label>
                   <Form.Control
                     type="location"
                     placeholder="Enter your location"
