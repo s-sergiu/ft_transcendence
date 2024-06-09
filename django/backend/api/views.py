@@ -4,6 +4,7 @@ from django.views.decorators.csrf import get_token
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.core import serializers
+from django.db.models import Q
 from .models import Token, ExtendedUser, MatchData
 import json, os, sys, requests
 
@@ -158,7 +159,9 @@ def getFriendList(request):
     return (JsonResponse({'Message' : 'Userlist'}))
 
 def getUserList(request):
-    userlist = User.objects.all()
+    data = json.loads(request.body.decode("utf-8"))
+    print(data['login']['login'], file = sys.stderr);
+    userlist = User.objects.all().exclude(Q(username = data['login']['login']) | Q(username = 'admin') )
     ser = serializers.serialize('json', userlist)
     return (JsonResponse(ser, safe=False))
     return (JsonResponse({'Message' : 'Userlist'}))

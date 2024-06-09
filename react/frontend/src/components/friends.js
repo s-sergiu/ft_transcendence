@@ -1,4 +1,5 @@
 
+import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import GetUserList from './GetUserList';
 import GetFriendList from './GetFriendList';
@@ -13,50 +14,44 @@ function Friends (props) {
 	const [ friends, setFriends ] = useState();
 	const [ refresh, setRefresh ] = useState(0);
 
-	const { user_list } = GetUserList(login)
 	const { friend_list } = GetFriendList(login)
+	const { user_list } = GetUserList(login)
 	const object = { 
 		login : login.login,
 		friend : 0,
 	}
 
-	const setFriendList = () => {
-		friend_list = GetFriendList(login);
-	}
-
-	function removeFriendFromList(id) {
+	const removeFriendFromList = (id) => {
 		object.friend = id;	
 		RemoveFriend(object);
 		setRefresh(refresh + 1);
 	}
 
-	function addFrienToList(id) {
+	const addFrienToList = (id) => {
 		object.friend = id;	
 		AddFriend(object);
 		setRefresh(refresh + 1);
 	}
 
 	useEffect (() => {
-		console.log(refresh);
 		if (user_list) {
 			setUsers(JSON.parse(user_list))
 		}
 		if (friend_list) {
-			console.log(friend_list);
 			setFriends(JSON.parse(friend_list))
 		}
 	}, [refresh, user_list, friend_list])
 
 		return (
 			<div> 
-			<div className="suggested-info">
 			  <h2>Suggested Friends</h2>
-			  <table className="table">
+			  <Table striped bordered hover >
 				<thead>
 				  <tr>
 					<th>id</th>
 					<th>Username</th>
 					<th>Email</th>
+					<th>Action</th>
 				  </tr>
 				</thead>
 				<tbody>
@@ -69,16 +64,15 @@ function Friends (props) {
 					</tr>
 				))}
 				</tbody>
-			  </table>
-			</div>
-			<div className="friends-list">
+			  </Table>
 			  <h2>Actual Friends List</h2>
-			  <table className="table">
+			  <Table striped bordered hover >
 				<thead>
 				  <tr>
 					<th>id</th>
 					<th>Username</th>
 					<th>Email</th>
+					<th>Action</th>
 				  </tr>
 				</thead>
 				<tbody>
@@ -91,8 +85,7 @@ function Friends (props) {
 					</tr>
 				))}
 				</tbody>
-			  </table>
-			</div>
+			  </Table>
 			</div>
 		);
 }
