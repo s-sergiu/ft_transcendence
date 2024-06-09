@@ -126,43 +126,6 @@ def getMatchWins(request):
     print(wins, file=sys.stderr)
     return (JsonResponse({'result' : wins}))
 
-def removeFriend(request):
-    data = json.loads(request.body.decode("utf-8"))
-    user = ExtendedUser.objects.get(login = data['login'])
-    friend = User.objects.get(pk = data['friend'])
-    user.friends.remove(friend);
-    print(user.login, file=sys.stderr);
-    print(friend.username, file=sys.stderr);
-    print(data, file=sys.stderr);
-    return (JsonResponse({'Message' : 'removeFriend'}))
-
-def addFriend(request):
-    data = json.loads(request.body.decode("utf-8"))
-    user = ExtendedUser.objects.get(login = data['login'])
-    friend = User.objects.get(pk = data['friend'])
-    user.friends.add(friend);
-
-    print(user.login, file=sys.stderr);
-    print(friend.username, file=sys.stderr);
-    print(data, file=sys.stderr);
-    return (JsonResponse({'Message' : 'addFriend'}))
-
-def getFriendList(request):
-    data = json.loads(request.body.decode("utf-8"))
-    print(data['login']['login'], file = sys.stderr);
-    friend_list = ExtendedUser.objects.get(login = data['login']['login'])
-    test = friend_list.friends.all();
-    print(test, file = sys.stderr);
-    ser = serializers.serialize('json', test)
-    return (JsonResponse(ser, safe=False))
-    return (JsonResponse({'Message' : 'Userlist'}))
-
-def getUserList(request):
-    userlist = User.objects.all()
-    ser = serializers.serialize('json', userlist)
-    return (JsonResponse(ser, safe=False))
-    return (JsonResponse({'Message' : 'Userlist'}))
-
 def getMatchData(request):
     data = json.loads(request.body.decode("utf-8"))
     match = MatchData.get_entry(data['code']);

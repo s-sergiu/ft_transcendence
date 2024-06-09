@@ -45,14 +45,6 @@ const LoginPage = (props) => {
 		setRegisterMessage("Please provide a password!")
 	} else if (!registerForm.username) {
 		setRegisterMessage("Please provide a username!")
-	} else if (!registerForm.first_name) {
-		setRegisterMessage("Please provide a first name!")
-	} 
-    else if (!registerForm.last_name) {
-		setRegisterMessage("Please provide a last name!")
-	} 
-  else if (!registerForm.location) {
-		setRegisterMessage("Please provide a location!")
 	} else {
 		const reply = await sendRegistrationForm(registerForm);
 		if (reply.Message === 3) {
@@ -189,7 +181,7 @@ const LoginPage = (props) => {
               <Form onSubmit={handleRegisterSubmit}>
 
                 <Form.Group controlId="formBasicRegisterEmail">
-                  <Form.Label>Email address *</Form.Label>
+                  <Form.Label>Email address</Form.Label>
                   <Form.Control
                     type="email"
                     placeholder="Enter email"
@@ -200,7 +192,7 @@ const LoginPage = (props) => {
                 </Form.Group>
 
                 <Form.Group controlId="formBasicRegisterUsername">
-                  <Form.Label>username *</Form.Label>
+                  <Form.Label>username</Form.Label>
                   <Form.Control
                     type="username"
                     placeholder="Enter username"
@@ -211,7 +203,7 @@ const LoginPage = (props) => {
                 </Form.Group>
 
                 <Form.Group controlId="formBasicRegisterFirstName">
-                  <Form.Label>first name *</Form.Label>
+                  <Form.Label>username</Form.Label>
                   <Form.Control
                     type="first_name"
                     placeholder="Enter your first name"
@@ -222,7 +214,7 @@ const LoginPage = (props) => {
                 </Form.Group>
 
                 <Form.Group controlId="formBasicRegisterLastName">
-                  <Form.Label>last name *</Form.Label>
+                  <Form.Label>username</Form.Label>
                   <Form.Control
                     type="last_name"
                     placeholder="Enter your last name"
@@ -233,7 +225,7 @@ const LoginPage = (props) => {
                 </Form.Group>
 
                 <Form.Group controlId="formBasicRegisterLocation">
-                  <Form.Label>location *</Form.Label>
+                  <Form.Label>username</Form.Label>
                   <Form.Control
                     type="location"
                     placeholder="Enter your location"
@@ -244,7 +236,7 @@ const LoginPage = (props) => {
                 </Form.Group>
 
                 <Form.Group controlId="formBasicRegisterPassword">
-                  <Form.Label>Password *</Form.Label>
+                  <Form.Label>Password</Form.Label>
                   <Form.Control
                     type="password"
                     placeholder="Password"
