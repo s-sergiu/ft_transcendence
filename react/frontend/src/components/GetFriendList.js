@@ -7,7 +7,7 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 
 const GetFriendList = (body) =>  {
 
-	const [friends, setFriends] = useState();
+	const [friend_list, setFriends] = useState();
 	let csrf;
 
 	try {
@@ -40,7 +40,9 @@ const GetFriendList = (body) =>  {
 		fetchFriendList();
 	}, []);
 
-	return { friends }
+
+	return { friend_list }
+
 }
 
 export default GetFriendList;

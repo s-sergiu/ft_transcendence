@@ -17,7 +17,7 @@ function MainContent (props) {
 	} else if (content === '3dgame') {
 		return (<Game3D />);
 	} else if (content === 'friends') {
-		return (<Friends />);
+		return (<Friends login = { login } />);
 	}
 }
 
