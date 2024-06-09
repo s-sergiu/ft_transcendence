@@ -75,6 +75,7 @@ class ExtendedUser(models.Model):
     pool_year = models.CharField(max_length = 64)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     token = models.ForeignKey(Token, on_delete=models.CASCADE, null = True)
+    friends = models.ManyToManyField(User, related_name= '+' )
     def create_user(api_data, user):
         ext = ExtendedUser.objects.filter(email = api_data['email'])
         if not ext:
