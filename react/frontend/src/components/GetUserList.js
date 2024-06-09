@@ -7,7 +7,7 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 
 const GetUserList = () =>  {
 
-	const [list, setList] = useState();
+	const [user_list, setUsers] = useState();
 	let csrf;
 
 	try {
@@ -27,7 +27,7 @@ const GetUserList = () =>  {
 				},
 			})
 			const data = await response.json();
-			setList(data);
+			setUsers(data);
 		} catch (error) {
 			console.error(error);
 		}
@@ -37,7 +37,7 @@ const GetUserList = () =>  {
 		fetchUsers();
 	}, []);
 
-	return { list }
+	return { user_list }
 }
 
 export default GetUserList;
