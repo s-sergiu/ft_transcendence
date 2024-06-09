@@ -11,7 +11,6 @@ import './css/navbar.css'
 import ChatIcon from './Chat/ChatIcon';
 import App from '../App';
 import ChatPage from './Chat/ChatPage';
-import ChangeStatus from './Status/statusChange';
 
 function UserNavbar(props) {
 
@@ -61,7 +60,6 @@ function UserNavbar(props) {
 
             
           </Nav>
-			<ChangeStatus login =  {userData[0]['fields'].login} />
 		  <Form className="d-flex">
             <Button onClick = { e => Logout()} variant="outline-success">Logout</Button>
           </Form>

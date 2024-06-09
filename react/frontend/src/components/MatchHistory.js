@@ -17,10 +17,10 @@ function MatchHistory (props) {
 					<thead>
 					  <tr>
 						<th>Player1</th>
+						<th>Player2</th>
 						<th>Score1</th>
 						<th>Score2</th>
-						<th>Player2</th>
-						{/* <th>Timenow</th> */}
+						<th>Timenow</th>
 						<th>Winner</th>
 					  </tr>
 					</thead>
@@ -31,7 +31,7 @@ function MatchHistory (props) {
 						  <td>{res['fields'].player2}</td>
 						  <td>{res['fields'].score1}</td>
 						  <td>{res['fields'].score2}</td>
-						  {/* <td>{res['fields'].timenow}</td> */}
+						  <td>{res['fields'].timenow}</td>
 						  <td>{res['fields'].winner}</td>
 						</tr>
 					))}

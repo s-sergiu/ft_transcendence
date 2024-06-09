@@ -6,7 +6,6 @@ import GetFriendList from './GetFriendList';
 import RemoveFriend from './RemoveFriend';
 import AddFriend from './AddFriend';
 import { useEffect, useState } from 'react';
-import Status from './Status/statusDisplay';
 
 function Friends (props) {
 	
@@ -55,7 +54,7 @@ function Friends (props) {
 				  </tr>
 				</thead>
 				<tbody>
-				{ users && friends && users.filter(res => res['fields'].username !== login.login && !friends.some(friend => friend['fields'].username === res['fields'].username)).map(res => (
+				{ users && users.map((res) => (
 					<tr>
 					  <td>{res['pk']}</td> 
 					  <td>{res['fields'].username}</td> 
@@ -70,7 +69,6 @@ function Friends (props) {
 				<thead>
 				  <tr>
 					<th>id</th>
-					<th>Status</th>
 					<th>Username</th>
 					<th>Email</th>
 					<th>Action</th>
@@ -80,9 +78,7 @@ function Friends (props) {
 				{ friends && friends.map((res) => (
 					<tr>
 					  <td>{res['pk']}</td> 
-					  <td><Status userName={res['fields'].username}/></td> 
-					  <td>{res['fields'].username}</td>
-					  {/* <td><Status userName={res['fields'].username}/></td> */}
+					  <td>{res['fields'].username}</td> 
 					  <td>{res['fields'].email}</td> 
 					  <Button onClick = { e => removeFriendFromList(res['pk']) } > <td>Remove Friend</td> </Button>
 					</tr>

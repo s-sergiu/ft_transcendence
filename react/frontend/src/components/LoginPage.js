@@ -91,7 +91,7 @@ const LoginPage = (props) => {
 		  credentials: 'include',
 		  body: JSON.stringify({
 			username: data.username,
-			password: data.password,
+			password: data.password
 		  }),
 		  headers: {
 			"X-CSRFToken": csrf,
