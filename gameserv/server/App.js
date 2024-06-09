@@ -5,6 +5,7 @@ const port = 4000;
 const host = "0.0.0.0";
 var id = 0;
 createIndex = 0;
+const userStatus = {};
 const ballVelocity = 10;
 const barVelocity = 30;
 var bootVelocity = 22.5;
@@ -462,8 +463,22 @@ io.on("connection", (socket) => {
                   socket.emit('error', { message: 'Invalid Game ID' });
                 }
               });
+              socket.on('changeStatus', (data) => {
+                console.log('login', data.login.login);
+                console.log('status', data.status);
+                      userStatus[data.login.login] = data.status;
+                    // console.log('satusasdsa' , userStatus[data.login.login]);
+                  });
 
-            
+            socket.on('checkStatus', (login) => {
+                if (userStatus[login] == null) {
+                    userStatus[login] = 'offline';
+                }
+                console.log('>>>>>>>>>>>>>>checkStatus', login);
+                console.log('status', userStatus[login]);
+                      socket.emit('statusUpdate', { status: userStatus[login], login: login });
+                  });
+
               socket.on('disconnect', () => {
                 console.log('user disconnected:', socket.id);
                 delete users[socket.id];
