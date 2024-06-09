@@ -181,7 +181,7 @@ const LoginPage = (props) => {
               <Form onSubmit={handleRegisterSubmit}>
 
                 <Form.Group controlId="formBasicRegisterEmail">
-                  <Form.Label>Email address</Form.Label>
+                  <Form.Label>Email address *</Form.Label>
                   <Form.Control
                     type="email"
                     placeholder="Enter email"
@@ -192,7 +192,7 @@ const LoginPage = (props) => {
                 </Form.Group>
 
                 <Form.Group controlId="formBasicRegisterUsername">
-                  <Form.Label>username</Form.Label>
+                  <Form.Label>username *</Form.Label>
                   <Form.Control
                     type="username"
                     placeholder="Enter username"
@@ -236,7 +236,7 @@ const LoginPage = (props) => {
                 </Form.Group>
 
                 <Form.Group controlId="formBasicRegisterPassword">
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label>Password *</Form.Label>
                   <Form.Control
                     type="password"
                     placeholder="Password"
