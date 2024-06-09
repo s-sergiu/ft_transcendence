@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
 if (process.env.REACT_APP_HTTP_METHOD === 'https')
@@ -36,10 +36,7 @@ const GetFriendList = (body) =>  {
 		}
 	}
 
-	useEffect(() => {
-		fetchFriendList();
-	}, []);
-
+	fetchFriendList();
 
 	return { friend_list }
 
