@@ -4,13 +4,14 @@ import GetUserList from './GetUserList';
 import GetFriendList from './GetFriendList';
 import RemoveFriend from './RemoveFriend';
 import AddFriend from './AddFriend';
-import { useEffect, forceUpdate, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function Friends (props) {
 	
 	const { login } = props;
 	const [ users, setUsers ] = useState();
 	const [ friends, setFriends ] = useState();
+	const [ refresh, setRefresh ] = useState(0);
 
 	const { user_list } = GetUserList(login)
 	const { friend_list } = GetFriendList(login)
@@ -18,24 +19,33 @@ function Friends (props) {
 		login : login.login,
 		friend : 0,
 	}
-	const removeFriendFromList = (id) => {
-		object.friend = id;	
-		RemoveFriend(object);
+
+	const setFriendList = () => {
+		friend_list = GetFriendList(login);
 	}
 
-	const addFrienToList = (id) => {
+	function removeFriendFromList(id) {
+		object.friend = id;	
+		RemoveFriend(object);
+		setRefresh(refresh + 1);
+	}
+
+	function addFrienToList(id) {
 		object.friend = id;	
 		AddFriend(object);
+		setRefresh(refresh + 1);
 	}
 
 	useEffect (() => {
+		console.log(refresh);
 		if (user_list) {
 			setUsers(JSON.parse(user_list))
 		}
 		if (friend_list) {
+			console.log(friend_list);
 			setFriends(JSON.parse(friend_list))
 		}
-	}, [user_list, friend_list])
+	}, [refresh, user_list, friend_list])
 
 		return (
 			<div> 
