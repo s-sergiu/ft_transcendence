@@ -40,7 +40,9 @@ const GetFriendList = (body) =>  {
 		fetchFriendList();
 	}, []);
 
+
 	return { friend_list }
+
 }
 
 export default GetFriendList;

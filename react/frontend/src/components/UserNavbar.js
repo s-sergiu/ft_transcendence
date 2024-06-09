@@ -57,7 +57,6 @@ function UserNavbar(props) {
             <Nav.Link onClick = { e => setNavToggle('game') } >Game</Nav.Link>
             <Nav.Link onClick = { e => setNavToggle('3dgame') } >3D Game</Nav.Link>
             <Nav.Link onClick = { e => setNavToggle('profile') } >Profile</Nav.Link>
-            <Nav.Link onClick = { e => setNavToggle('tourn') } >Tournaments</Nav.Link>
 
             
           </Nav>

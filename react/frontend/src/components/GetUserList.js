@@ -8,6 +8,7 @@ if (process.env.REACT_APP_HTTP_METHOD === 'https')
 const GetUserList = () =>  {
 
 	const [user_list, setUsers] = useState();
+
 	let csrf;
 
 	try {
@@ -38,6 +39,7 @@ const GetUserList = () =>  {
 	}, []);
 
 	return { user_list }
+
 }
 
 export default GetUserList;
