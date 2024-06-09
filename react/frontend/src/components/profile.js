@@ -77,8 +77,6 @@ const Profile = (props) => {
     }
   };
 	
-	console.log(wins);
-	console.log(loss);
 if (login) {
   return (
     <div className='div_global'>

@@ -5,7 +5,7 @@ var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST
 if (process.env.REACT_APP_HTTP_METHOD === 'https')
 	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME
 
-const GetUserList = (body) =>  {
+const GetUserList = (body, list) =>  {
 
 	const [user_list, setUsers] = useState();
 
