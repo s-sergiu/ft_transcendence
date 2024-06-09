@@ -22,7 +22,6 @@ if [[ $OSTYPE == darwin* ]]
 fi
 
 main() {
-	echo $1
 	if [[ $1 == 'dev' ]]
 		then
 			mkdir debug
