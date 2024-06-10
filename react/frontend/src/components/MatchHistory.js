@@ -17,9 +17,9 @@ function MatchHistory (props) {
 					<thead>
 					  <tr>
 						<th>Player1</th>
+						<th>Player2</th>
 						<th>Score1</th>
 						<th>Score2</th>
-						<th>Player2</th>
 						<th>Timenow</th>
 						<th>Winner</th>
 					  </tr>

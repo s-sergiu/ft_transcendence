@@ -17,7 +17,6 @@ const StatusToggle = (login) => {
 
   const handleStatusChange = (newStatus) => {
     setStatus(newStatus);
-    //  console.log('logiiin', login);
     socket.emit('changeStatus', newStatus, login);
   };
 

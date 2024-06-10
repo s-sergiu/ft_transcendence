@@ -15,7 +15,6 @@ function Friends (props) {
 	const [ refresh, setRefresh ] = useState(0);
 
 	const { user_list } = GetUserList(login)
-	// console.log(user_list)
 	const { friend_list } = GetFriendList(login)
 	const object = { 
 		login : login.login,
@@ -88,11 +87,11 @@ function Friends (props) {
 				{ friends && friends.map((res) => (
 					<tr>
 					  <td>{res['pk']}</td>
-					  <td><Status userName={res['fields'].username}/></td>
+					  <td><div><Status userName={res['fields'].username}/></div></td>
 					  <td>{res['fields'].username}</td>
 					  {/* <td><Status userName={res['fields'].username}/></td> */}
 					  <td>{res['fields'].email}</td> 
-					  <Button onClick = { e => removeFriendFromList(res['pk']) } > <td>Remove Friend</td> </Button>
+					  <td><Button onClick = { e => removeFriendFromList(res['pk']) } > <td>Remove Friend</td> </Button> </td>
 					</tr>
 				))}
 				</tbody>

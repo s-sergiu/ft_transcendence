@@ -464,23 +464,20 @@ io.on("connection", (socket) => {
                 }
               });
               socket.on('changeStatus', (status, login) => {
-                // console.log('login', login);
-                // console.log('status', status);
                       userStatus[login.login] = status;
-                    // console.log('satusasdsa' , userStatus[login.login]);
                   });
 
             socket.on('checkStatus', (login) => {
                 if (userStatus[login] == null) {
                     userStatus[login] = 'offline';
+                    // users[socket.id].login = login;
                 }
-                // console.log('>>>>>>>>>>>>>>checkStatus', login);
-                // console.log('status', userStatus[login]);
                       socket.emit('statusUpdate', { status: userStatus[login], login: login });
                   });
 
               socket.on('disconnect', () => {
                 console.log('user disconnected:', socket.id);
+                // userStatus[users[socket.id].login] = 'offline';
                 delete users[socket.id];
               });
     });

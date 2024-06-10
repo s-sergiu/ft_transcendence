@@ -12,6 +12,17 @@ import ChatIcon from './Chat/ChatIcon';
 import App from '../App';
 import ChatPage from './Chat/ChatPage';
 import ChangeStatus from './Status/statusChange';
+import io from 'socket.io-client';
+
+var URL;
+var socket;
+if (process.env.REACT_APP_HTTP_METHOD === 'http') {
+	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":4000";
+	socket = io(URL);
+} else {
+	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME 
+	socket = io(URL, {   path: "/socket.io" });
+}
 
 function UserNavbar(props) {
 
@@ -22,6 +33,7 @@ function UserNavbar(props) {
 	const { info } = GetInfo(localStorage.getItem("token"));
 
 	function Logout() {
+		socket.emit('changeStatus', "Offline", userData[0]['fields']);
 		localStorage.clear();
 		setLogged(false);
 	}
@@ -30,6 +42,7 @@ function UserNavbar(props) {
 		if (userData) {
 			profileInfo = userData[0]['fields']
 			setLogin(profileInfo);
+			socket.emit('changeStatus', "Online", userData[0]['fields']);
 		}	
 	}, [userData]);
 
@@ -61,7 +74,6 @@ function UserNavbar(props) {
 
             
           </Nav>
-			<ChangeStatus login =  {userData[0]['fields'].login} />
 		  <Form className="d-flex">
             <Button onClick = { e => Logout()} variant="outline-success">Logout</Button>
           </Form>

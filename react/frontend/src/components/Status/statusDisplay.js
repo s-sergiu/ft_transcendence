@@ -17,13 +17,9 @@ const UserStatusLED = ({ userName }) => {
   const [ledColor, setLedColor] = useState('red');
 
   const update = () => {
-    console.log('update');
-
     socket.emit('checkStatus', userName);
 
     socket.on('statusUpdate', (data) => {
-        console.log('data : ', data);
-        // console.log(data.status);
         if (data.login === userName){
           setStatus(data.status);
           setLedColor(data.status === 'Online'? 'green' :'red');
@@ -39,7 +35,6 @@ const UserStatusLED = ({ userName }) => {
     <div>
       <button onClick={update} style={{ fontSize: '12px', padding: '5px 10px' }}>Update</button>
       <div style={{  marginTop: '-25px', width: '20px', height: '20px', borderRadius: '50%', backgroundColor: ledColor }}></div>
-      {/* <>{userName}</> */}
     </div>
   );
 };
