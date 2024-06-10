@@ -14,7 +14,7 @@ const fs = require('fs');
 const socketIo = require('socket.io');
 const cors = require('cors');
 const { create } = require('domain');
-const onlineUsers = new Set();
+const userStatus = {};
 
 const app = express();
 var options;
@@ -201,10 +201,6 @@ server.listen(port,host, () => {
             
 io.on("connection", (socket) => {
         createGame();
-	socket.on('hello', (arg) => {
-		onlineUsers.add(arg);
-		socket.emit("online", onlineUsers);
-	});
     socket.on("infos", (data, gid) => {
         id = gid;
         GamesList[gid].gameInfo.player1 = data.player1;
@@ -470,6 +466,21 @@ io.on("connection", (socket) => {
                 }
               });
 
+			socket.on('changeStatus', (data) => {
+                console.log('login', data.login.login);
+                console.log('status', data.status);
+                userStatus[data.login.login] = data.status;
+                    // console.log('satusasdsa' , userStatus[data.login.login]);
+            });
+
+            socket.on('checkStatus', (login) => {
+                if (userStatus[login] == null) {
+                    userStatus[login] = 'offline';
+                }
+                console.log('>>>>>>>>>>>>>>checkStatus', login);
+                console.log('status', userStatus[login]);
+                socket.emit('statusUpdate', { status: userStatus[login], login: login });
+			});
             
               socket.on('disconnect', () => {
                 console.log('user disconnected:', socket.id);
