@@ -33,7 +33,12 @@ function UserNavbar(props) {
 	const { info } = GetInfo(localStorage.getItem("token"));
 
 	function Logout() {
-		socket.emit('changeStatus', "Offline", userData[0]['fields']);
+		console.log("userdata", userData);
+		console.log("info ",info);
+		if (userData)
+			socket.emit('changeStatus', "Offline", userData[0]['fields']);
+		else
+			socket.emit('changeStatus', "Offline", login);
 		localStorage.clear();
 		setLogged(false);
 	}
@@ -52,6 +57,7 @@ function UserNavbar(props) {
 			setLogged(false);
 		} else if  (info && !info.Message) {
 			profileInfo = info[0]['fields']
+			socket.emit('changeStatus', "Online", profileInfo);
 			setLogin(profileInfo);
 		}	
 	}, [profileInfo, info]);
