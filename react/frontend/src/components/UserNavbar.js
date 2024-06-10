@@ -11,7 +11,6 @@ import { useEffect, useState } from 'react';
 import './css/navbar.css'
 import ChatIcon from './Chat/ChatIcon';
 import App from '../App';
-import ChangeStatus from './status/statusChange';
 import ChatPage from './Chat/ChatPage';
 import ChangeStatus from './Status/statusChange';
 import io from 'socket.io-client';

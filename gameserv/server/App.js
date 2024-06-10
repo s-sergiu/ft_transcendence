@@ -15,7 +15,6 @@ const fs = require('fs');
 const socketIo = require('socket.io');
 const cors = require('cors');
 const { create } = require('domain');
-const userStatus = {};
 
 const app = express();
 var options;
