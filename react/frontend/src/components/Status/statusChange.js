@@ -13,17 +13,11 @@ if (process.env.REACT_APP_HTTP_METHOD === 'http') {
 
 const StatusToggle = (login) => {
   const [status, setStatus] = useState('Offline');
-	console.log(login);
-  if (login === undefined) {
-	console.log("error");
-	return undefined;
-  }
+
 
   const handleStatusChange = (newStatus) => {
     setStatus(newStatus);
-      console.log('logiiin', login);
-	if (login)
-		socket.emit('changeStatus', { newStatus, login } );
+    socket.emit('changeStatus', newStatus, login);
   };
 
   return (
