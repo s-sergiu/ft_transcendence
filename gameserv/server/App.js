@@ -468,9 +468,9 @@ io.on("connection", (socket) => {
 
 			socket.on('changeStatus', (data) => {
                 console.log('login', data.login.login);
-                console.log('status', data.status);
-                userStatus[data.login.login] = data.status;
-                    // console.log('satusasdsa' , userStatus[data.login.login]);
+                console.log('status', data.newStatus);
+				if (data.login)
+					userStatus[data.login.login] = data.newStatus;
             });
 
             socket.on('checkStatus', (login) => {
