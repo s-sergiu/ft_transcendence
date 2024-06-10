@@ -1,4 +1,5 @@
 
+import io from 'socket.io-client';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -8,6 +9,32 @@ import MainContent from './MainContent';
 import GetInfo from './GetInfo';
 import { useEffect, useState } from 'react';
 import './css/navbar.css'
+import ChatIcon from './Chat/ChatIcon';
+import App from '../App';
+import ChangeStatus from './status/statusChange';
+import ChatPage from './Chat/ChatPage';
+import ChangeStatus from './Status/statusChange';
+import io from 'socket.io-client';
+
+var URL;
+var socket;
+if (process.env.REACT_APP_HTTP_METHOD === 'http') {
+	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":4000";
+	socket = io(URL);
+} else {
+	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME 
+	socket = io(URL, {   path: "/socket.io" });
+}
+
+var URL;
+var socket;
+if (process.env.REACT_APP_HTTP_METHOD === 'http') {
+	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":4000";
+	socket = io(URL);
+} else {
+	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME 
+	socket = io(URL, {   path: "/socket.io" });
+}
 
 function UserNavbar(props) {
 
@@ -18,17 +45,31 @@ function UserNavbar(props) {
 	const { info } = GetInfo(localStorage.getItem("token"));
 
 	function Logout() {
+		socket.emit('changeStatus', "Offline", userData[0]['fields']);
 		localStorage.clear();
 		setLogged(false);
 	}
 	
 	useEffect(() => {
-		console.log(login)
 		if (userData) {
 			profileInfo = userData[0]['fields']
 			setLogin(profileInfo);
+			socket.emit('changeStatus', "Online", userData[0]['fields']);
 		}	
 	}, [userData]);
+
+	useEffect(() => {
+		if (login)
+			socket.emit('hello', login.user) 
+		else if (profileInfo)
+			socket.emit('hello', profileInfo) 
+    }, [login]);
+
+	useEffect(() => {
+		socket.on('online', (arg) => {
+			console.log(Array.from(arg));
+		})
+    }, [login]);
 
 	useEffect(() => {
 		if (info && info.Message === 'User already exists!') {
@@ -38,7 +79,7 @@ function UserNavbar(props) {
 			profileInfo = info[0]['fields']
 			setLogin(profileInfo);
 		}	
-	}, [info]);
+	}, [profileInfo, info]);
 
   return (
     <div className="App">
@@ -51,14 +92,14 @@ function UserNavbar(props) {
             className="me-auto my-2 my-lg-0"
             style={{ maxHeight: '100px' }}
           >
-            <Nav.Link href="#action1">Home</Nav.Link>
+            <Nav.Link onClick = { e => setNavToggle('friends') } >Friends</Nav.Link>
             <Nav.Link onClick = { e => setNavToggle('game') } >Game</Nav.Link>
             <Nav.Link onClick = { e => setNavToggle('3dgame') } >3D Game</Nav.Link>
             <Nav.Link onClick = { e => setNavToggle('profile') } >Profile</Nav.Link>
-            <Nav.Link onClick = { e => setNavToggle('tourn') } >Tournaments</Nav.Link>
 
             
           </Nav>
+		  <ChangeStatus login = { login && login.login} />
 		  <Form className="d-flex">
             <Button onClick = { e => Logout()} variant="outline-success">Logout</Button>
           </Form>
@@ -66,6 +107,7 @@ function UserNavbar(props) {
         </Navbar.Collapse>
       </Container>
     </Navbar>
+	<ChatPage />
 	<MainContent content = { toggle } login = { login } />
     </div>
   );

@@ -1,29 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import Header from './Header';
 
-
 const ChatWindow = ({ contact, onClose, onBack, socket }) => {
   const [message, setMessage] = useState('');
   const [chatHistory, setChatHistory] = useState(contact.chatHistory || []);
 
   useEffect(() => {
-    if (socket) {
     const receiveMessage = (msg) => {
       setChatHistory(currentHistory => [...currentHistory, msg]);
     };
 
     socket.on('new-message', receiveMessage);
     return () => socket.off('new-message', receiveMessage);
-  }}, [socket]);
+  }, [socket]);
 
   const sendMessage = () => {
-    if (message.trim() && socket) {
+    if (message.trim()) {
       const newMessage = { message, time: new Date().toLocaleTimeString(), isUser: true, contactId: contact.id };
-      console.log('message sent:', message);
-      // console.log('message sent:', newMessage);
       setChatHistory([...chatHistory, newMessage]);
-      // console.log('chat history:', chatHistory);
-      // socket.emit("disconnect2");
       socket.emit('send-message', newMessage);
       setMessage('');
     }

@@ -53,3 +53,29 @@ h3{
     background-color: lightblue;
 
 }
+.made-by-section {
+    text-align: center;
+    padding: 2rem 0;
+  }
+  
+  .person-box {
+    margin: 1rem 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .person-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 0.5rem;
+  }
+  .footer {
+    background-color: #f8f9fa;
+    padding: 1rem 0;
+    width: 100%;
+    bottom: 0;
+  }
+  

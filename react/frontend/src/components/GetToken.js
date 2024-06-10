@@ -1,6 +1,6 @@
 
-import GetCSRF from './GetCSRF';
 import { useEffect, useState } from 'react';
+import GetCSRF from './GetCSRF';
 
 var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
 if (process.env.REACT_APP_HTTP_METHOD === 'https')
@@ -10,7 +10,6 @@ const GetToken = (code) =>  {
 
 	const [token, setToken] = useState();
 	let csrf;
-	GetCSRF();
 
 	try {
 		csrf = document.cookie.match(("(^|;)\\s*csrftoken\\s*=\\s*([^;]+)"))[2];
@@ -28,7 +27,7 @@ const GetToken = (code) =>  {
 						code: code
 					}),
 					headers: {
-						"X-CSRFToken": csrf,
+						"X-Csrftoken": csrf,
 						'Content-Type': 'application/json'
 					},
 				})
@@ -41,6 +40,7 @@ const GetToken = (code) =>  {
 	}
 
 	useEffect(() => {
+		GetCSRF();
 		fetchToken();
 	}, []);
 

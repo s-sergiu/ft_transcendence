@@ -5,7 +5,6 @@ import Header from './Header';
 import DeleteContact from './DeleteContact';
 import avatarUrl from './chat-avatar.png';
 import logoPic from './pingpong-icon.webp';
-import InviteGame from '../game/inviteGame.js';
 
 const Contacts = ({ contacts, onBack, onClose, profilePic, onChat, onBlock, onViewProfile, onDelete, socket }) => {
   return (
@@ -19,7 +18,6 @@ const Contacts = ({ contacts, onBack, onClose, profilePic, onChat, onBlock, onVi
         <div key={contact.id} className="contact-item">
           <img src={contact.avatarUrl} alt="Profile" className="header-profile-pic" />
           <span className="contact-name">{contact.name}</span>
-          <InviteGame friends={contacts} />
           <button className="options-button" onClick={(event) => {
             const dropdown = event.currentTarget.nextElementSibling;
             dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';

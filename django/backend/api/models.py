@@ -2,7 +2,44 @@ from django.db import models
 from django.contrib.auth.models import User
 import sys, hashlib
  
-# Create your models here.
+class MatchData(models.Model):
+    player1 = models.CharField(max_length = 64)
+    player2 = models.CharField(max_length = 64)
+    score1 = models.CharField(max_length = 2)
+    score2 = models.CharField(max_length = 2)
+    timenow = models.CharField(max_length = 64)
+    winner = models.CharField(max_length = 64)
+    loser = models.CharField(max_length = 64)
+    def add_entry(data):
+        if (data['score1'] > data['score2']): 
+            win = data['player1'];
+            lose = data['player2'];
+        else:
+            win = data['player2'];
+            lose = data['player1'];
+        m = MatchData( player1 = data['player1'],
+                       player2 = data['player2'],
+                       score1 = data['score1'],
+                       score2 = data['score2'],
+                       timenow = data['timenow'],
+                       winner = win,
+                       loser = lose,
+                      )
+        m.save()
+    def get_entry(data):
+        m = MatchData.objects.filter(player1 = data) | MatchData.objects.filter(player2 =data);
+        return m;
+    def get_wins(data):
+        m = MatchData.objects.filter(winner = data) 
+        if m is None:
+            return 0;
+        return m;
+    def get_loss(data):
+        m = MatchData.objects.filter(loser = data) 
+        if m is None:
+            return 0;
+        return m;
+
 class Token(models.Model):
     access_token = models.CharField(max_length = 64)
     token_type = models.CharField(max_length = 6, null = True)
@@ -31,12 +68,14 @@ class ExtendedUser(models.Model):
     login = models.CharField(max_length = 64)
     first_name = models.CharField(max_length = 64)
     last_name = models.CharField(max_length = 64)
+    location = models.CharField(max_length = 64, null = True)
     image_medium = models.CharField(max_length = 256)
     image_small = models.CharField(max_length = 128)
     pool_month = models.CharField(max_length = 64)
     pool_year = models.CharField(max_length = 64)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     token = models.ForeignKey(Token, on_delete=models.CASCADE, null = True)
+    friends = models.ManyToManyField(User, related_name= '+' )
     def create_user(api_data, user):
         ext = ExtendedUser.objects.filter(email = api_data['email'])
         if not ext:
@@ -46,6 +85,9 @@ class ExtendedUser(models.Model):
             url = 'https://www.gravatar.com/avatar/' + email_hash;
             ext = ExtendedUser(email = api_data['email'],
                                login = api_data['username'],
+                               first_name = api_data['first_name'],
+                               last_name = api_data['last_name'],
+                               location = api_data['location'],
                                image_medium = url,
                                user = user,
                                )
@@ -66,6 +108,7 @@ class ExtendedUser(models.Model):
                                login = api_data['login'],
                                first_name = api_data['first_name'],
                                last_name = api_data['last_name'],
+                               location = api_data['location'],
                                image_medium = api_data['image']['versions']['medium'],
                                image_small = api_data['image']['versions']['small'],
                                pool_month = api_data['pool_month'],
