@@ -198,6 +198,7 @@ server.listen(port,host, () => {
     console.log("Listening at :4000...");
 });
 
+            
 io.on("connection", (socket) => {
         createGame();
     socket.on("infos", (data, gid) => {
@@ -327,6 +328,7 @@ io.on("connection", (socket) => {
     socket.on("ballmove", (data, gid, online) => {
             id = gid;
             if ((online && data == 1) || !online){
+				console.log(login);
             if(GamesList[id].ballpositions.x <= ballVelocity && (GamesList[id].ballpositions.y < GamesList[id]. positions.y || GamesList[id].ballpositions.y > GamesList[id].positions.y + 120))
                 {
                     io.emit("message", "Player 1 lose");
@@ -428,7 +430,7 @@ io.on("connection", (socket) => {
               socket.on('createFriendGame', ({ email, gameId, playerName }) => {
                 privateGames[gameId] = { player1: playerName, socket, email, gameId };
               });
-            
+
               socket.on('joinPrivateGame', ({ gameId, playerName }) => {
                 const game = privateGames[gameId];
                 if (game) {
@@ -463,18 +465,21 @@ io.on("connection", (socket) => {
                   socket.emit('error', { message: 'Invalid Game ID' });
                 }
               });
-              socket.on('changeStatus', (status, login) => {
-                      userStatus[login.login] = status;
-                  });
+			socket.on('changeStatus', (data) => {
+                console.log('login', data.login.login);
+                console.log('status', data.newStatus);
+				if (data.login)
+					userStatus[data.login.login] = data.newStatus;
+            });
 
             socket.on('checkStatus', (login) => {
                 if (userStatus[login] == null) {
                     userStatus[login] = 'offline';
-                    // users[socket.id].login = login;
                 }
-                      socket.emit('statusUpdate', { status: userStatus[login], login: login });
-                  });
-
+                console.log('>>>>>>>>>>>>>>checkStatus', login);
+                console.log('status', userStatus[login]);
+                socket.emit('statusUpdate', { status: userStatus[login], login: login });
+			});
               socket.on('disconnect', () => {
                 console.log('user disconnected:', socket.id);
                 // userStatus[users[socket.id].login] = 'offline';
