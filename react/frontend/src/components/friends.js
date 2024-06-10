@@ -5,6 +5,7 @@ import GetUserList from './GetUserList';
 import GetFriendList from './GetFriendList';
 import RemoveFriend from './RemoveFriend';
 import AddFriend from './AddFriend';
+import Status from './status/statusDisplay';
 import { useEffect, useState } from 'react';
 
 function Friends (props) {
@@ -70,6 +71,7 @@ function Friends (props) {
 				<thead>
 				  <tr>
 					<th>id</th>
+					<th>Status</th>
 					<th>Username</th>
 					<th>Email</th>
 					<th>Action</th>
@@ -79,6 +81,7 @@ function Friends (props) {
 				{ friends && friends.map((res) => (
 					<tr>
 					  <td>{res['pk']}</td> 
+					  <td><Status userName={res['fields'].username}/></td>
 					  <td>{res['fields'].username}</td> 
 					  <td>{res['fields'].email}</td> 
 					  <Button onClick = { e => removeFriendFromList(res['pk']) } > <td>Remove Friend</td> </Button>
