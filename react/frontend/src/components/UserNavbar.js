@@ -13,7 +13,6 @@ import ChatIcon from './Chat/ChatIcon';
 import App from '../App';
 import ChatPage from './Chat/ChatPage';
 import ChangeStatus from './Status/statusChange';
-import io from 'socket.io-client';
 
 var URL;
 var socket;
@@ -44,7 +43,9 @@ function UserNavbar(props) {
 	const { info } = GetInfo(localStorage.getItem("token"));
 
 	function Logout() {
-		socket.emit('changeStatus', "Offline", userData[0]['fields']);
+		try {
+			socket.emit('changeStatus', "Offline", userData[0]['fields']);
+		} catch(error) { console.error(error) }
 		localStorage.clear();
 		setLogged(false);
 	}
