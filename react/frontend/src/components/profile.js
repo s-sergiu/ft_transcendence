@@ -9,7 +9,7 @@ import pic6 from './profile.png'
 
 const Profile = (props) => {
   const { login } = props;
-  const [selectedSection, setSelectedSection] = useState(null); // Default selected section
+  const [selectedSection, setSelectedSection] = useState(null);
   const [userInfo, setUserInfo] = useState({
     login: '',
     first_name: '',
