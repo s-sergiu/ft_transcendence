@@ -24,16 +24,6 @@ if (process.env.REACT_APP_HTTP_METHOD === 'http') {
 	socket = io(URL, {   path: "/socket.io" });
 }
 
-var URL;
-var socket;
-if (process.env.REACT_APP_HTTP_METHOD === 'http') {
-	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":4000";
-	socket = io(URL);
-} else {
-	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME 
-	socket = io(URL, {   path: "/socket.io" });
-}
-
 function UserNavbar(props) {
 
 	var profileInfo;
