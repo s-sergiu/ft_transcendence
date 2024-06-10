@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import './css/navbar.css'
 import ChatIcon from './Chat/ChatIcon';
 import App from '../App';
+import ChangeStatus from './status/statusChange';
 import ChatPage from './Chat/ChatPage';
 
 var URL;
@@ -84,6 +85,7 @@ function UserNavbar(props) {
 
             
           </Nav>
+		  <ChangeStatus login = { login && login.login} />
 		  <Form className="d-flex">
             <Button onClick = { e => Logout()} variant="outline-success">Logout</Button>
           </Form>
