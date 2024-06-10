@@ -1,4 +1,5 @@
 
+import io from 'socket.io-client';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -10,9 +11,20 @@ import { useEffect, useState } from 'react';
 import './css/navbar.css'
 import ChatIcon from './Chat/ChatIcon';
 import App from '../App';
+import ChangeStatus from './status/statusChange';
 import ChatPage from './Chat/ChatPage';
 import ChangeStatus from './Status/statusChange';
 import io from 'socket.io-client';
+
+var URL;
+var socket;
+if (process.env.REACT_APP_HTTP_METHOD === 'http') {
+	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":4000";
+	socket = io(URL);
+} else {
+	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME 
+	socket = io(URL, {   path: "/socket.io" });
+}
 
 var URL;
 var socket;
@@ -47,6 +59,19 @@ function UserNavbar(props) {
 	}, [userData]);
 
 	useEffect(() => {
+		if (login)
+			socket.emit('hello', login.user) 
+		else if (profileInfo)
+			socket.emit('hello', profileInfo) 
+    }, [login]);
+
+	useEffect(() => {
+		socket.on('online', (arg) => {
+			console.log(Array.from(arg));
+		})
+    }, [login]);
+
+	useEffect(() => {
 		if (info && info.Message === 'User already exists!') {
 			alert(info.Message)
 			setLogged(false);
@@ -74,6 +99,7 @@ function UserNavbar(props) {
 
             
           </Nav>
+		  <ChangeStatus login = { login && login.login} />
 		  <Form className="d-flex">
             <Button onClick = { e => Logout()} variant="outline-success">Logout</Button>
           </Form>

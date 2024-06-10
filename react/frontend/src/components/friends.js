@@ -4,6 +4,7 @@ import GetUserList from './GetUserList';
 import GetFriendList from './GetFriendList';
 import RemoveFriend from './RemoveFriend';
 import AddFriend from './AddFriend';
+import Status from './status/statusDisplay';
 import { useEffect, useState } from 'react';
 import Status from './Status/statusDisplay';
 
