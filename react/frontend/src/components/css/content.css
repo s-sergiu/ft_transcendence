@@ -1,12 +1,12 @@
 .d-block, img{
-    width: 600px;
-    height: 700px;
+    width: 800px;
+    height: 900px;
 }
 
-/* h3{
+h3{
     color: rgb(2, 229, 210);
     margin-bottom: 300px;
-} */
+}
 .custom-image {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -56,7 +56,6 @@
 .made-by-section {
     text-align: center;
     padding: 2rem 0;
-    background-image: url('../img/cover.png');
   }
   
   .person-box {
@@ -78,41 +77,5 @@
     padding: 1rem 0;
     width: 100%;
     bottom: 0;
-  }
-
-  /* body {
-    padding: 0;
-    margin: 0!important;
-    background-color: #000!important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-  } */
-
-  h1 {
-    color: hsl(0, 0%, 100%);
-    font-size: 50px;
-    font-weight: bold;
-    font-family: monospace;
-    letter-spacing: 7px;
-    cursor: pointer;
-  }
-  
-  h1 span {
-    transition: 0.5s ease-out;
-  }
-  h1:hover span:nth-child(1) {
-    margin-right: 5px;
-  }
-  h1:hover span:nth-child(1):after {
-    content: "'";
-  }
-  h1:hover span:nth-child(2) {
-    margin-left: 30px;
-  }
-  h1:hover span {
-    color: #e2700d;
-    text-shadow: 0 0 10px #ffffff, 0 0 20px #fff, 0 0 40px #fff;
   }
   
