@@ -159,6 +159,13 @@ def getMatchData(request):
     ser = serializers.serialize('json', match.all())
     return (JsonResponse(ser, safe=False))
 
+def getPhoto(request):
+    print(request.body.decode('utf-8'), file=sys.stderr);
+    name = request.body.decode('utf-8');
+    ext = ExtendedUser.objects.filter(login = name).get()
+    image = str(ext.image);
+    return (JsonResponse({'Message' : image}))
+
 def sendPhoto(request):
     file = request.FILES.get('image')
     user = request.POST.get('username')

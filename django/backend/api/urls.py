@@ -18,4 +18,5 @@ urlpatterns = [
     path("register", views.register, name="register"),
     path("login", views.login, name="login"),
     path("send-photo", views.sendPhoto, name="send-photo"),
+    path("get-photo", views.getPhoto, name="get-photo"),
 ]
