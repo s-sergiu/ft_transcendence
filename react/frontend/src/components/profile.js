@@ -80,29 +80,24 @@ const Profile = (props) => {
 	};
 
 	photo = GetPhoto(login.login);
-	useEffect(() => {
-		if (photo === undefined) {
-			console.log("is undefined");
-		} else {
-			console.log("photo: ", photo.photo);
-			try { 
-			login.image = photo.photo.Message
-			} catch(error) { console.error(error) }
-		}
-	}, [photo])
-	
+
 	useEffect(() => {
 		handleSubmit();
 	}, [image])
 
   const handleSubmit = () => {
-		let url;
 		let form_data = new FormData();
 		form_data.append('image', image.image);
 		form_data.append('username', login.login);
 		SendPhoto(form_data);
     };
 
+
+	useEffect(() => {
+		if (photo.photo != undefined) {
+			login.image = photo.photo.Message
+		}
+	}, [photo])
 
 if (login) {
 	if (login.image)
