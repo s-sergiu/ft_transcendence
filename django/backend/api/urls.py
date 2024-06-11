@@ -12,6 +12,7 @@ urlpatterns = [
     path("get-match-wins", views.getMatchWins, name="get-match-wins"),
     path("get-userlist", views.getUserList, name="get-userlist"),
     path("get-friendlist", views.getFriendList, name="get-friendlist"),
+    path("send-photo", views.sendPhoto, name="send-photo"),
     path("add-friend", views.addFriend, name="add-friend"),
     path("remove-friend", views.removeFriend, name="remove-friend"),
     path("get-match-loss", views.getMatchLoss, name="get-match-loss"),

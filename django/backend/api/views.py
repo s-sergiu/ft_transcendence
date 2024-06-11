@@ -172,6 +172,16 @@ def getMatchData(request):
     ser = serializers.serialize('json', match.all())
     return (JsonResponse(ser, safe=False))
 
+def sendPhoto(request):
+
+    #print(request.body, file=sys.stderr);
+    file = request.FILES.get('image')
+    if file is not None:
+        ext = ExtendedUser.objects.filter(login = 'ssergiu').get()
+        ext.image.save(str(file), file.file);
+        return (JsonResponse({'Message' : str(file) }))
+    return (JsonResponse({'Message' : 'fileChange Failed!'}))
+
 def changeMatchData(request):
     data = json.loads(request.body.decode("utf-8"))
     MatchData.add_entry(data['matchData']);
