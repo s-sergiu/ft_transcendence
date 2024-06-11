@@ -33,8 +33,6 @@ function UserNavbar(props) {
 	const { info } = GetInfo(localStorage.getItem("token"));
 
 	function Logout() {
-		console.log("userdata", userData);
-		console.log("info ",info);
 		if (userData)
 			socket.emit('changeStatus', "Offline", userData[0]['fields']);
 		else
