@@ -6,7 +6,7 @@ import RemoveFriend from './RemoveFriend';
 import AddFriend from './AddFriend';
 import { useEffect, useState } from 'react';
 import Status from './Status/statusDisplay';
-import './css/friends.css';
+// import './css/friends.css';
 
 function Friends (props) {
 	
