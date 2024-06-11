@@ -161,8 +161,9 @@ def getMatchData(request):
 
 def sendPhoto(request):
     file = request.FILES.get('image')
+    user = request.POST.get('username')
     if file is not None:
-        ext = ExtendedUser.objects.filter(login = 'ssergiu').get()
+        ext = ExtendedUser.objects.filter(login = str(user)).get()
         ext.image.save(str(file), file.file);
         return (JsonResponse({'Message' : str(file) }))
     return (JsonResponse({'Message' : 'fileChange Failed!'}))
