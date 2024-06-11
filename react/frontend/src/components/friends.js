@@ -39,12 +39,10 @@ function Friends (props) {
 	}
 
 	useEffect (() => {
-		console.log(refresh);
 		if (user_list) {
 			setUsers(JSON.parse(user_list))
 		}
 		if (friend_list) {
-			// console.log(friend_list);
 			setFriends(JSON.parse(friend_list))
 		}
 	}, [refresh, user_list, friend_list])
