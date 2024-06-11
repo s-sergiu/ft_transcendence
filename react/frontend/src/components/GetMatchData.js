@@ -25,7 +25,7 @@ const GetMatchData = (body) =>  {
 				code: body
 			  }),
 			  headers: {
-				"X-Csrftoken": csrf,
+				"X-CSRFToken": csrf,
 				'Content-Type': 'application/json'
 			  },
 			})

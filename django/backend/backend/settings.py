@@ -16,11 +16,11 @@ import os,sys
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-HOST_NAME = os.environ.get('HOST_NAME')
-HOST_IP = os.environ.get('HOST_IP')
-REACT_PORT = os.environ.get('REACT_PORT')
-DJANGO_DEBUG = os.environ.get('DJANGO_DEBUG')
-HTTP_METHOD = os.environ.get('HTTP_METHOD')
+HOST_NAME = os.environ.get('HOST_NAME', 'macbook-air.local')
+HOST_IP = os.environ.get('HOST_IP', '10.64.34.90')
+REACT_PORT = os.environ.get('REACT_PORT', '80')
+DJANGO_DEBUG = os.environ.get('DJANGO_DEBUG', 'True')
+HTTP_METHOD = os.environ.get('HTTP_METHOD', 'http')
 HOST_WITH_PORT = HTTP_METHOD + "://" + HOST_IP
 HOST_NAME_W_PORT = HTTP_METHOD + "://" + HOST_NAME
 # Quick-start development settings - unsuitable for production
@@ -150,14 +150,46 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
-        HOST_WITH_PORT,
-        HOST_NAME_W_PORT,
+    HOST_WITH_PORT,
+    HOST_NAME_W_PORT,
 ]
 
-CSRF_TRUSTED_ORIGINS = [
-        HOST_WITH_PORT,
-        HOST_NAME_W_PORT,
-]
+# CSRF_TRUSTED_ORIGINS = [
+#     HOST_WITH_PORT,
+#     HOST_NAME_W_PORT,
+#     "http://localhost:80",  
+#     "http://127.0.0.1:80",
+# ]
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
+
+####################################
+
+
+
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    HOST_WITH_PORT,
+    HOST_NAME_W_PORT,
+]

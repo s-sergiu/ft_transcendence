@@ -27,7 +27,7 @@ if (process.env.REACT_APP_HTTP_METHOD === 'http') {
 function UserNavbar(props) {
 
 	var profileInfo;
-	const [ toggle, setNavToggle ] = useState('profile');
+	const [ toggle, setNavToggle ] = useState('content');
 	const [ login, setLogin ] = useState();
 	const { userData, setLogged } = props;
 	const { info } = GetInfo(localStorage.getItem("token"));
@@ -66,17 +66,18 @@ function UserNavbar(props) {
     <div className="App">
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand href="#">transcendence</Navbar.Brand>
+        <Navbar.Brand href="#" onClick = { e => setNavToggle('content') }>transcendence</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
             className="me-auto my-2 my-lg-0"
             style={{ maxHeight: '100px' }}
           >
-            <Nav.Link onClick = { e => setNavToggle('friends') } >Friends</Nav.Link>
+            <Nav.Link href="#action1">Home</Nav.Link>
             <Nav.Link onClick = { e => setNavToggle('game') } >Game</Nav.Link>
             <Nav.Link onClick = { e => setNavToggle('3dgame') } >3D Game</Nav.Link>
             <Nav.Link onClick = { e => setNavToggle('profile') } >Profile</Nav.Link>
+            <Nav.Link onClick = { e => setNavToggle('tourn') } >Tournaments</Nav.Link>
 
             
           </Nav>
@@ -87,7 +88,7 @@ function UserNavbar(props) {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-	<ChatPage />
+	<ChatPage userData={userData || {}} />
 	<MainContent content = { toggle } login = { login } />
     </div>
   );

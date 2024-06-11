@@ -7,6 +7,7 @@ import AddFriend from './AddFriend';
 import { useEffect, useState } from 'react';
 import Status from './Status/statusDisplay';
 
+
 function Friends (props) {
 	
 	const { login } = props;

@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 import sys, hashlib
- 
+from django.utils import timezone
+import uuid
+
 class MatchData(models.Model):
     player1 = models.CharField(max_length = 64)
     player2 = models.CharField(max_length = 64)
@@ -76,7 +78,6 @@ class ExtendedUser(models.Model):
     pool_year = models.CharField(max_length = 64)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     token = models.ForeignKey(Token, on_delete=models.CASCADE, null = True)
-    friends = models.ManyToManyField(User, related_name= '+' )
     def create_user(api_data, user):
         ext = ExtendedUser.objects.filter(email = api_data['email'])
         if not ext:
@@ -121,3 +122,33 @@ class ExtendedUser(models.Model):
             return ext
         return ext.get()
 
+class Friendship(models.Model):
+    class Status(models.TextChoices):
+        PENDING = 'P', 'Pending'
+        ACCEPTED = 'A', 'Accepted'
+        BLOCKED = 'B', 'Blocked'
+
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friendships_sent')
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friendships_received')
+    status = models.CharField(max_length=1, choices=Status.choices, default=Status.PENDING)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('sender', 'receiver')
+
+class ChatMessage(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='messages_sent')
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='messages_received')
+    content = models.TextField()
+    timestamp = models.DateTimeField(default=timezone.now)  # Store timezone-aware datetime
+
+class GameInvite(models.Model):
+    class Status(models.TextChoices):
+        PENDING = 'P', 'Pending'
+        ACCEPTED = 'A', 'Accepted'
+        DECLINED = 'D', 'Declined'
+
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='game_invites_sent')
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='game_invites_received')
+    status = models.CharField(max_length=1, choices=Status.choices, default=Status.PENDING)
+    created_at = models.DateTimeField(auto_now_add=True)

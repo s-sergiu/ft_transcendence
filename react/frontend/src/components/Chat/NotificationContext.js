@@ -1,20 +1,20 @@
 import React, { createContext, useContext, useState } from 'react';
 
-const NotificationContext = createContext(null);
+export const NotificationContext = createContext({
+  notifications: [],
+  addNotification: () => {},
+  removeNotification: () => {},
+});
 
 export const useNotifications = () => {
-  const context = useContext(NotificationContext);
-  if (context === undefined) {
-    throw new Error('please use useNotifications within a NotificationProvider!');
-  }
-  return context;
+  return useContext(NotificationContext);
 };
 
 export const NotificationProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
 
   const addNotification = (notification) => {
-    setNotifications(prev => [...prev, { id: Math.random(), ...notification }]);
+    setNotifications(prev => [...prev, { id: Date.now(), ...notification }]); // Use Date.now() for unique IDs
   };
 
   const removeNotification = (id) => {

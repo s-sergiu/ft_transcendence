@@ -1,27 +1,34 @@
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 
-const useWebSocket = (url) => {
+const useWebSocket = (url, events = {}) => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const socket = io(url);
+    const newSocket = io(url);
 
-    socket.on('connect', () => {
-      console.log('WebSocket Connected:', socket.id);
+    // Attach event listeners based on the provided events object
+    for (const event in events) {
+      if (events.hasOwnProperty(event)) {
+        newSocket.on(event, events[event]);
+      }
+    }
+
+    newSocket.on('connect', () => {
+      console.log(`WebSocket connected to ${url}:`, newSocket.id);
     });
 
-    socket.on('connect_error', (error) => {
-      console.error('Connection Error:', error);
+    newSocket.on('connect_error', (error) => {
+      console.error(`Connection error to ${url}:`, error);
     });
 
-    setSocket(socket);
+    setSocket(newSocket);
 
     return () => {
-      socket.disconnect();
-      console.log('WebSocket Disconnected');
+      newSocket.disconnect();
+      console.log(`WebSocket disconnected from ${url}`);
     };
-  }, [url]);
+  }, [url, events]); // Include events in the dependency array
 
   return socket;
 };
