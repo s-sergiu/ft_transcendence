@@ -23,7 +23,8 @@ const Profile = (props) => {
   });
 
 	const [image, setImage] = useState({
-		image: null
+		image: null,
+		username: '',
 	});
 
 	const getLoginName = () => {
@@ -82,16 +83,8 @@ const Profile = (props) => {
 		let url;
 		let form_data = new FormData();
 		form_data.append('image', image.image);
+		form_data.append('username', login.login);
 		SendPhoto(form_data);
-	  /*
-		axios.post(url, form_data, {
-		  headers: {
-			'content-type': 'multipart/form-data'
-		  }
-		}).then(res => {
-			  console.log(res.data);
-		}).catch(err => console.log(err))
-	*/
     };
 
 	var image_ref;
