@@ -37,9 +37,9 @@ function GuestNavbar(props) {
         <Navbar.Brand onClick = { e => showLogin(false) } href="#">transcendence</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
-          <Form className="d-flex">
+          {/* <Form className="d-flex">
             <Button onClick = { e => showLogin(true) } variant="outline-success">Login</Button>
-          </Form>
+          </Form> */}
           <Form className="d-flex">
             <Button onClick = { e => OpenURI() } variant="outline-success">Login 42</Button>
           </Form>
@@ -48,7 +48,7 @@ function GuestNavbar(props) {
 	  {/* <ChatPage /> */}
     </Navbar>
 		{ 
-			(login) ? (<LoginPage setLogged = { setLogged } setUserData = { setUserData } />) : (<Content/>)
+			<LoginPage setLogged = { setLogged } setUserData = { setUserData } />
 		}
     </div>
   );
