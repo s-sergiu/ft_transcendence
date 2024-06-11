@@ -6,9 +6,13 @@ import MatchHistory from './MatchHistory';
 import GetMatchWins from './GetMatchWins';
 import GetMatchLoss from './GetMatchLoss';
 import SendPhoto from './sendPhoto';
+import GetPhoto from './getPhoto';
 import pic6 from './profile.png'
 
 const Profile = (props) => {
+  var image_ref;
+  var photo;
+  var photo_string;
   const { login } = props;
   const [selectedSection, setSelectedSection] = useState(null);
   const [userInfo, setUserInfo] = useState({
@@ -75,6 +79,18 @@ const Profile = (props) => {
 		})
 	};
 
+	photo = GetPhoto(login.login);
+	useEffect(() => {
+		if (photo === undefined) {
+			console.log("is undefined");
+		} else {
+			console.log("photo: ", photo.photo);
+			try { 
+			login.image = photo.photo.Message
+			} catch(error) { console.error(error) }
+		}
+	}, [photo])
+	
 	useEffect(() => {
 		handleSubmit();
 	}, [image])
@@ -87,7 +103,6 @@ const Profile = (props) => {
 		SendPhoto(form_data);
     };
 
-	var image_ref;
 
 if (login) {
 	if (login.image)
