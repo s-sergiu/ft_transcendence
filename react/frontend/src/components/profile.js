@@ -5,15 +5,10 @@ import ChangeInfo from './ChangeInfo';
 import MatchHistory from './MatchHistory';
 import GetMatchWins from './GetMatchWins';
 import GetMatchLoss from './GetMatchLoss';
-import SendPhoto from './sendPhoto';
 import pic6 from './profile.png'
 
 const Profile = (props) => {
   const { login } = props;
-  const [image, setImage] = useState({
-    image: null
-  });
-
   const [selectedSection, setSelectedSection] = useState(null);
   const [userInfo, setUserInfo] = useState({
     login: '',
@@ -68,38 +63,23 @@ const Profile = (props) => {
   };
 
   const handleImageChange = (e) => {
-    setImage({
-      image: e.target.files[0]
-    })
-  };
+    const file = e.target.files[0];
+    const reader = new FileReader();
 
-	useEffect(() => {
-		handleSubmit();
-	}, [image])
-
-  const handleSubmit = () => {
-		let url;
-		let form_data = new FormData();
-		form_data.append('image', image.image);
-		SendPhoto(form_data);
-	  /*
-		axios.post(url, form_data, {
-		  headers: {
-			'content-type': 'multipart/form-data'
-		  }
-		}).then(res => {
-			  console.log(res.data);
-		}).catch(err => console.log(err))
-	*/
+    reader.onloadend = () => {
+      setUserInfo({ ...userInfo, profilePic: reader.result });
+      console.log('Uploaded image', reader.result);
+      props.login.image_medium = reader.result;
     };
-	var image_ref;
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
 	
+	console.log(wins);
+	console.log(loss);
 if (login) {
-	if (login.image)
-		image_ref = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":8000/media/" + login.image;
-	else 
-		image_ref = login.image_medium
-	console.log("ping: ", image_ref)
   return (
     <div className='div_global'>
       <h1 className="display-4">Welcome your dashboard</h1>
@@ -109,7 +89,7 @@ if (login) {
         {/* Left sidebar */}
         <Col sm={3} className="left-sidebar">
           <div className="profile-info">
-            <Image src={image_ref} roundedCircle className="profile-pic" />
+            <Image src={login.image_medium} roundedCircle className="profile-pic" />
             <div className="change-picture-btn">
               <label htmlFor="upload-input" className="btn btn-primary">
                 Change Picture
