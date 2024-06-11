@@ -60,9 +60,11 @@ const LoginPage = (props) => {
 			setRegisterMessage("Account with that email already exists")
 		} else if (reply.Message === 2) {
 			setRegisterMessage("Account with that username already exists")
+		} else if (reply.Message === 'Error') {
+			setRegisterMessage(reply.Error)
 		} else {
 			toggleLoginForm(true);
-			setMessage("Succesfully registered!")
+			setMessage(reply.Message)
 		}
 	}	
   };
