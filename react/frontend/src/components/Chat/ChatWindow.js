@@ -1,25 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import Header from './Header';
+import axios from 'axios';
 
 const ChatWindow = ({ contact, onClose, onBack, socket }) => {
   const [message, setMessage] = useState('');
-  const [chatHistory, setChatHistory] = useState(contact.chatHistory || []);
+  const [chatHistory, setChatHistory] = useState([]);
 
+  // Fetch initial chat history on component mount
   useEffect(() => {
-    const receiveMessage = (msg) => {
-      setChatHistory(currentHistory => [...currentHistory, msg]);
+    const fetchChatHistory = async () => {
+      try {
+        const response = await axios.get(`/api/chat-messages/?receiver=${contact.id}`);
+        setChatHistory(response.data);
+      } catch (error) {
+        console.error('Error fetching chat history:', error);
+      }
     };
 
-    socket.on('new-message', receiveMessage);
-    return () => socket.off('new-message', receiveMessage);
-  }, [socket]);
+    fetchChatHistory();
+  }, [contact.id]); 
+
+  useEffect(() => {
+    if (socket) {
+      // WebSocket event handler for new messages
+      const receiveMessage = (msg) => {
+        setChatHistory(prevHistory => [...prevHistory, msg]);
+      };
+      
+      socket.on('chat.message', receiveMessage);
+      return () => socket.off('chat.message', receiveMessage);
+    }
+  }, [socket]); // Include socket in dependency array
 
   const sendMessage = () => {
-    if (message.trim()) {
-      const newMessage = { message, time: new Date().toLocaleTimeString(), isUser: true, contactId: contact.id };
-      setChatHistory([...chatHistory, newMessage]);
-      socket.emit('send-message', newMessage);
-      setMessage('');
+    if (message.trim() && socket) {
+      const newMessage = { 
+        content: message, 
+        receiver: contact.id, // Send receiver's ID to the backend
+      };
+      socket.emit('chat.message', newMessage);
+      setMessage(''); 
     }
   };
 
@@ -27,16 +47,16 @@ const ChatWindow = ({ contact, onClose, onBack, socket }) => {
     <div className="chat-window">
       <Header
         onBack={onBack}
-        profilePic={contact.avatarUrl}
-        title={`${contact.name}`}
-        onOptions={() => console.log('Options clicked')}
+        profilePic={contact.avatarUrl} 
+        title={contact.name}
+        onOptions={() => console.log('Options clicked')} 
         onClose={onClose}
       />
       <div className="chat-messages">
         {chatHistory.map((msg, index) => (
           <div key={index} className={`chat-message ${msg.isUser ? 'self-end' : ''}`}>
-            <div>{msg.message}</div>
-            <div className="message-time">{msg.time}</div>
+            <div>{msg.content}</div> 
+            <div className="message-time">{msg.timestamp}</div> 
           </div>
         ))}
       </div>
@@ -46,10 +66,8 @@ const ChatWindow = ({ contact, onClose, onBack, socket }) => {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Type a message..."
-          onKeyDown={(e) => { 
-            if (e.key === "Enter") 
-              sendMessage(); }}
-            />
+          onKeyDown={(e) => { if (e.key === 'Enter') sendMessage(); }}
+        />
         <button onClick={sendMessage}>Send</button>
       </div>
     </div>
