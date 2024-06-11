@@ -50,7 +50,7 @@ function GameInfo({ navigate, gameType, user, gid }) {
                 bootid = {bootid}
                 onWinnerChange={(newWinner) => setWinner(newWinner)}
             />}
-        { winner && <h1>Winner is: {winner}</h1>}
+        { winner && <h2>Winner is: {winner}</h2>}
         </div>
           )
     } 
