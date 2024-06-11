@@ -17,4 +17,5 @@ urlpatterns = [
     path("get-match-loss", views.getMatchLoss, name="get-match-loss"),
     path("register", views.register, name="register"),
     path("login", views.login, name="login"),
+    path("send-photo", views.sendPhoto, name="send-photo"),
 ]
