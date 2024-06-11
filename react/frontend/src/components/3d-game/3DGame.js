@@ -298,7 +298,7 @@ function Game3D() {
 				<p>Player1: {leftScore}</p>
 				<p>Player2: {rightScore}</p>
 			</div>
-		  	<canvas class="3d-game" id="canvas"></canvas>
+		  	<canvas className="3d-game" id="canvas"></canvas>
 		</div>
 	);
 }
