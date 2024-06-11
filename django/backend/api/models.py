@@ -73,7 +73,6 @@ class ExtendedUser(models.Model):
     location = models.CharField(max_length = 64, null = True)
     image_medium = models.CharField(max_length = 256)
     image_small = models.CharField(max_length = 128)
-    image = models.ImageField(upload_to= ".", null = True)
     pool_month = models.CharField(max_length = 64)
     pool_year = models.CharField(max_length = 64)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
