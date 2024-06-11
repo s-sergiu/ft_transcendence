@@ -27,7 +27,7 @@ if (process.env.REACT_APP_HTTP_METHOD === 'http') {
 function UserNavbar(props) {
 
 	var profileInfo;
-	const [ toggle, setNavToggle ] = useState('profile');
+	const [ toggle, setNavToggle ] = useState('content');
 	const [ login, setLogin ] = useState();
 	const { userData, setLogged } = props;
 	const { info } = GetInfo(localStorage.getItem("token"));
@@ -66,7 +66,7 @@ function UserNavbar(props) {
     <div className="App">
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand href="#">transcendence</Navbar.Brand>
+        <Navbar.Brand href="#" onClick = { e => setNavToggle('content') }>transcendence</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav

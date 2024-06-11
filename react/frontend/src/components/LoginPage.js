@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import './css/LoginPage.css'
-import pic3 from './login.png'
+// import pic3 from './login.png'
+import pic3 from './img/Logo42.png'
 
 var URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":" + process.env.REACT_APP_DJANGO_PORT
 if (process.env.REACT_APP_HTTP_METHOD === 'https')
