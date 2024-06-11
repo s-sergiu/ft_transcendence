@@ -90,7 +90,6 @@ def getUserInfo(request):
     headers = {'authorization': f'Bearer {token['code']}'}
     api_call = requests.get(url, headers = headers)
     data = api_call.json()
-    print(data['location'], file=sys.stderr);
     if (list(data.keys())[0] == 'error'):
         return (JsonResponse(data))
     users = get_or_create_user(data,token);
@@ -118,13 +117,11 @@ def login(request):
 def getMatchLoss(request):
     data = json.loads(request.body.decode("utf-8"))
     loss = MatchData.get_loss(data['code']).count();
-    print(loss, file=sys.stderr)
     return (JsonResponse({'result' : loss}))
 
 def getMatchWins(request):
     data = json.loads(request.body.decode("utf-8"))
     wins = MatchData.get_wins(data['code']).count();
-    print(wins, file=sys.stderr)
     return (JsonResponse({'result' : wins}))
 
 def removeFriend(request):
@@ -132,9 +129,6 @@ def removeFriend(request):
     user = ExtendedUser.objects.get(login = data['login'])
     friend = User.objects.get(pk = data['friend'])
     user.friends.remove(friend);
-    print(user.login, file=sys.stderr);
-    print(friend.username, file=sys.stderr);
-    print(data, file=sys.stderr);
     return (JsonResponse({'Message' : 'removeFriend'}))
 
 def addFriend(request):
@@ -142,25 +136,18 @@ def addFriend(request):
     user = ExtendedUser.objects.get(login = data['login'])
     friend = User.objects.get(pk = data['friend'])
     user.friends.add(friend);
-
-    print(user.login, file=sys.stderr);
-    print(friend.username, file=sys.stderr);
-    print(data, file=sys.stderr);
     return (JsonResponse({'Message' : 'addFriend'}))
 
 def getFriendList(request):
     data = json.loads(request.body.decode("utf-8"))
-    print(data['login']['login'], file = sys.stderr);
     friend_list = ExtendedUser.objects.get(login = data['login']['login'])
     test = friend_list.friends.all();
-    print(test, file = sys.stderr);
     ser = serializers.serialize('json', test)
     return (JsonResponse(ser, safe=False))
     return (JsonResponse({'Message' : 'Userlist'}))
 
 def getUserList(request):
     data = json.loads(request.body.decode("utf-8"))
-    print(data['login']['login'], file = sys.stderr);
     userlist = User.objects.all().exclude(Q(username = data['login']['login']) | Q(username = 'admin') )
     ser = serializers.serialize('json', userlist)
     return (JsonResponse(ser, safe=False))
@@ -188,7 +175,6 @@ def changeMatchData(request):
 def changeInfo(request):
     data = json.loads(request.body.decode("utf-8"))
     ext = ExtendedUser.objects.filter(email = data['email']['email'])
-    print(data['info'], file=sys.stderr);
     ext.update(location = data['info']['location'])
     ext.update(first_name = data['info']['first_name'])
     ext.update(last_name = data['info']['last_name'])
