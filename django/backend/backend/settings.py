@@ -16,6 +16,9 @@ import os,sys
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+POSTGRES_USER = os.environ.get('POSTGRES_USER')
+POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
+POSTGRES_DB = os.environ.get('POSTGRES_DB')
 HOST_NAME = os.environ.get('HOST_NAME')
 HOST_IP = os.environ.get('HOST_IP')
 REACT_PORT = os.environ.get('REACT_PORT')
@@ -95,9 +98,9 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'django_db',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'NAME': POSTGRES_DB,
+        'USER': POSTGRES_USER,
+        'PASSWORD': POSTGRES_PASSWORD,
         'HOST': 'postgresql',
         'PORT': '5432',
     }
