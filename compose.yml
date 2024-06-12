@@ -46,6 +46,7 @@ services:
       - "${REACT_PORT}:${REACT_PORT}"
     volumes:
       - ./debug/react:/debug/src
+      - ./media:/media
     restart: on-failure
   django:
     build:
@@ -60,6 +61,7 @@ services:
       - "${DJANGO_PORT}:${DJANGO_PORT}"
     volumes:
       - ./debug/django:/debug/backend
+      - ./media:/app/media
     environment:
       - DJANGO_DEBUG=${DJANGO_DEBUG}
       - HTTP_METHOD=${HTTP_METHOD}
