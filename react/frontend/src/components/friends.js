@@ -83,7 +83,6 @@ function Friends (props) {
 					<th>Email</th>
 					<th>Action</th>
 				  </tr>
-				))) : null }
 				</thead>
 				<tbody>
 				{ (friends) ? (friends.map((res) => (
