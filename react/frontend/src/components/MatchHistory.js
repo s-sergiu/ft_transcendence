@@ -25,16 +25,19 @@ function MatchHistory (props) {
 					  </tr>
 					</thead>
 					<tbody>
-					{ test.map((res) => (
+					{ test.map((res) => {
+						let datas = new Date();
+						return (
 						<tr>
 						  <td>{res['fields'].player1}</td>
 						  <td>{res['fields'].player2}</td>
 						  <td>{res['fields'].score1}</td>
 						  <td>{res['fields'].score2}</td>
-						  <td>{res['fields'].timenow}</td>
+						  <td>{datas.toUTCString(res['fields'].timenow)}</td>
 						  <td>{res['fields'].winner}</td>
 						</tr>
-					))}
+						)
+					})}
 					</tbody>
 				  </table>
 				</div>
