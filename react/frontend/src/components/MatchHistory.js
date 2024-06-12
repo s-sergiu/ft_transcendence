@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 function MatchHistory (props) {
 	const { user } = props;
 	const { data } = GetMatchData(user);
+	var date = new Date();
 	if (data) {
 		var test = JSON.parse(data);
 	}
@@ -31,7 +32,7 @@ function MatchHistory (props) {
 						  <td>{res['fields'].player2}</td>
 						  <td>{res['fields'].score1}</td>
 						  <td>{res['fields'].score2}</td>
-						  <td>{res['fields'].timenow}</td>
+						  <td>{date.toUTCString(res['fields'].timenow)}</td>
 						  <td>{res['fields'].winner}</td>
 						</tr>
 					))}
