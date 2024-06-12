@@ -76,8 +76,7 @@ function Friends (props) {
 			  <h2>Actual Friends List</h2>
 			  <table className="table">
 				<thead>
-				{ (friends) ? (friends.map((res) => (
-				  <tr key ={res['pk']}>
+				  <tr>
 					<th>id</th>
 					<th>Status</th>
 					<th>Username</th>
