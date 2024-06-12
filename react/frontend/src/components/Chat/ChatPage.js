@@ -63,6 +63,7 @@ function ChatPage(props) {
               id: (contacts.length + index + 1).toString(),
               intra: user.fields.username,
               name: user.fields.username,
+              email: user.fields.email,
               blocked: false,
               chatHistory: [],
               profileViewed: false,
@@ -72,16 +73,16 @@ function ChatPage(props) {
           };
           setContacts([]);
           generateContacts(friends);
-          console.log(contacts);
+          // console.log(contacts);
         }
       }, [friends]);
         
       const userId = new URLSearchParams(window.location.search).get('user') || 'default-user-id';
     
       useEffect(() => {
-        if (socket) {
-          socket.emit('join', { userId });
-          socket.on('new-message', (message) => {
+        if (socket && login) {
+          socket.on('new-message2', (message, sender, user) => {
+            if (login.login === user) {
             setContacts((prevContacts) => {
               return prevContacts.map(contact => {
                 if (contact.id === message.contactId) {
@@ -93,9 +94,11 @@ function ChatPage(props) {
                 return contact;
               });
             });
+          }
+          socket.off('new-message2');
           });
         }
-      }, [socket, userId]);
+      });
     
       const handleDeleteContact = contactId => {
         setContacts(currentContacts => currentContacts.filter(contact => contact.id !== contactId));
@@ -128,6 +131,7 @@ function ChatPage(props) {
         {!showChat && <ChatIcon toggleChat={toggleChat} />}
         {showChat && (
           <ChatBox
+          login={login.login}
             contacts={contacts}
             onChat={handleChat}
             onBlock={(contact) => console.log('Block contact:', contact.name)}
