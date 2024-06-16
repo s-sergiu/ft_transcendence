@@ -1,7 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import Header from './Header';
+import io from 'socket.io-client';
 
-const ChatWindow = ({ contact, onClose, onBack, socket }) => {
+var URL;
+var socket;
+if (process.env.REACT_APP_HTTP_METHOD === 'http') {
+	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":4000";
+	socket = io(URL);
+} else {
+	URL = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME 
+	socket = io(URL, {   path: "/socket.io" });
+}
+
+const ChatWindow = ({ contact, onClose, onBack, login }) => {
   const [message, setMessage] = useState('');
   const [chatHistory, setChatHistory] = useState(contact.chatHistory || []);
 
@@ -9,16 +20,24 @@ const ChatWindow = ({ contact, onClose, onBack, socket }) => {
     const receiveMessage = (msg) => {
       setChatHistory(currentHistory => [...currentHistory, msg]);
     };
-
-    socket.on('new-message', receiveMessage);
-    return () => socket.off('new-message', receiveMessage);
-  }, [socket]);
+    socket.on('new-message2', (msg, sender, user) => {
+      if(login)
+        {
+      if (login == user && contact.intra == sender) {
+        receiveMessage (msg);
+        }}
+      socket.off('new-message2');
+      });
+  });
 
   const sendMessage = () => {
     if (message.trim()) {
       const newMessage = { message, time: new Date().toLocaleTimeString(), isUser: true, contactId: contact.id };
       setChatHistory([...chatHistory, newMessage]);
-      socket.emit('send-message', newMessage);
+      console.log('newMessage', newMessage);
+      console.log('atciveChat', contact.intra);
+      console.log('login', login);
+      socket.emit('send-message2', newMessage, login, contact.intra);
       setMessage('');
     }
   };

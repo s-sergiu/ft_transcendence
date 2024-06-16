@@ -384,22 +384,16 @@ io.on("connection", (socket) => {
             GamesList[id].ballpositions.y += ballVelocity * GamesList[id].directionY * GamesList[id].velocityPercent;
             io.emit("ballposition", GamesList[id].ballpositions, GamesList[id].positions, GamesList[id].positions2, id);}
             }});
+            
             socket.on('join', ({ userId }) => {
                 console.log("socket id :" +socket.id);
                 users[socket.id] = userId;
                 console.log(`User ${userId} connected with ID: ${socket.id}`);
               });
             
-              socket.on('send-message', (message) => {
-                console.log('message: ', message);
-                const { contactId, ...msg } = message;
-                const recipientSocketId = Object.keys(users).find(key => users[key] === contactId);
-                if (recipientSocketId) {
-                  io.to(recipientSocketId).emit('new-message', msg);
-                }
+              socket.on('send-message2', (message, userAct, userOut) => {
+                io.emit('new-message2',message, userAct, userOut);
               });
-
-
 
               socket.on('startRandomGame', ({ playerName }) => {
                 if (waitingPlayer) {

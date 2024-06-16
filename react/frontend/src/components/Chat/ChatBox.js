@@ -7,7 +7,7 @@ import logoPic from './pingpong-icon.webp';
 
 
 const ChatBox = ({
-  contacts, onBack, onClose, profilePic, socket
+  contacts, onBack, onClose, profilePic, socket, login
 }) => {
   const [view, setView] = useState('contacts');
   const [activeChat, setActiveChat] = useState(null);
@@ -24,14 +24,14 @@ const ChatBox = ({
       }} onClose={onClose} />}
       
       {view === 'chat' && activeChat && (
-        <ChatWindow contact={activeChat} onClose={onClose} onBack={() => {
+        <ChatWindow contact={activeChat} login = {login} onClose={onClose} onBack={() => {
           setActiveChat(null);
           handleViewChange('contacts');
         }} socket={socket} />
       )}
 
       {view === 'profile' && activeProfile && (
-        <ProfilePage contact={activeProfile} onBack={() => {
+        <ProfilePage contact={activeProfile} login = {login} onBack={() => {
           setActiveProfile(null);
           handleViewChange('contacts');
         }} />

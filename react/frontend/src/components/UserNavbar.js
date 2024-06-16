@@ -85,7 +85,7 @@ function UserNavbar(props) {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-	<ChatPage />
+	<ChatPage login = { login } />
 	<MainContent content = { toggle } login = { login } />
     </div>
   );

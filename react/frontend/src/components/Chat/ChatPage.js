@@ -13,6 +13,9 @@ import ChatIcon from './ChatIcon';
 import ChatBox from './ChatBox';
 import avatarUrl from './chat-avatar.png';
 import io from 'socket.io-client';
+import GetFriendList from '../GetFriendList';
+import { update } from 'lodash';
+
 
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -26,26 +29,60 @@ if (process.env.REACT_APP_HTTP_METHOD === 'http') {
 	socket = io(URL, {   path: "/socket.io" });
 }
 
-function ChatPage({ userData }) {
+function ChatPage(props) {
+  const { login } = props;
+  const { friend_list } = GetFriendList(login);
+  const [ friends, setFriends ] = useState();
+  // console.log('fr  ',friend_list);
+  // console.log(login);
     const [contacts, setContacts] = useState([
-        { id: '1', intra: 'sheali', name: 'Alice Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl},
-        { id: '2', intra: 'sheali', name: 'Bob Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl},
-        { id: '3', intra: 'sheali', name: 'Charlie Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl },
-        { id: '4', intra: 'sheali', name: 'David Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl},
-        { id: '5', intra: 'sheali', name: 'Eva Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl},
-        { id: '6', intra: 'sheali', name: 'Fiona Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl},
-        { id: '7', intra: 'sheali', name: 'George Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl },
-        { id: '8', intra: 'sheali', name: 'Hannah Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl },
-        { id: '9', intra: 'sheali', name: 'Ivan Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl},
-        { id: '10',intra: 'sheali',  name: 'Julia Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl}
+        // { id: '1', intra: 'sheali', name: 'Alice Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl},
+        // { id: '2', intra: 'sheali', name: 'Bob Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl},
+    //     { id: '3', intra: 'sheali', name: 'Charlie Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl },
+        // { id: '4', intra: 'sheali', name: 'David Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl},
+        // { id: '5', intra: 'sheali', name: 'Eva Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl},
+        // { id: '6', intra: 'sheali', name: 'Fiona Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl},
+        // { id: '7', intra: 'sheali', name: 'George Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl },
+        // { id: '8', intra: 'sheali', name: 'Hannah Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl },
+        // { id: '9', intra: 'sheali', name: 'Ivan Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl},
+        // { id: '10',intra: 'sheali',  name: 'Julia Doe', blocked: false, chatHistory: [], profileViewed: false, avatarUrl: avatarUrl}
       ]);
-    
+
+      useEffect(() => {
+        if (friend_list) {
+          setFriends(JSON.parse(friend_list))
+          // console.log('fffffffffffff', friends);
+        }
+      }, [friend_list]);
+
+      useEffect(() => {
+        update();
+        if (friends) {
+          const generateContacts = (friends) => {
+            const newContacts = friends.map((user, index) => ({
+              id: (contacts.length + index + 1).toString(),
+              intra: user.fields.username,
+              name: user.fields.username,
+              email: user.fields.email,
+              blocked: false,
+              chatHistory: [],
+              profileViewed: false,
+              avatarUrl: avatarUrl
+            }));
+            setContacts(prevContacts => [...prevContacts, ...newContacts]);
+          };
+          setContacts([]);
+          generateContacts(friends);
+          // console.log(contacts);
+        }
+      }, [friends]);
+        
       const userId = new URLSearchParams(window.location.search).get('user') || 'default-user-id';
     
       useEffect(() => {
-        if (socket) {
-          socket.emit('join', { userId });
-          socket.on('new-message', (message) => {
+        if (socket && login) {
+          socket.on('new-message2', (message, sender, user) => {
+            if (login.login === user) {
             setContacts((prevContacts) => {
               return prevContacts.map(contact => {
                 if (contact.id === message.contactId) {
@@ -57,9 +94,11 @@ function ChatPage({ userData }) {
                 return contact;
               });
             });
+          }
+          socket.off('new-message2');
           });
         }
-      }, [socket, userId]);
+      });
     
       const handleDeleteContact = contactId => {
         setContacts(currentContacts => currentContacts.filter(contact => contact.id !== contactId));
@@ -92,6 +131,7 @@ function ChatPage({ userData }) {
         {!showChat && <ChatIcon toggleChat={toggleChat} />}
         {showChat && (
           <ChatBox
+          login={login.login}
             contacts={contacts}
             onChat={handleChat}
             onBlock={(contact) => console.log('Block contact:', contact.name)}
