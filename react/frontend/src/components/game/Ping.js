@@ -75,7 +75,7 @@ const GameBlock = ({gameInfo, bootid, winner, onWinnerChange, online}) => {
 				player2: gameInfo.player2,
 				score1: scores.player1,
 				score2: scores.player2,
-				timenow: new Date().getTime(),
+				timenow: new Date().toLocaleString('en-GB', { timeZone: 'Europe/Berlin'}),
 			  };
 			ChangeMatchData(data);
 		}

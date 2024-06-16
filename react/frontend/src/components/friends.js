@@ -57,17 +57,18 @@ function Friends (props) {
 					<th>id</th>
 					<th>Username</th>
 					<th>Email</th>
+					<th>Action</th>
 				  </tr>
 				</thead>
 				<tbody>
-				{ users && friends && users.filter(res => res['fields'].username !== login.login && !friends.some(friend => friend['fields'].username === res['fields'].username)).map(res => (
+				{ (users && friends) ? (users.filter(res => res['fields'].username !== login.login && !friends.some(friend => friend['fields'].username === res['fields'].username)).map(res => (
 					<tr>
 					  <td>{res['pk']}</td> 
 					  <td>{res['fields'].username}</td> 
 					  <td>{res['fields'].email}</td> 
-					  <Button onClick = { e => addFrienToList(res['pk']) } > <td>Add Friend</td> </Button>
+					  <td><Button onClick = { e => addFrienToList(res['pk']) } > Add Friend </Button></td>
 					</tr>
-				))}
+				))) : null }
 				</tbody>
 			  </table>
 			</div>
@@ -80,19 +81,20 @@ function Friends (props) {
 					<th>Status</th>
 					<th>Username</th>
 					<th>Email</th>
+					<th>Action</th>
 				  </tr>
 				</thead>
 				<tbody>
-				{ friends && friends.map((res) => (
+				{ (friends) ? (friends.map((res) => (
 					<tr>
 					  <td>{res['pk']}</td>
 					  <td><div><Status userName={res['fields'].username}/></div></td>
 					  <td>{res['fields'].username}</td>
 					  {/* <td><Status userName={res['fields'].username}/></td> */}
 					  <td>{res['fields'].email}</td> 
-					  <td><Button onClick = { e => removeFriendFromList(res['pk']) } > <td>Remove Friend</td> </Button> </td>
+					  <td><Button onClick = { e => removeFriendFromList(res['pk']) } > Remove Friend </Button></td>
 					</tr>
-				))}
+				))) : null }
 				</tbody>
 			  </table>
 			</div>

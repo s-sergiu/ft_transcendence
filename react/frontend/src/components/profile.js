@@ -101,7 +101,7 @@ const Profile = (props) => {
 
 if (login) {
 	if (login.image)
-		image_ref = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + ":8000/media/" + login.image;
+		image_ref = process.env.REACT_APP_HTTP_METHOD + "://" + process.env.REACT_APP_HOST_NAME + "/media/" + login.image;
 	else
 		image_ref = login.image_medium
   return (

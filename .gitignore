@@ -3,6 +3,7 @@ migrations
 TODO
 __pycache__
 .env
+media
 debug
 react/frontend/src/package-lock.json
 react/frontend/src/package.json

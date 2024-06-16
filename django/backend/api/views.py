@@ -99,6 +99,12 @@ def getUserInfo(request):
 
 def register(request):
     data= json.loads(request.body.decode("utf-8"))
+    username_length = len(data['username'])
+    password_length = len(data['password'])
+    if username_length < 5:
+        return (JsonResponse({'Message' : 'Error', 'Error' : 'Username is too short!'}))
+    if password_length < 8:
+        return (JsonResponse({'Message' : 'Error', 'Error' : 'Password is too short!'}))
     status = get_or_create_normal_user(data)
     if status == 3:
         return (JsonResponse({'Message' : status}))
@@ -160,7 +166,6 @@ def getMatchData(request):
     return (JsonResponse(ser, safe=False))
 
 def getPhoto(request):
-    print(request.body.decode('utf-8'), file=sys.stderr);
     name = request.body.decode('utf-8');
     ext = ExtendedUser.objects.filter(login = name).get()
     image = str(ext.image);

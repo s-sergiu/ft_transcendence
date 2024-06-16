@@ -46,6 +46,7 @@ services:
       - "${REACT_PORT}:${REACT_PORT}"
     volumes:
       - ./debug/react:/debug/src
+      - ./media:/media
     restart: on-failure
   django:
     build:
@@ -60,6 +61,7 @@ services:
       - "${DJANGO_PORT}:${DJANGO_PORT}"
     volumes:
       - ./debug/django:/debug/backend
+      - ./media:/app/media
     environment:
       - DJANGO_DEBUG=${DJANGO_DEBUG}
       - HTTP_METHOD=${HTTP_METHOD}
@@ -73,6 +75,9 @@ services:
       - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD}
       - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
       - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     restart: on-failure
   postgresql:
     build: postgres/.
